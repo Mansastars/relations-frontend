@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active {
+    /* @apply border-box-borders; */
+    @apply opacity-100;
+    @apply bg-white;
+    @apply bg-opacity-50
+}
