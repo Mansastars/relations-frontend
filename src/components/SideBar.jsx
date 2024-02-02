@@ -27,7 +27,7 @@ function Sidebar() {
         </div>
 
         <div className=" flex flex-col gap-x-2 gap-y-2 text-white items-start py-4 font-semibold text-base">
-            <a href="/" className=" flex float-start w-full">
+            <a href="/dashboard" className=" flex float-start w-full">
                 <SidebarItem icon={dashboard} text="Dasboard" id='1' activeItem={activeItem} setActiveItem={setActiveItem} />
             </a>
             <Link to="/profile" className=" flex float-start w-full">
@@ -41,7 +41,7 @@ function Sidebar() {
             </a>
         </div>
 
-        <button onClick={handleLogout} className=" flex flex-row justify-center items-center gap-3 text-white p-10">
+        <button onClick={handleLogout} className=" flex flex-row justify-start gap-3 text-white py-10 px-2">
             <img src={logout} className=" w-7" alt="" />
             <p>Log out</p>
         </button>
