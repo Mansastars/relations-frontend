@@ -12,12 +12,12 @@ export function Card(borderColour) {
                 <p className=" font-extrabold text-sm">Khairat Adesina</p>
                 <p className=" text-sm">Khairat Company</p>
             </div>
-            <div className=" flex flex-col gap-1 p-2 items-center justify-center">
+            <div className=" flex flex-col gap-1 p-2 items-end">
                 <div className="">
                     <p className=" text-xs font-semibold">Meeting: Jan 22nd, 9am</p>
                     <p className="text-xs">khairatadesina01@gmail.com</p>
                 </div>
-                <div className=" flex flex-col justify-center items-center">
+                <div className=" flex flex-col justify-center items-end">
                     <p className="text-xs">Get Alex to introduce me</p>
                 </div>
             </div>

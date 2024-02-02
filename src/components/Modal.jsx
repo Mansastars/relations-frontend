@@ -1,6 +1,6 @@
 // Pop-up Modal
 import { X } from 'lucide-react';
-import { Button, DropDown, FormInput, FormInputRequired, FormNotes } from "./Reusables"
+import { Button, DateTimeForm, DropDown, FormInput, FormInputRequired, FormNotes } from "./Reusables"
 import { useRef } from 'react';
 
 function Modal({onClose}) {
@@ -30,6 +30,7 @@ function Modal({onClose}) {
                         <FormInput type="email" title="Contact Email" placeholder="sundi@sankore.com" htmlFor="email" name="email" id="contanct-email" />
                         <DropDown />
                     </div>
+                    <DateTimeForm />
                     <div>
                         <FormNotes />
                     </div>

@@ -42,7 +42,7 @@ export function Button({text}) {
 // Form template for not required inputs
 export function FormInput({ type, title, placeholder, htmlFor, name, id }) {
     return (
-        <div className=" relative sm:col-span-3">
+        <div className=" relative col-span-full">
             <label htmlFor={htmlFor} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
                 { title }
             </label>
@@ -63,7 +63,7 @@ export function FormInput({ type, title, placeholder, htmlFor, name, id }) {
 // Form template for required inputs
 export function FormInputRequired({ type, title, placeholder, htmlFor, name, id }) {
     return (
-        <div className=" relative sm:col-span-3">
+        <div className=" relative col-span-full">
             <label htmlFor={htmlFor} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
                 { title }
             </label>
@@ -130,6 +130,34 @@ export function DropDown() {
                 <option>Follow up/Add Newsletter</option>
                 <option>Rejection/Not a Fit</option>
                 </select>
+            </div>
+        </div>
+    )
+}
+
+// Form for data time
+export const DateTimeForm = () => {
+    return (
+        <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
+            <div className="relative sm:col-span-3">
+                <label htmlFor="date" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Date</label>
+                <div className="mt-1">
+                    <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    />
+                </div>
+            </div>
+            <div className="relative sm:col-span-3">
+                <label htmlFor="time" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Time</label>
+                <input
+                type="time"
+                id="time"
+                name="time"
+                className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                />
             </div>
         </div>
     )
