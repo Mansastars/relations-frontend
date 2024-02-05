@@ -1,21 +1,23 @@
 // This file contains the list of tables
 import { Card } from "./Cards";
 import { Column } from "./Column";
+import data from "./data.js";
 
 export const Tables = () => {
+  // if the table is not avaliable by default create it
     return (
-      <div className="flex gap-1 pb-10 overflow-y-auto overflow-x-auto" >
-        <Column title="Research" titleColor='#fc6e51' content={Card('#fc6e51')} />
+      <div className="flex gap-2 pb-10 overflow-y-auto overflow-x-auto" >
+        <Column titles="Research" titleColors='#fc6e51' contents={data} />
 
-        <Column title="Contacted" titleColor='#3bafda' content={Card('#3bafda')} />
+        <Column titles="Contacted" titleColors='#3bafda' contents="" />
 
-        <Column title="Pitch"  titleColor='#967adc' content={Card('#967adc')} />
+        <Column titles="Pitch"  titleColors='#967adc' contents={data} />
 
-        <Column title="Negotiation" titleColor='blue' content="Card content 3" />
+        <Column titles="Negotiation" titleColors='blue' contents="" />
 
-        <Column title="Deal" titleColor='grey' content="Card content 3" />
+        <Column titles="Deal" titleColors='grey' contents={data} />
 
-        <Column title="Not a Fit" titleColor='brown' content="Card content 3" />
+        <Column titles="Not a Fit" titleColors='brown' contents="" />
       </div>
     );
 };

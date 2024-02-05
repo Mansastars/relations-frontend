@@ -104,17 +104,17 @@ export function FormNotes() {
 }
 
 // Drop Down Menu for the Create a contact form
-export function DropDown() {
+export function DropDown({label, id}) {
     return (
         <div className=" relative sm:col-span-3">
             <label htmlFor="current-stage" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
-                Current Stage
+                {label}
             </label>
             <div className="mt-1">
                 <select
-                id="current-stage"
-                name="current-stage"
-                autoComplete="current-stage"
+                id={id}
+                name="stage"
+                autoComplete="stage"
                 required
                 className="block w-full rounded-md border border-dark-blue py-2.5 text-dark-blue focus:outline-none focus:border-2 focus:border-mansa-blue shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 hover:border-mansa-blue"
                 >
@@ -139,8 +139,8 @@ export function DropDown() {
 export const DateTimeForm = () => {
     return (
         <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
-            <div className="relative sm:col-span-3">
-                <label htmlFor="date" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Date</label>
+            <div className="relative sm:col-span-3 w-40">
+                <label htmlFor="date" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Date</label>
                 <div className="mt-1">
                     <input
                     type="date"
@@ -150,8 +150,8 @@ export const DateTimeForm = () => {
                     />
                 </div>
             </div>
-            <div className="relative sm:col-span-3">
-                <label htmlFor="time" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Time</label>
+            <div className="relative sm:col-span-3 w-40">
+                <label htmlFor="time" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Time</label>
                 <input
                 type="time"
                 id="time"

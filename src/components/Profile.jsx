@@ -28,17 +28,17 @@ export default function Profile() {
                                 <Button text="Save Profile" />
                             </div>
                         </div>
-                        <div className="flex flex-col gap-5 pb-8" style={BorderStyle}>
+                        <div className="flex flex-col gap-5 pb-8">
                             <div className="flex gap-5 w-full">
                                 <FormInput type="text" title="First Name" placeholder="Sundi" htmlFor="first-name" name="first-name" id="first-name" />
                                 <FormInput type="text" title="Last Name" placeholder="Keita" htmlFor="Last-name" name="last-name" id="last-name" />
                             </div>
                             <div className=" flex flex-col gap-1">
-                                <FormInput type="number" title="Phone" placeholder="+23412234556" htmlFor="phone" name="phone" id="phone" />
+                                <FormInput type="tel" title="Phone" placeholder="+23412234556" htmlFor="phone" name="phone" id="phone" />
                                 <p className=" text-dark-blue text-base">We collect this incase of emergencies.</p>
                             </div>
                         </div>
-                        <div className="flex flex-col pt-8 justify-between pb-8" style={BorderStyle}>
+                        <div className="flex flex-col justify-between pb-8" style={BorderStyle}>
                             <h2 className=" text-dark-blue font-bold text-xl pb-6">Profile Section</h2>
                             <div className=" relative col-span-full">
                                 <label htmlFor="bio" className=" absolute -top-3 left-3 bg-white px-1 text-sm leading-6 text-dark-blue font-semibold">

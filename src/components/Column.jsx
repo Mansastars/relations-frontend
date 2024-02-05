@@ -1,35 +1,46 @@
 // The file contains the Column desgin for the dashboard
 import classNames from "classnames";
+import { Card } from "./Cards";
 
-export function Column({ title, titleColor, content }) {
+/**
+ * This code snippet defines a function called Column that represents a column design for a dashboard.
+ * 
+ * @param {string} titles - The titles for the column.
+ * @param {string} titleColors - The colors for the column titles.
+ * @param {Array} contents - The contents of the column.
+ * @returns {JSX.Element} - The JSX element representing the column design.
+ */
+export function Column({ titles, titleColors, contents }) {
     const ColumnClasses = classNames(
-        'max-w-xs',
-        'mx-auto',
         'shadow-lg',
         'rounded-2xl',
         'w-full',
-        'flex'
+        // 'relative',
     );
 
     const TitleStyle = {
-        color: titleColor,
-        borderBottom: '1px solid  #d3d3d3',
+        color: titleColors,
+        // position: 'sticky',
+        // top: 0,
+        // borderBottom: '1px solid  #d3d3d3',
       };
 
       const ColumnStyle = {
-        //backdropFilter: 'blur(2px)', /* Equivalent to backdrop-blur-sm */
-        width: '100%',
         backgroundColor: 'rgb(255, 255, 255)',
-        // border: `1px solid ${titleColor}`
     };
 
     return (
-        <div className={ColumnClasses} style={ ColumnStyle }>
-            <div className="p-2 rounded-2xl w-50">
-                <div className="font-bold text-xl mb-2 p-2 text-center" style={TitleStyle}>{title}</div>
-                <div>
-                    {content}
-                </div>
+        <div className=" flex flex-col gap-5 items-center">
+            <div className={ColumnClasses} style={ ColumnStyle }>
+                <div className="font-bold text-xl p-5 text-center min-w-40" style={TitleStyle}>{titles}</div>
+            </div>
+            <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
+                {Array.isArray(contents) &&
+                    contents.map((content) => (
+                    <div key={content.key}>
+                        <Card borderColour={titleColors} data={content} />
+                    </div>
+                ))}
             </div>
         </div>
     )

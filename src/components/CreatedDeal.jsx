@@ -2,14 +2,26 @@
 
 export default function CreatedDeals() {
     return (
-        <div className=" flex flex-col gap-10 justify-center items-center">
-            <div className="">
-                <h1 className=" text-dark-blue font-bold text-3xl">Existing Deals</h1>
+        <div className=" flex flex-col gap-10 items-start justify-start">
+            <div className=" flex self-center">
+                <h1 className=" text-dark-blue font-bold text-4xl">Existing Deals</h1>
             </div>
-            <div>
-                <p>Deal 1</p>
-                <p>Deal 2</p>
-                <p>Deal 3</p>
+            <div className=" flex flex-row justify-start items-start gap-5">
+                <div className=" flex flex-col justify-start items-start w-full gap-2 p-5 rounded border border-mansa-blue hover:border-dark-blue">
+                    <h2 className=" font-bold text-2xl text-dark-blue text-nowrap">Mansa</h2>
+                    <p className=" text-dark-blue text-base font-semibold">23 contacts created</p>
+                    <p className=" text-dark-blue text-base"><span className=" font-semibold">Deadline: </span> 12/06/2023</p>
+                </div>
+                <div className=" flex flex-col justify-start items-start w-full gap-2 p-5 rounded border border-mansa-blue hover:border-dark-blue">
+                    <h2 className=" font-bold text-2xl text-dark-blue text-nowrap ">Khairat Daniel</h2>
+                    <p className=" text-dark-blue text-base font-semibold">23 contacts created</p>
+                    <p className=" text-dark-blue text-base"><span className=" font-semibold">Deadline: </span>12/06/2023</p>
+                </div>
+                <div className=" flex flex-col justify-start items-start w-full gap-2 p-5 rounded border border-mansa-blue hover:border-dark-blue">
+                    <h2 className=" font-bold text-2xl text-dark-blue text-nowrap">Khairat Deal</h2>
+                    <p className=" text-dark-blue text-base font-semibold">23 contacts created</p>
+                    <p className=" text-dark-blue text-base"><span className=" font-semibold">Deadline: </span>12/06/2023</p>
+                </div>
             </div>
         </div>
     )

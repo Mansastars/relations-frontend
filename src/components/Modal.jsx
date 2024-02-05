@@ -23,12 +23,12 @@ function Modal({onClose}) {
                         <FormInputRequired type="text" title="First Name" placeholder="Sundi" htmlFor="first-name" name="first-name" id="first-name" />
                         <FormInputRequired type="text" title="Last Name" placeholder="Keita" htmlFor="Last-name" name="last-name" id="last-name" />
                         <FormInput type="text" title="Company" placeholder="Mansa, LLC" htmlFor="company" name="company" id="company" />
-                        <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" htmlFor="value" name="value" id="value" />
+                        <FormInput type="tel" title="Deal Size ($)" placeholder="1,000,000" htmlFor="value" name="value" id="value" />
                     </div>
                     <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
                         <FormInput type="text" title="Deal Name" placeholder="Website Development" htmlFor="deal-name" name="deal-name" id="deal-name" />
                         <FormInput type="email" title="Contact Email" placeholder="sundi@sankore.com" htmlFor="email" name="email" id="contanct-email" />
-                        <DropDown />
+                        <DropDown label="Current Stage" id="current-stage" />
                     </div>
                     <DateTimeForm />
                     <div>

@@ -21,7 +21,7 @@ function NewDealModal({onClose}) {
                 <form action="" className=' flex flex-col gap-5'>
                     <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
                         <FormInputRequired type="text" title="Deal Name" placeholder="Sundi" htmlFor="deal-name" name="deal-name" id="deal-name" />
-                        <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" htmlFor="value" name="value" id="value" />
+                        <FormInput type="tel" title="Deal Size ($)" placeholder="1,000,000" htmlFor="value" name="value" id="value" />
                     </div>
                     <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
                         <div className="relative sm:col-span-3">
@@ -36,38 +36,9 @@ function NewDealModal({onClose}) {
                             </div>
                         </div>
                     </div>
-                    <div className=' flex flex-col gap-5'>
-                        <div className=" relative col-span-full">
-                            <label htmlFor="notes" className=" absolute -top-3 left-3 bg-white px-1 text-sm leading-6 text-dark-blue font-semibold">
-                            Negotiation value
-                            </label>
-                            <div className="mt-1">
-                            <textarea
-                                id="notes"
-                                name="notes"
-                                rows={2}
-                                className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-                                defaultValue={''}
-                                placeholder="Computes the value of all deals added to Negotiation stage"
-                            />
-                            </div>
-                        </div>
-
-                        <div className=" relative col-span-full">
-                            <label htmlFor="notes" className=" absolute -top-3 left-3 bg-white px-1 text-sm leading-6 text-dark-blue font-semibold">
-                            Deal signed value
-                            </label>
-                            <div className="mt-1">
-                            <textarea
-                                id="notes"
-                                name="notes"
-                                rows={2}
-                                className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-                                defaultValue={''}
-                                placeholder="Computes the value of all deals added to Deal stage"
-                            />
-                            </div>
-                        </div>
+                    <div className=' flex flex-row gap-5'>
+                        <FormInput type="value" title="Negotiation value" placeholder="" htmlFor="value" name="value" id="Negotiation-value" />
+                        <FormInput type="value" title="Deal signed value" placeholder="" htmlFor="value" name="value" id="Deal-signed-value" />
                     </div>
                     <div className=' mt-8 w-full flex items-center justify-center'>
                         <Button text="Create a Deal" />
