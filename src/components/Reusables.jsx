@@ -93,10 +93,11 @@ export function FormNotes() {
             <textarea
                 id="notes"
                 name="notes"
-                rows={3}
+                rows={1}
                 className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
                 defaultValue={''}
                 placeholder="Example text."
+                maxLength={35}
             />
             </div>
         </div>

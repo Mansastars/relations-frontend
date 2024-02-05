@@ -5,7 +5,7 @@ const data = [
       company: "Mansa",
       meeting: "Meeting: Jan 22nd, 9am",
       email: "abc@gmail.com",
-      notes: "Testing... Testing. ..Testing ...Te sting ...Testing...Testing...Testing...Testing...",
+      notes: "...Testing...Testingmnj nijnmjkjnb",
     },
     {
       key: 2,
@@ -21,7 +21,7 @@ const data = [
       company: "Mansa",
       meeting: "Meeting: Jan 22nd, 9am",
       email: "abc@gmail.com",
-      notes: "Testing ...Te sting...Testing ...Testing... Testing...Testing...",
+      notes: "Testing ...Te sting...Testing ...Te",
     },
   ];
   

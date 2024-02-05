@@ -36,7 +36,7 @@ function Sidebar() {
             <Link to="/profile" className=" flex flex-row w-full">
                 <SidebarItem icon={profile} text="Profile" id='2' activeItem={activeItem} setActiveItem={setActiveItem} />
             </Link>
-            <a href="mailto:" className=" flex flex-row w-full">
+            <a href="mailto:customercare@mansastars.com" className=" flex flex-row w-full">
                 <SidebarItem  icon={support} text="Support" id='3' activeItem={activeItem} setActiveItem={setActiveItem} />
             </a>
             <a href="https://www.mansastars.com/monthly-investor-update" className=" flex flex-row w-full">
