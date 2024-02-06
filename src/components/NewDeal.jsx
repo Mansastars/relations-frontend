@@ -6,23 +6,34 @@ import { useState } from "react"
 import NewDealModal from "./NewDealModal"
 import CreatedDeals from "./CreatedDeal"
 
+/**
+ * This code snippet represents the NewDealPage component in a React application.
+ * It is responsible for rendering the page that allows users to create new deals.
+ * The component includes a sidebar, a button to create a new deal,
+ * and a section to display existing deals. It also includes a modal component for
+ * creating a new deal. The component uses state to control the visibility of the
+ * modal. When the button to create a new deal is clicked, the modal is shown. When
+ * the modal is closed, the state is updated to hide the modal. The component is
+ * exported as the default export.
+ */
+
 export default function NewDealPage() {
     const [showNewDealModal, setShowNewDealModal] = useState(false)
 
     return (
         <div>
             <div className=" flex gap-5 h-screen">
-                <div className=" fixed w-56">
+                <div className=" fixed"> 
                     <Sidebar />
                 </div>
-                <div className=" flex flex-col gap-20 w-full pl-56 mx-2">
-                <div className=" flex pt-2 items-center gap-4">
-                    {/* <SearchBar /> */}
-                    <div onClick={() => setShowNewDealModal(true)} className="flex">
-                        <Button text="Create a Deal" />
+                <div className=" flex flex-col ml-56 gap-20 pl-2 w-full h-full ">
+                    <div className=" flex pt-2 items-center gap-4">
+                        {/* <SearchBar /> */}
+                        <div onClick={() => setShowNewDealModal(true)} className="flex">
+                            <Button text="Create a Deal" />
+                        </div>
                     </div>
-                </div>
-                <CreatedDeals />
+                    <CreatedDeals />
                 </div>
                 {showNewDealModal && <NewDealModal onClose={() => setShowNewDealModal(false)} />}
             </div>

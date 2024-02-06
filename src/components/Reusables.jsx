@@ -40,20 +40,22 @@ export function Button({text}) {
 }
 
 // Form template for not required inputs
-export function FormInput({ type, title, placeholder, htmlFor, name, id }) {
+export function FormInput({ type, title, placeholder, id, value, onChange }) {
     return (
         <div className=" relative col-span-full">
-            <label htmlFor={htmlFor} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+            <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
                 { title }
             </label>
             <div className="mt-1">
                 <input
                     type={type}
-                    name={name}
+                    name={id}
                     id={id}
-                    autoComplete="given-name"
+                    autoComplete={id}
                     placeholder={placeholder}
                     className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-grey-400 focus:outline-none focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    value={value}
+                    onChange={onChange}
                 />
             </div>
         </div>
@@ -61,21 +63,23 @@ export function FormInput({ type, title, placeholder, htmlFor, name, id }) {
 }
 
 // Form template for required inputs
-export function FormInputRequired({ type, title, placeholder, htmlFor, name, id }) {
+export function FormInputRequired({ type, title, placeholder, id, autoComplete, value, onChange }) {
     return (
         <div className=" relative col-span-full">
-            <label htmlFor={htmlFor} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+            <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
                 { title }
             </label>
             <div className="mt-1">
                 <input
                     type={type}
-                    name={name}
+                    name={id}
                     id={id}
-                    autoComplete="given-name"
+                    autoComplete={autoComplete}
                     placeholder={placeholder}
                     required
                     className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-grey-400 focus:outline-none focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    value={value}
+                    onChange={onChange}
                 />
             </div>
         </div>
@@ -83,7 +87,7 @@ export function FormInputRequired({ type, title, placeholder, htmlFor, name, id 
 }
 
 // Notes part of the add a contact form
-export function FormNotes() {
+export function FormNotes({value, onChange}) {
     return (
         <div className=" relative col-span-full">
             <label htmlFor="notes" className=" absolute -top-3 left-3 bg-white px-1 text-sm leading-6 text-dark-blue font-semibold">
@@ -95,9 +99,10 @@ export function FormNotes() {
                 name="notes"
                 rows={1}
                 className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-                defaultValue={''}
                 placeholder="Example text."
                 maxLength={35}
+                value={value}
+                onChange={onChange}
             />
             </div>
         </div>
@@ -105,19 +110,21 @@ export function FormNotes() {
 }
 
 // Drop Down Menu for the Create a contact form
-export function DropDown({label, id}) {
+export function DropDown({label, id, value, onChange}) {
     return (
         <div className=" relative sm:col-span-3">
-            <label htmlFor="current-stage" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+            <label htmlFor={id} className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
                 {label}
             </label>
             <div className="mt-1">
                 <select
                 id={id}
-                name="stage"
-                autoComplete="stage"
+                name={id}
+                autoComplete={id}
                 required
                 className="block w-full rounded-md border border-dark-blue py-2.5 text-dark-blue focus:outline-none focus:border-2 focus:border-mansa-blue shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                value={value}
+                onChange={onChange}
                 >
                 <option>Research</option>
                 <option>Prospect</option>
@@ -137,29 +144,36 @@ export function DropDown({label, id}) {
 }
 
 // Form for data time
-export const DateTimeForm = () => {
+export const DateForm = ({value, onChange}) => {
     return (
-        <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
-            <div className="relative sm:col-span-3 w-40">
-                <label htmlFor="date" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Date</label>
-                <div className="mt-1">
-                    <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-                    />
-                </div>
-            </div>
-            <div className="relative sm:col-span-3 w-40">
-                <label htmlFor="time" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Time</label>
-                <input
-                type="time"
-                id="time"
-                name="time"
-                className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-                />
-            </div>
+        <div className="relative sm:col-span-3 w-40">
+        <label htmlFor="date" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Date</label>
+        <div className="mt-1">
+            <input
+            type="date"
+            id="date"
+            name="date"
+            className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+            value={value}
+            onChange={onChange}
+            />
+        </div>
+    </div>
+    )
+}
+
+export const TimeForm = ({value, onChange}) => {
+    return (
+        <div className="relative sm:col-span-3 w-40">
+            <label htmlFor="time" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Time</label>
+            <input
+            type="time"
+            id="time"
+            name="time"
+            className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+            value={value}
+            onChange={onChange}
+            />
         </div>
     )
 }

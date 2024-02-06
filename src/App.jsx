@@ -8,7 +8,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/deal" element={<NewDealPage />} />
+        <Route path="/deals" element={<NewDealPage />} />
         <Route path="/dashboard" element={<Dasboard />} />
         <Route path="/profile" element={<Profile />} />
         {/* Add more routes as needed */}
