@@ -1,6 +1,6 @@
 // Cards in the table dashboard
-import data from "./data.js";
-import Research from "./TableContactsRoute.jsx";
+// import data from "./data.js";
+// import Research from "./TableContactsRoute.jsx";
 
 export function Card( {borderColour, data}) {
     const BorderStyle = {

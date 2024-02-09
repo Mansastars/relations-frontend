@@ -5,7 +5,6 @@ import Dasboard from "../src/components/Dashboard";
 import NewDealPage from "../src/components/NewDeal";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
-import Research from "./components/TableContactsRoute";
 
 function App() {
   return (

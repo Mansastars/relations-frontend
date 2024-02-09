@@ -60,6 +60,7 @@ function Modal({onClose}) {
             const response = await api.post(`/deals/create-contact/${currentDealId}`, userData);
             console.log(response);
             setSuccessMessage('Contact created successfully.');
+            window.location.reload();
             setErrorMessage('');
             setFormValue({ firstName:'', lastName:'', company: '', dealSize:0, dealName:'', email:'', phoneNumber:0, notes:'', currentStage:'', datetime:'' });
             // Close the modal after a delay (e.g., 2 seconds)
@@ -95,7 +96,7 @@ function Modal({onClose}) {
                     </div>
                     <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
                         <FormInput type="text" title="Deal Name" placeholder="Website Development" id="dealName" value={formValue.dealName} onChange={handleInput} />
-                        <FormInput type="email" title="Contact Email" placeholder="sundi@sankore.com" id="email" value={formValue.email} onChange={handleInput} />
+                        <FormInputRequired type="email" title="Contact Email" placeholder="sundi@sankore.com" id="email" value={formValue.email} onChange={handleInput} />
                         <FormInput type="number" title="Phone Number" placeholder="+123456789" id="phoneNumber" value={formValue.phoneNumber} onChange={handleInput} />
                         <DropDown label="Current Stage" id="currentStage" value={formValue.currentStage} onChange={handleInput} />
                     </div>

@@ -5,7 +5,6 @@ import { useRef } from 'react';
 import api from "./api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Research from './TableContactsRoute';
 import { DateForm } from './Reusables';
 
 /**
@@ -38,13 +37,19 @@ function NewDealModal({onClose}) {
         }
     }
 
+    let meetingDate;
+
+    if (formValue.datetime) {
+        meetingDate = new Date(formValue.datetime).toISOString();
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
     
         const userData = {
             deal_name: formValue.dealName,
             deal_size: formValue.dealSize,
-            dead_line: new Date(formValue.datetime).toISOString(),
+            dead_line: meetingDate,
             negotiation_value: formValue.negotiationValue,
             signed_value: formValue.dealSignedValue
         };
@@ -52,6 +57,7 @@ function NewDealModal({onClose}) {
         try {
             const response = await api.post('/deals/create-deal', userData);
             console.log(response);
+            window.location.reload();
             // Store deal ID in localStorag
             localStorage.setItem('currentDealId', response.data.findDeal.id);
             console.log(localStorage)
