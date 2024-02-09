@@ -22,13 +22,12 @@ export default function NewDealPage() {
 
     return (
         <div>
-            <div className=" flex gap-5 h-screen">
+            <div className=" flex gap-5">
                 <div className=" fixed"> 
                     <Sidebar />
                 </div>
-                <div className=" flex flex-col ml-56 gap-20 pl-2 w-full h-full ">
+                <div className=" flex flex-col ml-56 gap-20 pl-2 w-full h-full mb-10 ">
                     <div className=" flex pt-2 items-center gap-4">
-                        {/* <SearchBar /> */}
                         <div onClick={() => setShowNewDealModal(true)} className="flex">
                             <Button text="Create a Deal" />
                         </div>

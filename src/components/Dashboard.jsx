@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import { useState } from "react";
 import { Tables } from "./Tables";
 import MoveContactModal from "./MoveContactModal";
+import { useParams } from "react-router-dom";
 
 function Dasboard() {
     const [showModal, setShowModal] = useState(false)

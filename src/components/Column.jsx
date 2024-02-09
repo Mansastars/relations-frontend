@@ -1,6 +1,7 @@
 // The file contains the Column desgin for the dashboard
 import classNames from "classnames";
 import { Card } from "./Cards";
+import Research from "./TableContactsRoute";
 
 /**
  * This code snippet defines a function called Column that represents a column design for a dashboard.
@@ -20,9 +21,6 @@ export function Column({ titles, titleColors, contents }) {
 
     const TitleStyle = {
         color: titleColors,
-        // position: 'sticky',
-        // top: 0,
-        // borderBottom: '1px solid  #d3d3d3',
       };
 
       const ColumnStyle = {
@@ -35,12 +33,7 @@ export function Column({ titles, titleColors, contents }) {
                 <div className="font-bold text-xl p-5 text-center min-w-40" style={TitleStyle}>{titles}</div>
             </div>
             <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
-                {Array.isArray(contents) &&
-                    contents.map((content) => (
-                    <div key={content.key}>
-                        <Card borderColour={titleColors} data={content} />
-                    </div>
-                ))}
+                {contents}
             </div>
         </div>
     )

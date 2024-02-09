@@ -27,12 +27,9 @@ function Sidebar() {
         </div>
 
         <div className=" flex flex-col gap-x-2 gap-y-2 text-white items-start py-4 font-semibold text-base">
-            <a href="/deal" className=" flex flex-row w-full">
+            <a href="/deals" className=" flex flex-row w-full">
                 <SidebarItem icon={dashboard} text="Deals" id='1' activeItem={activeItem} setActiveItem={setActiveItem} />
             </a>
-            {/* <a href="/dashboard" className=" flex flex-row w-full">
-                <SidebarItem icon={dashboard} text="Dasboard" id='1' activeItem={activeItem} setActiveItem={setActiveItem} />
-            </a> */}
             <Link to="/profile" className=" flex flex-row w-full">
                 <SidebarItem icon={profile} text="Profile" id='2' activeItem={activeItem} setActiveItem={setActiveItem} />
             </Link>

@@ -126,17 +126,18 @@ export function DropDown({label, id, value, onChange}) {
                 value={value}
                 onChange={onChange}
                 >
-                <option>Research</option>
-                <option>Prospect</option>
-                <option>Contacted</option>
-                <option>Pitch</option>
-                <option>On-going Review/Due Diligence</option>
-                <option>Partner/Decision Maker Meeting</option>
-                <option>Term Sheet/Initial Offer</option>
-                <option>Negotiation</option>
-                <option>Deal/Agreement Signed</option>
-                <option>Follow up/Add Newsletter</option>
-                <option>Rejection/Not a Fit</option>
+                <option value="">Choose option</option>
+                <option value="Research">Research</option>
+                <option value="Prospect">Prospect</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Pitch">Pitch</option>
+                <option value="On-going Review / Due Diligence">On-going Review/Due Diligence</option>
+                <option value="Partner/ Decision Maker Meeting">Partner/Decision Maker Meeting</option>
+                <option value="Term Sheet/ Initial Offer">Term Sheet/Initial Offer</option>
+                <option value="Negotiation">Negotiation</option>
+                <option value="Deal/ Agreement signed">Deal/Agreement Signed</option>
+                <option value="Follow up/ Add to Newsletter">Follow up/Add Newsletter</option>
+                <option value="Rejection/ Not a fit">Rejection/Not a Fit</option>
                 </select>
             </div>
         </div>
@@ -147,12 +148,12 @@ export function DropDown({label, id, value, onChange}) {
 export const DateForm = ({value, onChange}) => {
     return (
         <div className="relative sm:col-span-3 w-40">
-        <label htmlFor="date" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Date</label>
+        <label htmlFor="datetime" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Date</label>
         <div className="mt-1">
             <input
-            type="date"
-            id="date"
-            name="date"
+            type="datetime-local"
+            id="datetime"
+            name="datetime"
             className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
             value={value}
             onChange={onChange}

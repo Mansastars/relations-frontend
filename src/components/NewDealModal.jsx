@@ -5,6 +5,8 @@ import { useRef } from 'react';
 import api from "./api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Research from './TableContactsRoute';
+import { DateForm } from './Reusables';
 
 /**
  * Renders a modal for creating a new deal.
@@ -12,7 +14,7 @@ import { useNavigate } from "react-router-dom";
  * @param {function} onClose - Callback function to close the modal.
  * 
  * @returns {JSX.Element} The rendered modal component.
- */
+*/
 
 function NewDealModal({onClose}) {
     const NewDealModalRef = useRef();
@@ -24,8 +26,10 @@ function NewDealModal({onClose}) {
     }
 
     // Interaction with API post request
-    const [formValue, setFormValue] = useState({dealName:'', dealSize:'', deadline:'', negotiationValue: '', dealSignedValue:''})
+    const [formValue, setFormValue] = useState({dealName:'', dealSize:0, negotiationValue: 0, dealSignedValue: 0, datetime:''})
     const [errorMessage, setErrorMessage] = useState("");
+
+    const navigate = useNavigate();
 
     const handleInput = (e) => {
         if (e && e.target) {
@@ -34,31 +38,30 @@ function NewDealModal({onClose}) {
         }
     }
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // const allInputvalue = { address: formValue.address, store_name: formValue.store_name, brand_name: formValue.brand_name, first_name: formValue.first_name, last_name: formValue.last_name, email: formValue.email, password: formValue.password, phone: formValue.phone }
-
-        let formData = new FormData();
-
-        formData.append("dealName", formValue.dealName);
-        formData.append("dealSize", formValue.dealSize);
-        formData.append("deadline", formValue.deadline);
-        formData.append("negotiationValue", formValue.negotiationValue);
-        formData.append("dealSignedValue", formValue.dealSignedValue);
-        
-        api.post('', formData) //API URL
-            .then(function (response) {
-                console.log(response);
-                navigate(""); // Url tp open a dashboard
-            }) 
-            .catch(function (error) {
-                console.log(error);
-                setErrorMessage("Something went wrong. Please try again."); // set error message
-                window.scrollTo(0, 0); //scroll to the top of the page
-            })
-
-        // console.log(formData.values)
-    }
+    
+        const userData = {
+            deal_name: formValue.dealName,
+            deal_size: formValue.dealSize,
+            dead_line: new Date(formValue.datetime).toISOString(),
+            negotiation_value: formValue.negotiationValue,
+            signed_value: formValue.dealSignedValue
+        };
+    
+        try {
+            const response = await api.post('/deals/create-deal', userData);
+            console.log(response);
+            // Store deal ID in localStorag
+            localStorage.setItem('currentDealId', response.data.findDeal.id);
+            console.log(localStorage)
+            navigate(`/dashboard/${response.data.findDeal.id}`);
+        } catch (error) {
+            console.log(error);
+            setErrorMessage("Something went wrong. Please try again."); // set error message
+            window.scrollTo(0, 0); //scroll to the top of the page
+        }
+    };
 
     return (
       <div ref={NewDealModalRef} onClick={closeNewDealModal} className=" fixed z-50 inset-0 bg-dark-blue bg-opacity-30 backdrop-blur-sm ml-56 flex justify-center overflow-y-auto h-screen">
@@ -68,28 +71,16 @@ function NewDealModal({onClose}) {
                 <h1 className=' text-dark-blue text-3xl font-extrabold'>Create a New Deal</h1>
                 <form onSubmit={ handleSubmit } className=' flex flex-col gap-5'>
                     {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
-                    <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
+                    <div className='flex flex-row max-md:flex-col gap-5'>
                         <FormInputRequired type="text" title="Deal Name*" placeholder="Sundi" id="dealName" value={formValue.dealName} onChange={handleInput} />
                         <FormInput type="number" title="Deal Size ($)*" placeholder="1,000,000" id="dealSize" value={formValue.dealSize} onChange={handleInput} />
                     </div>
-                    <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
-                        <div className="relative sm:col-span-3">
-                            <label htmlFor="deadline" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Deadline</label>
-                            <div className="mt-1">
-                                <input
-                                type="date"
-                                id="deadline"
-                                name="date"
-                                className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-                                // value={formValue.deadline}
-                                onChange={handleInput}
-                                />
-                            </div>
-                        </div>
+                    <div className='flex flex-row gap-5 justify-center items-center'>
+                        <DateForm value={formValue.datetime} onChange={handleInput} />
                     </div>
-                    <div className=' flex flex-row gap-5'>
-                        <FormInput type="text" title="Negotiation value" placeholder="" id="negotiationValue" value={formValue.negotiationValue} onChange={handleInput} />
-                        <FormInput type="text" title="Deal signed value" placeholder="" id="dealSignedValue" value={formValue.dealSignedValue} onChange={handleInput} />
+                    <div className=' flex flex-row max-md:flex-col gap-5'>
+                        <FormInput type="number" title="Negotiation value" placeholder="" id="negotiationValue" value={formValue.negotiationValue} onChange={handleInput} />
+                        <FormInput type="number" title="Deal signed value" placeholder="" id="dealSignedValue" value={formValue.dealSignedValue} onChange={handleInput} />
                     </div>
                     <div className=' mt-8 w-full flex items-center justify-center'>
                         <Button type="submit" text="Create a Deal" />
@@ -97,6 +88,7 @@ function NewDealModal({onClose}) {
                 </form>
             </div>
         </div>
+        {/* {newDealId && <ContactForm selectedDealId={newDealId} /> && <Research selectedDealId={newDealId} />} */}
       </div>
     )
   }
