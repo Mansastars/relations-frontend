@@ -52,17 +52,20 @@ export default function NotAFit({ borderColour }) {
     return (
         <>
             {notAFits.length === 0 ? (
-            <div>No contact data available</div>
+            <div></div>
             ) : (
             notAFits.map(notAFit => (
-                <div key={notAFit.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={BorderStyle}>
+                <div key={notAFit.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={{...BorderStyle, minWidth: '150px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
-                    <p className="font-extrabold text-sm">{notAFit.first_name}</p>
+                    <p className="font-extrabold text-sm">{notAFit.first_name} {notAFit.last_name}</p>
                     <p className="text-sm">{notAFit.organization_name}</p>
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
                     <div>
-                    <p className="text-xs font-semibold">{notAFit.meeting_date}</p>
+                    {/* <p className="text-xs font-semibold">{notAFit.meeting_date}</p> */}
+                    <p className="text-xs font-semibold">
+                        {notAFit.meeting_date ? new Date(notAFit.meeting_date).toLocaleString() : ''}
+                    </p>
                     <p className="text-xs">{notAFit.email}</p>
                     </div>
                     <div className="flex flex-col justify-center items-start">

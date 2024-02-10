@@ -16,7 +16,7 @@ function Modal({onClose}) {
     }
 
     // Interaction with API post request
-    const [formValue, setFormValue] = useState({firstName:'', lastName:'', company: '', dealSize:0, dealName:'', email:'', phoneNumber:0, notes:'', currentStage:'', datetime:''})
+    const [formValue, setFormValue] = useState({firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:0, notes:'', currentStage:'', datetime:''})
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,7 +62,7 @@ function Modal({onClose}) {
             setSuccessMessage('Contact created successfully.');
             window.location.reload();
             setErrorMessage('');
-            setFormValue({ firstName:'', lastName:'', company: '', dealSize:0, dealName:'', email:'', phoneNumber:0, notes:'', currentStage:'', datetime:'' });
+            setFormValue({ firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:0, notes:'', currentStage:'', datetime:'' });
             // Close the modal after a delay (e.g., 2 seconds)
             setTimeout(() => {
                 setIsSubmitting(false);
@@ -95,7 +95,7 @@ function Modal({onClose}) {
                         <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" id="dealSize" value={formValue.dealSize} onChange={handleInput} />
                     </div>
                     <div className='flex flex-row items-center justify-center flex-wrap gap-5'>
-                        <FormInput type="text" title="Deal Name" placeholder="Website Development" id="dealName" value={formValue.dealName} onChange={handleInput} />
+                        {/* <FormInput type="text" title="Deal Name" placeholder="Website Development" id="dealName" value={formValue.dealName} onChange={handleInput} /> */}
                         <FormInputRequired type="email" title="Contact Email" placeholder="sundi@sankore.com" id="email" value={formValue.email} onChange={handleInput} />
                         <FormInput type="number" title="Phone Number" placeholder="+123456789" id="phoneNumber" value={formValue.phoneNumber} onChange={handleInput} />
                         <DropDown label="Current Stage" id="currentStage" value={formValue.currentStage} onChange={handleInput} />

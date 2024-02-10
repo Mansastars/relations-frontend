@@ -52,12 +52,12 @@ export default function Deals({ borderColour }) {
     return (
         <>
             {deals.length === 0 ? (
-            <div>No contact data available</div>
+            <div></div>
             ) : (
             deals.map(deal => (
-                <div key={deal.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={BorderStyle}>
+                <div key={deal.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={{...BorderStyle, minWidth: '150px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
-                    <p className="font-extrabold text-sm">{deal.first_name}</p>
+                    <p className="font-extrabold text-sm">{deal.first_name} {deal.last_name}</p>
                     <p className="text-sm">{deal.organization_name}</p>
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
@@ -66,6 +66,9 @@ export default function Deals({ borderColour }) {
                         {deal.meeting_date ? new Date(deal.meeting_date).toLocaleDateString() : ''}
                     </p>
                     {/* <p className="text-xs font-semibold">{deal.meeting_date}</p> */}
+                    <p className="text-xs font-semibold">
+                        Meeting: {deal.meeting_date ? new Date(deal.meeting_date).toLocaleString() : ''}
+                    </p>
                     <p className="text-xs">{deal.email}</p>
                     </div>
                     <div className="flex flex-col justify-center items-start">

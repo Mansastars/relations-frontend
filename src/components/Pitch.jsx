@@ -52,17 +52,20 @@ export default function Pitch({ borderColour }) {
     return (
         <>
             {pitches.length === 0 ? (
-            <div>No pitch data available</div>
+            <div></div>
             ) : (
             pitches.map(pitch => (
-                <div key={pitch.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={BorderStyle}>
+                <div key={pitch.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={{...BorderStyle, minWidth: '150px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
-                    <p className="font-extrabold text-sm">{pitch.first_name}</p>
+                    <p className="font-extrabold text-sm">{pitch.first_name} {pitch.last_name}</p>
                     <p className="text-sm">{pitch.organization_name}</p>
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
                     <div>
-                    <p className="text-xs font-semibold">{pitch.meeting_date}</p>
+                    {/* <p className="text-xs font-semibold">{pitch.meeting_date}</p> */}
+                    <p className="text-xs font-semibold">
+                        {pitch.meeting_date ? new Date(pitch.meeting_date).toLocaleString() : ''}
+                    </p>
                     <p className="text-xs">{pitch.email}</p>
                     </div>
                     <div className="flex flex-col justify-center items-start">

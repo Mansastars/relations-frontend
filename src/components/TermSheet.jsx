@@ -1,12 +1,28 @@
 import api from "./api";
 import { useEffect, useState } from 'react';
+import classNames from "classnames";
 
 //Contact
-export default function TermSheet({ borderColour }) {
+export default function TermSheet({ borderColour, titleColors }) {
 
     const BorderStyle = {
         border: `2px solid  ${borderColour}`,
       };
+
+      const ColumnClasses = classNames(
+        'shadow-lg',
+        'rounded-2xl',
+        'w-full',
+        // 'relative',
+    );
+
+    const TitleStyle = {
+        color: titleColors,
+      };
+
+      const ColumnStyle = {
+        backgroundColor: 'rgb(255, 255, 255)',
+    };
 
     const [termSheets, setTermSheets] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -51,31 +67,39 @@ export default function TermSheet({ borderColour }) {
 
     return (
         <>
-            {termSheets.length === 0 ? (
-            <div>No contact data available</div>
+            {termSheets.length > 0 ? (
+                <div className=" flex flex-col gap-5 items-center">
+                <div className={ColumnClasses} style={ ColumnStyle }>
+                    <div className="font-bold text-xl p-5 text-center min-w-40" style={TitleStyle}>Term Sheet</div>
+                </div>
+                <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
+                    {
+                        termSheets.map(termSheet => (
+                            <div key={termSheet.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={{...BorderStyle, minWidth: '150px'}}>
+                                <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
+                                    <p className="font-extrabold text-sm">{termSheet.first_name} {termSheet.last_name}</p>
+                                    <p className="text-sm">{termSheet.organization_name}</p>
+                                </div>
+                                <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
+                                    <div>
+                                    {/* <p className="text-xs font-semibold">{termSheet.meeting_date}</p> */}
+                                    <p className="text-xs font-semibold">
+                                        {termSheet.meeting_date ? new Date(termSheet.meeting_date).toLocaleString() : ''}
+                                    </p>
+                                    <p className="text-xs">{termSheet.email}</p>
+                                    </div>
+                                    <div className="flex flex-col justify-center items-start">
+                                    <p className="text-xs text-wrap">{termSheet.notes}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
             ) : (
-            termSheets.map(termSheet => (
-                <div key={termSheet.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={BorderStyle}>
-                <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
-                    <p className="font-extrabold text-sm">{termSheet.first_name}</p>
-                    <p className="text-sm">{termSheet.organization_name}</p>
-                </div>
-                <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
-                    <div>
-                    <p className="text-xs font-semibold">{termSheet.meeting_date}</p>
-                    <p className="text-xs">{termSheet.email}</p>
-                    </div>
-                    <div className="flex flex-col justify-center items-start">
-                    <p className="text-xs text-wrap">{termSheet.notes}</p>
-                    </div>
-                </div>
-                </div>
-            ))
+            null
             )}
       </>
     )
-}
-
-export function getTermSheetLength(termSheets) {
-    return termSheets.length;
 }

@@ -52,12 +52,12 @@ export default function Contact({ borderColour }) {
     return (
         <>
             {contacts.length === 0 ? (
-            <div>No contact data available</div>
+            <div></div>
             ) : (
             contacts.map(contact => (
-                <div key={contact.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={BorderStyle}>
+                <div key={contact.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={{...BorderStyle, minWidth: '150px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
-                    <p className="font-extrabold text-sm">{contact.first_name}</p>
+                    <p className="font-extrabold text-sm">{contact.first_name} {contact.last_name}</p>
                     <p className="text-sm">{contact.organization_name}</p>
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
@@ -65,7 +65,10 @@ export default function Contact({ borderColour }) {
                     <p className="text-xs font-semibold">
                         {contact.meeting_date ? new Date(contact.meeting_date).toLocaleDateString() : ''}
                     </p>
-                    <p className="text-xs font-semibold">{contact.meeting_date}</p>
+                    {/* <p className="text-xs font-semibold">{contact.meeting_date}</p> */}
+                    <p className="text-xs font-semibold">
+                        Meeting: {contact.meeting_date ? new Date(contact.meeting_date).toLocaleString() : ''}
+                    </p>
                     <p className="text-xs">{contact.email}</p>
                     </div>
                     <div className="flex flex-col justify-center items-start">

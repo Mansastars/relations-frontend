@@ -52,17 +52,20 @@ export default function Negotiation({ borderColour }) {
     return (
         <>
             {negotiations.length === 0 ? (
-            <div>No negotiations data available</div>
+            <div></div>
             ) : (
             negotiations.map(negotiation => (
-                <div key={negotiation.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={BorderStyle}>
+                <div key={negotiation.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={{...BorderStyle, minWidth: '150px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
-                    <p className="font-extrabold text-sm">{negotiation.first_name}</p>
+                    <p className="font-extrabold text-sm">{negotiation.first_name} {negotiation.last_name}</p>
                     <p className="text-sm">{negotiation.organization_name}</p>
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
                     <div>
-                    <p className="text-xs font-semibold">{negotiation.meeting_date}</p>
+                    {/* <p className="text-xs font-semibold">{negotiation.meeting_date}</p> */}
+                    <p className="text-xs font-semibold">
+                        {negotiation.meeting_date ? new Date(negotiation.meeting_date).toLocaleString() : ''}
+                    </p>
                     <p className="text-xs">{negotiation.email}</p>
                     </div>
                     <div className="flex flex-col justify-center items-start">
