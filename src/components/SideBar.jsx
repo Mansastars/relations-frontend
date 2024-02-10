@@ -15,7 +15,7 @@ function Sidebar() {
 
     const handleLogout = () => {
         // Perform any additional logout logic (clearing tokens, etc.)
-        
+        localStorage.clear();
         // Redirect to the login page or another appropriate route
         window.location.href = 'https://relations.mansastars.com/';
       };
