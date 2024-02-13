@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/auth/sign_up" element={ <SignUp /> } />
         <Route path="/auth/login" element={ <Login /> } />
-        <Route path="/deals" element={<NewDealPage />} />
+        <Route path="/alldeals" element={<NewDealPage />} />
         <Route path="/dashboard/:dealId" element={<Dasboard />} />
         <Route path="/profile" element={<Profile />} />
         {/* Add more routes as needed */}
