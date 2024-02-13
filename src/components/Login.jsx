@@ -31,7 +31,7 @@ function Login() {
             localStorage.setItem("user", JSON.stringify(response.data.user))
             localStorage.setItem("token", response.data.token)
             console.log(localStorage)
-            navigate("/deals");
+            navigate("/alldeals");
         } catch (error) {
             console.log(error);
             if (error.response.data.message) {
