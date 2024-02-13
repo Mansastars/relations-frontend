@@ -51,7 +51,7 @@ export default function Deals({ borderColour }) {
 
     return (
         <>
-            {deals.length === 0 ? (
+            {deals.length === 0 || undefined ? (
             <div></div>
             ) : (
             deals.map(deal => (

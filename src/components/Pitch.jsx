@@ -51,7 +51,7 @@ export default function Pitch({ borderColour }) {
 
     return (
         <>
-            {pitches.length === 0 ? (
+            {pitches.length === 0 || undefined ? (
             <div></div>
             ) : (
             pitches.map(pitch => (

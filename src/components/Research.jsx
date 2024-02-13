@@ -51,7 +51,7 @@ export default function Research({ borderColour }) {
 
     return (
         <>
-            {researches.length === 0 ? (
+            {researches.length === 0 || undefined? (
             <div></div>
             ) : (
             researches.map(research => (

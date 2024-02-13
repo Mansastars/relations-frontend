@@ -51,7 +51,7 @@ export default function Contact({ borderColour }) {
 
     return (
         <>
-            {contacts.length === 0 ? (
+            {contacts.length === 0 || undefined? (
             <div></div>
             ) : (
             contacts.map(contact => (

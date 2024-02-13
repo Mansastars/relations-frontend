@@ -51,7 +51,7 @@ export default function NotAFit({ borderColour }) {
 
     return (
         <>
-            {notAFits.length === 0 ? (
+            {notAFits.length === 0 || undefined ? (
             <div></div>
             ) : (
             notAFits.map(notAFit => (

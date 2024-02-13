@@ -51,7 +51,7 @@ export default function Negotiation({ borderColour }) {
 
     return (
         <>
-            {negotiations.length === 0 ? (
+            {negotiations.length === 0 || undefined ? (
             <div></div>
             ) : (
             negotiations.map(negotiation => (
