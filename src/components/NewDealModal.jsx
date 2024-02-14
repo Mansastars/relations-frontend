@@ -61,7 +61,7 @@ function NewDealModal({onClose}) {
             // Store deal ID in localStorag
             localStorage.setItem('currentDealId', response.data.findDeal.id);
             console.log(localStorage)
-            navigate(`/dashboard/${response.data.findDeal.id}`);
+            // navigate(`/dashboard/${response.data.findDeal.id}`);
         } catch (error) {
             console.log(error);
             setErrorMessage("Something went wrong. Please try again."); // set error message
@@ -85,8 +85,8 @@ function NewDealModal({onClose}) {
                         <DateForm value={formValue.datetime} onChange={handleInput} />
                     </div>
                     <div className=' flex flex-row max-md:flex-col gap-5'>
-                        <FormInput type="number" title="Negotiation value" placeholder="" id="negotiationValue" value={formValue.negotiationValue} onChange={handleInput} />
-                        <FormInput type="number" title="Deal signed value" placeholder="" id="dealSignedValue" value={formValue.dealSignedValue} onChange={handleInput} />
+                        <FormInput type="number" title="In-Negotiation Value ($)" placeholder="" id="negotiationValue" value={formValue.negotiationValue} onChange={handleInput} />
+                        <FormInput type="number" title="Deal Signed Value ($)" placeholder="" id="dealSignedValue" value={formValue.dealSignedValue} onChange={handleInput} />
                     </div>
                     <div className=' mt-8 w-full flex items-center justify-center'>
                         <Button type="submit" text="Create a Deal" />

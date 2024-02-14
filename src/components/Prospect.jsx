@@ -74,7 +74,7 @@ export default function Prospect({ borderColour, titleColors }) {
                     <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
                         {
                             prospects.map(prospect => (
-                                <div key={prospect.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={{...BorderStyle, minWidth: '300px'}}>
+                                <div key={prospect.id} className="flex flex-col rounded-2xl max-w-34 mb-2 h-40" style={{...BorderStyle, minWidth: '150px'}}>
                                     <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                                         <p className="font-extrabold text-sm">{prospect.first_name} {prospect.last_name}</p>
                                         <p className="text-sm">{prospect.organization_name}</p>

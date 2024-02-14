@@ -38,7 +38,7 @@ export default function Negotiation({ borderColour }) {
         fetchNegotiation();
     }, []);
 
-    console.log('Type of negotiation:', typeof contacts);
+    console.log('Type of negotiation:', typeof negotiations);
 
     if (loading) {
         return <div>Loading...</div>;

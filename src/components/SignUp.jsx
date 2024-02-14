@@ -55,9 +55,13 @@ function SignUp() {
                 <form action="" onSubmit={ handleSubmit } className=' flex flex-col gap-5 justify-center items-center ' >
                     <div className=' w-full flex flex-col gap-5'>
                         {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
-                        <div className=' flex gap-5 max-sm:flex-col justify-between'>
-                            <FormInputRequired type="text" title="First Name*" placeholder="Sundi" id="firstName" autoComplete="first-name" value={formValue.firstName} onChange={handleInput} />
-                            <FormInputRequired type="text" title="Last Name*" placeholder="Joe" id="lastName" autoComplete="last-name" value={formValue.lastName} onChange={handleInput} />
+                        <div className=' flex gap-5 max-sm:flex-col'>
+                            <div className=' w-full'>
+                                <FormInputRequired type="text" title="First Name*" placeholder="Sundi" id="firstName" autoComplete="first-name" value={formValue.firstName} onChange={handleInput} />
+                            </div>
+                            <div className=' w-full'>
+                                <FormInputRequired type="text" title="Last Name*" placeholder="Joe" id="lastName" autoComplete="last-name" value={formValue.lastName} onChange={handleInput} />
+                            </div>
                         </div>
                         <div className=' w-full flex flex-col gap-5'>
                             <FormInputRequired type="email" title="Email*" placeholder="SundiJoe@gmail.com" id="email" autoComplete="email" value={formValue.email} onChange={handleInput} />

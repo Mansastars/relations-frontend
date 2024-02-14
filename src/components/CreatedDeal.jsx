@@ -30,8 +30,8 @@ export default function CreatedDeals() {
     const sortedDeals = deals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     return (
-        <div className="flex flex-col gap-10 items-center justify-center w-full">
-            <h1 className="text-dark-blue font-bold text-4xl">Existing Deals</h1>
+        <div className="flex flex-col gap-10 items-start justify-center w-full">
+            <h1 className="text-dark-blue font-bold text-4xl self-center">Existing Deals</h1>
             <div className="flex flex-row max-md:flex-col flex-wrap justify-center items-start gap-5">
                 {sortedDeals.map(deal => (
                     <Link
