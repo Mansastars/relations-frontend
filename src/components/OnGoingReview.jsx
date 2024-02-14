@@ -67,7 +67,7 @@ export default function OnGoingReview({ borderColour, titleColors }) {
 
     return (
         <>
-            {OnGoingReviews.length > 0 ? (
+            {OnGoingReviews.length > 0 && OnGoingReviews.length !== undefined? (
                 <div className=" flex flex-col gap-5 items-center">
                 <div className={ColumnClasses} style={ ColumnStyle }>
                     <div className="font-bold text-xl p-5 text-center min-w-40" style={TitleStyle}>Review</div>

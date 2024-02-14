@@ -67,7 +67,7 @@ export default function Partner({ borderColour, titleColors }) {
 
     return (
         <>
-            {partners.length > 0 ? (
+            {partners.length > 0 && partners.length !== undefined? (
                 <div className=" flex flex-col gap-5 items-center">
                     <div className={ColumnClasses} style={ ColumnStyle }>
                         <div className="font-bold text-xl p-5 text-center min-w-40" style={TitleStyle}>Partner</div>
