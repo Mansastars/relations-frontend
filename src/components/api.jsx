@@ -2,7 +2,7 @@
 
 import axios from "axios"
 
-const baseURL =  `http://crm.mansastars.com`
+const baseURL =  `https://crm.mansastars.com`
 const api = axios.create({
     baseURL
 })
