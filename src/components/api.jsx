@@ -2,7 +2,7 @@
 
 import axios from "axios"
 
-const baseURL =  process.env.NODE_ENV === 'production' ? `` : `http://localhost:3050`
+const baseURL =  `` || `http://localhost:3050`
 const api = axios.create({
     baseURL
 })
