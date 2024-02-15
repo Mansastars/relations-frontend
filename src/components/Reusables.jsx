@@ -145,10 +145,10 @@ export function DropDown({label, id, value, onChange}) {
 }
 
 // Form for data time
-export const DateForm = ({value, onChange}) => {
+export const DateForm = ({title, value, onChange}) => {
     return (
-        <div className="relative sm:col-span-3 w-40">
-        <label htmlFor="datetime" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Date</label>
+        <div className="relative sm:col-span-3">
+        <label htmlFor="datetime" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">{title}</label>
         <div className="mt-1">
             <input
             type="datetime-local"

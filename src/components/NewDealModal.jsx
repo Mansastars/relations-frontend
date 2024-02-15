@@ -75,16 +75,12 @@ function NewDealModal({onClose}) {
             <button onClick={onClose} className=' place-self-end text-dark-blue'><X size={30}/></button>
             <div className=' bg-white rounded-xl px-20 py-10 flex flex-col gap-7 items-center mx-4'>
                 <h1 className=' text-dark-blue text-3xl font-extrabold'>Create a New Deal</h1>
-                <form onSubmit={ handleSubmit } className=' flex flex-col gap-5'>
+                <form onSubmit={ handleSubmit } className=' flex flex-col gap-5 '>
                     {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
-                    <div className='flex flex-row max-md:flex-col gap-5'>
+                    <div className='flex flex-row flex-wrap gap-5 justify-center items-center'>
                         <FormInputRequired type="text" title="Deal Name*" placeholder="Sundi" id="dealName" value={formValue.dealName} onChange={handleInput} />
                         <FormInput type="number" title="Deal Size ($)*" placeholder="1,000,000" id="dealSize" value={formValue.dealSize} onChange={handleInput} />
-                    </div>
-                    <div className='flex flex-row gap-5 justify-center items-center'>
-                        <DateForm value={formValue.datetime} onChange={handleInput} />
-                    </div>
-                    <div className=' flex flex-row max-md:flex-col gap-5'>
+                        <DateForm title="Deadline" value={formValue.datetime} onChange={handleInput} />
                         <FormInput type="number" title="In-Negotiation Value ($)" placeholder="" id="negotiationValue" value={formValue.negotiationValue} onChange={handleInput} />
                         <FormInput type="number" title="Deal Signed Value ($)" placeholder="" id="dealSignedValue" value={formValue.dealSignedValue} onChange={handleInput} />
                     </div>
