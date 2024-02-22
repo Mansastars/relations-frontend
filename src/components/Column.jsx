@@ -20,6 +20,7 @@ export function Column({ titles, titleColors, contents }) {
 
     const TitleStyle = {
         color: titleColors,
+        minWidth: '165px'
       };
 
       const ColumnStyle = {
@@ -27,11 +28,11 @@ export function Column({ titles, titleColors, contents }) {
     };
 
     return (
-        <div className=" flex flex-col gap-5 items-center">
-            <div className={ColumnClasses} style={ ColumnStyle }>
-                <div className="font-bold text-xl p-5 text-center min-w-40" style={TitleStyle}>{titles}</div>
+        <div className=" flex flex-col gap-5 items-center w-full " style={{maxWidth: 'calc(100% - 224px)', }} >
+            <div className={ColumnClasses} style={ ColumnStyle}>
+                <div className="font-bold text-xl p-5 text-center w-full " style={TitleStyle}>{titles}</div>
             </div>
-            <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
+            <div className=" w-full" style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
                 {contents}
             </div>
         </div>

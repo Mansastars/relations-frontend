@@ -66,7 +66,7 @@ function MoveContactModal({onClose}) {
     };
 
     return (
-      <div ref={moveContactModalRef} onClick={closeMoveContactModal} className=" fixed z-50 inset-0 bg-dark-blue bg-opacity-30 backdrop-blur-sm ml-56 flex justify-center overflow-y-auto h-screen">
+      <div ref={moveContactModalRef} onClick={closeMoveContactModal} className=" fixed z-50 inset-0 bg-dark-blue bg-opacity-30 backdrop-blur-sm ml-56 max-[768px]:ml-20 flex justify-center overflow-y-auto h-screen">
         <div className=' mt-10 flex flex-col gap-5'>
             <button onClick={onClose} className=' place-self-end text-dark-blue'><X size={30}/></button>
             <div className=' bg-white rounded-xl px-20 py-10 flex flex-col gap-7 items-center mx-4'>

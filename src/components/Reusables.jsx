@@ -10,7 +10,7 @@ export function SidebarItem({icon, text, activeItem, setActiveItem, id}) {
         setActiveItem(id);
     }
     return (
-        <div onClick={handleClick} className={`text-white flex flex-row gap-6 py-2 px-3 w-full items-center justify-start ${activeItem === id ? 'active' : ''}`}>
+        <div onClick={handleClick} className={`text-white flex flex-row gap-6 max-[768px]:gap-0 py-2 px-3 w-full items-center justify-start max-[768px]:justify-center ${activeItem === id ? 'active' : ''}`}>
             <img className=" w-7" src={icon} alt="" />
             <p>{text}</p>
         </div>

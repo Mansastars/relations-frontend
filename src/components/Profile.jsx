@@ -12,14 +12,14 @@ export default function Profile() {
       };
 
     return (
-        <div className=" flex gap-5 h-screen">
-            <div className=" fixed w-56">
+        <div className=" flex gap-5">
+            <div className=" fixed w-56 max-[768px]:w-20 h-full min-h-screen">
                 <Sidebar />
             </div>
-            <div className=" flex flex-col w-full pl-56 mx-2 items-center">
+            <div className=" flex flex-col w-full pl-56 max-[768px]:pl-20 mx-2 items-center">
                 <div className=" bg-white py-10 px-6 flex flex-col justify-center mt-10 mb-10 rounded-2xl items-start gap-10 w-10/12">
                     <form action="" className=" w-full">
-                        <div className=" flex flex-row justify-between pb-8">
+                        <div className=" flex flex-row max-sm:flex-col justify-between pb-8">
                             <div>
                                 <h1 className=" text-dark-blue font-bold text-3xl">General Info</h1>
                                 <p className=" text-dark-blue text-base">Use the form below to update your profile.</p>
@@ -29,7 +29,7 @@ export default function Profile() {
                             </div>
                         </div>
                         <div className="flex flex-col gap-5 pb-8">
-                            <div className="flex gap-5 w-full">
+                            <div className="flex max-[768px]:flex-col gap-5 w-full">
                                 <FormInput type="text" title="First Name" placeholder="Sundi" htmlFor="first-name" name="first-name" id="first-name" />
                                 <FormInput type="text" title="Last Name" placeholder="Keita" htmlFor="Last-name" name="last-name" id="last-name" />
                             </div>
@@ -60,14 +60,14 @@ export default function Profile() {
                     </form>
                     <div className="flex flex-col pt-8 pb-8 w-full" style={BorderStyle}>
                         <h2 className=" text-dark-blue font-bold text-xl pb-6">Social Accounts</h2>
-                        <button className=" flex flex-row items-center px-5 py-2 rounded-md border border-b-dark-blue gap-3 w-60 hover:border-mansa-blue" >
+                        <button className=" flex flex-row items-center px-5 py-2 rounded-md border border-b-dark-blue gap-3 w-60 max-sm:w-full hover:border-mansa-blue" >
                             <Linkedin color="blue" />
                             <p className="text-dark-blue text-base ">Continue with LinkedIn</p>
                         </button>
                     </div>
                     <form action="" className=" w-full pb-8" style={BorderStyle}>
-                        <div className=" flex flex-row justify-between pb-8" >
-                            <div>
+                        <div className=" flex flex-row justify-between pb-8 max-sm:flex-col" >
+                            <div className="">
                                 <h1 className=" text-dark-blue font-bold text-3xl">Email</h1>
                                 <p className="text-dark-blue text-base">Use this form to update your email.</p>
                             </div>
@@ -81,7 +81,7 @@ export default function Profile() {
                         </div>
                     </form>
                     <form action="" className=" w-full pb-8" style={BorderStyle}>
-                        <div className=" flex flex-row justify-between pb-8" >
+                        <div className=" flex flex-row justify-between pb-8 max-sm:flex-col" >
                             <div className="">
                                 <h1 className=" text-dark-blue font-bold text-3xl">Password</h1>
                                 <p className="text-dark-blue text-base">Use this form to update your password.</p>
