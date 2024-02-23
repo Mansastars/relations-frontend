@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 //Contact
 export default function Contact({ borderColour }) {
+    const currentDealId = localStorage.getItem('currentDealId');
 
     const BorderStyle = {
         border: `2px solid  ${borderColour}`,
@@ -64,7 +65,7 @@ export default function Contact({ borderColour }) {
             if (result.isConfirmed) {
                 try {
                     // YOUR_DELETE_ENDPOINT/${id}
-                    await axios.delete(``);
+                    await api.delete(`contacts/delete-contact/${currentDealId}/${id}`);
                     // Remove the deleted contact from the state
                     setContacts(contacts.filter(contact => contact.id !== id));
                     Swal.fire('Deleted!', 'Your contact entry has been deleted.', 'success');

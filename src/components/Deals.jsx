@@ -5,6 +5,7 @@ import { X, XCircleIcon } from "lucide-react";
 
 //Contact
 export default function Deals({ borderColour }) {
+    const currentDealId = localStorage.getItem('currentDealId');
 
     const BorderStyle = {
         border: `2px solid  ${borderColour}`,
@@ -78,7 +79,7 @@ export default function Deals({ borderColour }) {
             if (result.isConfirmed) {
                 try {
                     // YOUR_DELETE_ENDPOINT/${id}
-                    await axios.delete(``);
+                    await api.delete(`contacts/delete-contact/${currentDealId}/${id}`);
                     // Remove the deleted deal from the state
                     setDeals(deals.filter(deal => deal.id !== id));
                     Swal.fire('Deleted!', 'Your contact entry has been deleted.', 'success');

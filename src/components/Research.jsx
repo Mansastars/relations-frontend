@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 // Research
 export default function Research({ borderColour }) {
+    const currentDealId = localStorage.getItem('currentDealId');
 
     const BorderStyle = {
         border: `2px solid  ${borderColour}`,
@@ -64,7 +65,7 @@ export default function Research({ borderColour }) {
             if (result.isConfirmed) {
                 try {
                     // YOUR_DELETE_ENDPOINT/${id}
-                    await axios.delete(``);
+                    await api.delete(`contacts/delete-contact/${currentDealId}/${id}`);
                     // Remove the deleted research from the state
                     setResearches(researches.filter(research => research.id !== id));
                     Swal.fire('Deleted!', 'Your contact entry has been deleted.', 'success');
@@ -75,7 +76,6 @@ export default function Research({ borderColour }) {
             }
         });
     };
-
 
     // Truncate email address
     const truncateEmail = (email, maxLength) => {

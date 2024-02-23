@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 // pitch
 export default function Pitch({ borderColour }) {
+    const currentDealId = localStorage.getItem('currentDealId');
 
     const BorderStyle = {
         border: `2px solid  ${borderColour}`,
@@ -93,7 +94,7 @@ export default function Pitch({ borderColour }) {
             if (result.isConfirmed) {
                 try {
                     // YOUR_DELETE_ENDPOINT/${id}
-                    await axios.delete(``);
+                    await api.delete(`contacts/delete-contact/${currentDealId}/${id}`);
                     // Remove the deleted research from the state
                     setPitches(pitches.filter(pitch => pitch.id !== id));
                     Swal.fire('Deleted!', 'Your contact entry has been deleted.', 'success');
