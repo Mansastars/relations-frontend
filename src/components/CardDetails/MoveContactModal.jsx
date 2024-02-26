@@ -1,8 +1,8 @@
 // Pop-up MoveContactModal
 import { X } from 'lucide-react';
-import { Button, DropDown, FormInput, FormInputRequired, FormNotes } from "./Reusables"
+import { Button, DropDown, FormInput, FormInputRequired, FormNotes } from "../Reusables"
 import { useRef } from 'react';
-import api from "./api";
+import api from "../api";
 import { useState, useEffect } from "react";
 
 function MoveContactModal({onClose}) {

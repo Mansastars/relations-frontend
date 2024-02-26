@@ -1,10 +1,10 @@
-import Dashboard from "../src/components/Dashboard"
+import Dashboard from "../src/components/Pages/Dashboard"
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Profile from "./components/Profile";
+import Profile from "./components/Pages/Profile";
 // import Dashboard from "../src/components/Dashboard";
-import NewDealPage from "../src/components/NewDeal";
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
+import NewDealPage from "../src/components/Pages/NewDeal";
+import SignUp from "./components/AuthPages/SignUp";
+import Login from "./components/AuthPages/Login";
 
 function App() {
   const isSmallScreen = window.innerWidth <= 768;

@@ -1,6 +1,6 @@
-import { Button, FormInputRequired } from './Reusables'
+import { Button, FormInputRequired, SignUpRequired } from '../Reusables'
 import { useState } from "react";
-import api from "./api";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -54,9 +54,9 @@ function Login() {
                 <form action="" onSubmit={ handleSubmit } className=' flex flex-col gap-5 justify-center items-center w-full' >
                     {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
                     <div className=' w-full md:w-3/4 flex flex-col gap-8'>
-                        <FormInputRequired type="email" title="Email*" placeholder="SundiJoe@gmail.com" id="email" autoComplete="email" value={formValue.email} onChange={handleInput} />
+                        <SignUpRequired type="email" title="Email*" placeholder="SundiJoe@gmail.com" id="email" autoComplete="email" value={formValue.email} onChange={handleInput} />
                         <div>
-                            <FormInputRequired type="password" title="Password*" id="password" value={formValue.password} onChange={handleInput} />
+                            <SignUpRequired type="password" title="Password*" id="password" value={formValue.password} onChange={handleInput} />
                             <a href="" className=' text-sm text-mansa-blue'><u>Forget password</u></a>
                         </div>
                     </div>

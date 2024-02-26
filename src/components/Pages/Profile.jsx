@@ -1,8 +1,8 @@
 // This file contains content of the Proile page
 
-import { FormInputRequired } from "./Reusables";
-import { Button } from "./Reusables";
-import { FormInput } from "./Reusables";
+import { FormInputRequired } from "../Reusables";
+import { Button } from "../Reusables";
+import { FormInput } from "../Reusables";
 import Sidebar from "./SideBar";
 import { Linkedin } from 'lucide-react';
 

@@ -1,6 +1,6 @@
-import { Button, FormInputRequired } from './Reusables'
+import { Button, FormInputRequired, SignUpRequired } from '../Reusables'
 import { useState } from "react";
-import api from "./api";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
@@ -57,16 +57,16 @@ function SignUp() {
                         {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
                         <div className=' flex gap-5 max-sm:flex-col'>
                             <div className=' w-full'>
-                                <FormInputRequired type="text" title="First Name*" placeholder="Sundi" id="firstName" autoComplete="first-name" value={formValue.firstName} onChange={handleInput} />
+                                <SignUpRequired type="text" title="First Name*" placeholder="Sundi" id="firstName" autoComplete="first-name" value={formValue.firstName} onChange={handleInput} />
                             </div>
                             <div className=' w-full'>
-                                <FormInputRequired type="text" title="Last Name*" placeholder="Joe" id="lastName" autoComplete="last-name" value={formValue.lastName} onChange={handleInput} />
+                                <SignUpRequired type="text" title="Last Name*" placeholder="Joe" id="lastName" autoComplete="last-name" value={formValue.lastName} onChange={handleInput} />
                             </div>
                         </div>
                         <div className=' w-full flex flex-col gap-5'>
-                            <FormInputRequired type="email" title="Email*" placeholder="SundiJoe@gmail.com" id="email" autoComplete="email" value={formValue.email} onChange={handleInput} />
-                            <FormInputRequired type="password" title="Password*" id="password" value={formValue.password} onChange={handleInput} />
-                            <FormInputRequired type="password" title="Confirm Password*" id="confirmPassword" value={formValue.confirmPassword} onChange={handleInput} />
+                            <SignUpRequired type="email" title="Email*" placeholder="SundiJoe@gmail.com" id="email" autoComplete="email" value={formValue.email} onChange={handleInput} />
+                            <SignUpRequired type="password" title="Password*" id="password" value={formValue.password} onChange={handleInput} />
+                            <SignUpRequired type="password" title="Confirm Password*" id="confirmPassword" value={formValue.confirmPassword} onChange={handleInput} />
                         </div>
                     </div>
                     <Button type='submit' text="Sign Up" />

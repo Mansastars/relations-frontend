@@ -1,17 +1,17 @@
 // This file contains the list of tables
 import { Card } from "./Cards";
 import { Column } from "./Column";
-import Research from "./Research";
-import Contact from "./Contacts";
-import Pitch from "./Pitch";
-import Negotiation from "./Negotiation";
-import Deals from "./Deals";
-import NotAFit from "./NotAFit";
-import Prospect from "./Prospect";
-import OnGoingReview from "./OnGoingReview";
-import Partner from "./Partners";
-import TermSheet from "./TermSheet";
-import FollowUp from "./FollowUp";
+import Research from "../Cards/Research";
+import Contact from "../Cards/Contacts";
+import Pitch from "../Cards/Pitch";
+import Negotiation from "../Cards/Negotiation";
+import Deals from "../Cards/Deals";
+import NotAFit from "../Cards/NotAFit";
+import Prospect from "../Cards/Prospect";
+import OnGoingReview from "../Cards/OnGoingReview";
+import Partner from "../Cards/Partners";
+import TermSheet from "../Cards/TermSheet";
+import FollowUp from "../Cards/FollowUp";
 
 export const Tables = () => {
   // if the table is not avaliable by default create it

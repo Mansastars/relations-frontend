@@ -1,6 +1,5 @@
 // The file contains the Column desgin for the dashboard
 import classNames from "classnames";
-import Prospect from "./Prospect";
 
 /**
  * This code snippet defines a function called Column that represents a column design for a dashboard.

@@ -1,10 +1,10 @@
 // New Deal Page
 import Sidebar from "./SideBar"
-import { SearchBar } from "./Reusables"
-import { Button } from "./Reusables"
+import { SearchBar } from "../Reusables"
+import { Button } from "../Reusables"
 import { useState } from "react"
-import NewDealModal from "./NewDealModal"
-import CreatedDeals from "./CreatedDeal"
+import NewDealModal from "../DealDetails/NewDealModal"
+import CreatedDeals from "../DealDetails/CreatedDeal"
 
 /**
  * This code snippet represents the NewDealPage component in a React application.
@@ -22,7 +22,7 @@ export default function NewDealPage() {
 
     return (
         <div>
-            <div className=" flex gap-5">
+            <div className=" flex gap-5 h-screen">
                 <div className=" fixed h-full min-h-screen"> 
                     <Sidebar />
                 </div>
@@ -32,7 +32,9 @@ export default function NewDealPage() {
                             <Button text="Create a Deal" />
                         </div>
                     </div>
-                    <CreatedDeals />
+                    <div className=" overflow-x-auto pb-14">
+                        <CreatedDeals />
+                    </div>
                 </div>
                 {showNewDealModal && <NewDealModal onClose={() => setShowNewDealModal(false)} />}
             </div>

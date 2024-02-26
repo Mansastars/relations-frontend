@@ -1,22 +1,22 @@
-import { X, XCircleIcon } from "lucide-react";
-import api from "./api";
+import api from "../api";
 import { useEffect, useState } from 'react';
+import { X, XCircleIcon } from "lucide-react";
 import Swal from 'sweetalert2';
 
-// Research
-export default function Research({ borderColour }) {
+//Contact
+export default function NotAFit({ borderColour }) {
     const currentDealId = localStorage.getItem('currentDealId');
 
     const BorderStyle = {
         border: `2px solid  ${borderColour}`,
       };
 
-    const [researches, setResearches] = useState([]);
+    const [notAFits, setnotAFits] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchResearches = async () => {
+        const fetchNotAFits = async () => {
             const currentDealId = localStorage.getItem('currentDealId');
 
             if (!currentDealId) {
@@ -26,9 +26,9 @@ export default function Research({ borderColour }) {
             console.log(currentDealId)
 
             try {
-                const response = await api.get(`deals/research-contacts/${currentDealId}`);
+                const response = await api.get(`deals/rejection-contacts/${currentDealId}`);
                 // Assuming response.data contains the array of deals
-                setResearches(response.data.data);
+                setnotAFits(response.data.data);
                 // Set loading to false to indicate that data loading is complete
                 setLoading(false);
             } catch (error) {
@@ -38,10 +38,10 @@ export default function Research({ borderColour }) {
             }
         };
 
-        fetchResearches();
+        fetchNotAFits();
     }, []);
 
-    console.log('Type of researches:', typeof researches);
+    console.log('Type of NotAFit:', typeof notAFits);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -66,8 +66,8 @@ export default function Research({ borderColour }) {
                 try {
                     // YOUR_DELETE_ENDPOINT/${id}
                     await api.delete(`contacts/delete-contact/${currentDealId}/${id}`);
-                    // Remove the deleted research from the state
-                    setResearches(researches.filter(research => research.id !== id));
+                    // Remove the deleted not a fit from the state
+                    setnotAFits(notAFits.filter(notAFit => notAFit.id !== id));
                     Swal.fire('Deleted!', 'Your contact entry has been deleted.', 'success');
                 } catch (error) {
                     console.error('Error:', error);
@@ -107,35 +107,34 @@ export default function Research({ borderColour }) {
 
     return (
         <>
-            {researches.length === 0 || undefined? (
+            {notAFits.length === 0 || undefined ? (
             <div></div>
             ) : (
-            researches.map(research => (
-                // width: 'calc((100% - 224px) / 6 - 10px)', minWidth: '165px'
-                <div key={research.id} className="flex flex-col rounded-2xl mb-2 h-40" style={{...BorderStyle, minWidth: '165px'}}>
+            notAFits.map(notAFit => (
+                <div key={notAFit.id} className="flex flex-col rounded-2xl mb-2 h-40" style={{...BorderStyle, minWidth: '165px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
-                            {`${research.first_name} ${research.last_name}`.length > 11 ? `${research.first_name} ${research.last_name}`.substring(0, 13) + '...' : `${research.first_name} ${research.last_name}`}
+                            {`${notAFit.first_name} ${notAFit.last_name}`.length > 11 ? `${notAFit.first_name} ${notAFit.last_name}`.substring(0, 13) + '...' : `${notAFit.first_name} ${notAFit.last_name}`}
                         </p>
-                        <button onClick={() => handleDelete(research.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
+                        <button onClick={() => handleDelete(notAFit.id)} className="text-white cursor-pointer">
                             <XCircleIcon className="h-4 w-4" />
                         </button>
                     </div>
-                    <p className="text-sm text-white">{research.organization_name.length > 15 ? research.organization_name.substring(0, 15) + '...' : research.organization_name}</p>
+                    <p className="text-sm text-white">{notAFit.organization_name.length > 15 ? notAFit.organization_name.substring(0, 15) + '...' : notAFit.organization_name}</p>
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
                     <div>
                         <p className="text-xs font-semibold">
-                            Meeting: {research.meeting_date ? new Date(research.meeting_date).toLocaleString() : ''}
+                            Meeting: {notAFit.meeting_date ? new Date(notAFit.meeting_date).toLocaleString() : ''}
                         </p>
                         <p className="text-xs">
-                            {truncateEmail(research.email, 25)}
+                            {truncateEmail(notAFit.email, 25)}
                         </p>
-                        <p className="text-xs">{truncatePhoneNumber(research.phone_number, 15)}</p>
+                        <p className="text-xs">{truncatePhoneNumber(notAFit.phone_number, 15)}</p>
                     </div>
                     <div className="flex flex-col justify-center items-start">
-                    <p className="text-xs text-wrap">{research.notes.length > 22 ? research.notes.substring(0, 22) + '...' : research.notes}</p>
+                    <p className="text-xs text-wrap">{notAFit.notes.length > 22 ? notAFit.notes.substring(0, 22) + '...' : notAFit.notes}</p>
                     </div>
                 </div>
                 </div>

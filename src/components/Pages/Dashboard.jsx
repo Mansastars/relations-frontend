@@ -1,13 +1,13 @@
 // Dashboard implementation
 import Sidebar from "./SideBar";
-import { SearchBar } from "./Reusables";
-import { Button } from "./Reusables";
-import Modal from "./Modal";
+import { SearchBar } from "../Reusables";
+import { Button } from "../Reusables";
+import Modal from "../CardDetails/Modal";
 import { useState } from "react";
-import { Tables } from "./Tables";
-import MoveContactModal from "./MoveContactModal";
+import { Tables } from "../TableDetails/Tables";
+import MoveContactModal from "../CardDetails/MoveContactModal";
 import { useParams } from "react-router-dom";
-import api from "./api";
+import api from "../api";
 import { useEffect } from "react";
 
 function Dasboard() {

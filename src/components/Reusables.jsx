@@ -42,7 +42,30 @@ export function Button({text}) {
 // Form template for not required inputs
 export function FormInput({ type, title, placeholder, id, value, onChange }) {
     return (
-        <div className=" relative col-span-full">
+        <div className=" relative col-span-full w-60 max-lg:w-full">
+            <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+                { title }
+            </label>
+            <div className="mt-1">
+                <input
+                    type={type}
+                    name={id}
+                    id={id}
+                    autoComplete={id}
+                    placeholder={placeholder}
+                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-grey-400 focus:outline-none focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    value={value}
+                    onChange={onChange}
+                />
+            </div>
+        </div>
+    )
+}
+
+// Form template for not required login
+export function FullInput({ type, title, placeholder, id, value, onChange }) {
+    return (
+        <div className=" relative col-span-full w-full">
             <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
                 { title }
             </label>
@@ -63,9 +86,33 @@ export function FormInput({ type, title, placeholder, id, value, onChange }) {
 }
 
 // Form template for required inputs
+export function SignUpRequired({ type, title, placeholder, id, autoComplete, value, onChange }) {
+    return (
+        <div className=" relative col-span-full w-full">
+            <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+                { title }
+            </label>
+            <div className="mt-1">
+                <input
+                    type={type}
+                    name={id}
+                    id={id}
+                    autoComplete={autoComplete}
+                    placeholder={placeholder}
+                    required
+                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-grey-400 focus:outline-none focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    value={value}
+                    onChange={onChange}
+                />
+            </div>
+        </div>
+    )
+}
+
+// Form template for required inputs
 export function FormInputRequired({ type, title, placeholder, id, autoComplete, value, onChange }) {
     return (
-        <div className=" relative col-span-full">
+        <div className=" relative col-span-full w-60 max-lg:w-full">
             <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
                 { title }
             </label>
@@ -112,17 +159,17 @@ export function FormNotes({value, onChange}) {
 // Drop Down Menu for the Create a contact form
 export function DropDown({label, id, value, onChange}) {
     return (
-        <div className=" relative sm:col-span-3">
+        <div className=" relative sm:col-span-3 w-60 max-lg:w-full">
             <label htmlFor={id} className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
                 {label}
             </label>
-            <div className="mt-1">
+            <div className="mt-1 w-full">
                 <select
                 id={id}
                 name={id}
                 autoComplete={id}
                 required
-                className="block w-full rounded-md border border-dark-blue py-2.5 text-dark-blue focus:outline-none focus:border-2 focus:border-mansa-blue shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                className="block w-full rounded-md border border-dark-blue py-3.5 text-dark-blue focus:outline-none focus:border-2 focus:border-mansa-blue shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 hover:border-mansa-blue"
                 value={value}
                 onChange={onChange}
                 >
@@ -147,7 +194,7 @@ export function DropDown({label, id, value, onChange}) {
 // Form for data time
 export const DateForm = ({title, value, onChange}) => {
     return (
-        <div className="relative sm:col-span-3">
+        <div className="relative sm:col-span-3 w-60 max-lg:w-full">
         <label htmlFor="datetime" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">{title}</label>
         <div className="mt-1">
             <input

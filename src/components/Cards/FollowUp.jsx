@@ -1,11 +1,11 @@
-import api from "./api";
+import api from "../api";
 import { useEffect, useState } from 'react';
 import classNames from "classnames";
 import { X, XCircleIcon } from "lucide-react";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 //Contact
-export default function OnGoingReview({ borderColour, titleColors }) {
+export default function FollowUp({ borderColour, titleColors }) {
     const currentDealId = localStorage.getItem('currentDealId');
 
     const BorderStyle = {
@@ -28,12 +28,12 @@ export default function OnGoingReview({ borderColour, titleColors }) {
         backgroundColor: 'rgb(255, 255, 255)',
     };
 
-    const [OnGoingReviews, setOnGoingReviews] = useState([]);
+    const [followUps, setFollowUps] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchOnGoingReviews = async () => {
+        const fetchFollowUps = async () => {
             const currentDealId = localStorage.getItem('currentDealId');
 
             if (!currentDealId) {
@@ -43,9 +43,9 @@ export default function OnGoingReview({ borderColour, titleColors }) {
             console.log(currentDealId)
 
             try {
-                const response = await api.get(`deals/review-contacts/${currentDealId}`);
+                const response = await api.get(`deals/followup-contacts/${currentDealId}`);
                 // Assuming response.data contains the array of deals
-                setOnGoingReviews(response.data.data);
+                setFollowUps(response.data.data);
                 // Set loading to false to indicate that data loading is complete
                 setLoading(false);
             } catch (error) {
@@ -55,10 +55,10 @@ export default function OnGoingReview({ borderColour, titleColors }) {
             }
         };
 
-        fetchOnGoingReviews();
+        fetchFollowUps();
     }, []);
 
-    console.log('Type of OnGoingReview:', typeof OnGoingReview);
+    console.log('Type of followup:', typeof followUps);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -83,8 +83,8 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                 try {
                     // YOUR_DELETE_ENDPOINT/${id}
                     await api.delete(`contacts/delete-contact/${currentDealId}/${id}`);
-                    // Remove the deleted OnGoingReview from the state
-                    setOnGoingReviews(OnGoingReviews.filter(OnGoingReview => OnGoingReview.id !== id));
+                    // Remove the deleted followUp from the state
+                    setFollowUps(followUps.filter(followUp => followUp.id !== id));
                     Swal.fire('Deleted!', 'Your contact entry has been deleted.', 'success');
                 } catch (error) {
                     console.error('Error:', error);
@@ -124,45 +124,45 @@ export default function OnGoingReview({ borderColour, titleColors }) {
 
     return (
         <>
-            {OnGoingReviews.length > 0 ? (
+            {followUps.length > 0 ? (
                 <div className=" flex flex-col gap-5 items-center">
-                <div className={ColumnClasses} style={ ColumnStyle }>
-                    <div className="font-bold text-xl p-5 text-center" style={TitleStyle}>Review</div>
+                    <div className={ColumnClasses} style={ ColumnStyle }>
+                        <div className="font-bold text-xl p-5 text-center" style={TitleStyle}>Follow-up</div>
+                    </div>
+                    <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
+                        {
+                            followUps.map(followUp => (
+                                <div key={followUp.id} className="flex flex-col rounded-2xl mb-2 h-40" style={{...BorderStyle, minWidth: '165px'}}>
+                                <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
+                                    <div className="flex justify-between w-full">
+                                        <p className="font-extrabold text-sm text-white">
+                                            {`${followUp.first_name} ${followUp.last_name}`.length > 11 ? `${followUp.first_name} ${followUp.last_name}`.substring(0, 13) + '...' : `${followUp.first_name} ${followUp.last_name}`}
+                                        </p>
+                                        <button onClick={() => handleDelete(followUp.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
+                                            <XCircleIcon className="h-4 w-4" />
+                                        </button>
+                                    </div>
+                                    <p className="text-sm text-white">{followUp.organization_name.length > 15 ? followUp.organization_name.substring(0, 15) + '...' : followUp.organization_name}</p>
+                                </div>
+                                <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
+                                    <div>
+                                        <p className="text-xs font-semibold">
+                                            Meeting: {followUp.meeting_date ? new Date(followUp.meeting_date).toLocaleString() : ''}
+                                        </p>
+                                        <p className="text-xs">
+                                            {truncateEmail(followUp.email, 25)}
+                                        </p>
+                                        <p className="text-xs">{truncatePhoneNumber(followUp.phone_number, 15)}</p>
+                                    </div>
+                                    <div className="flex flex-col justify-center items-start">
+                                        <p className="text-xs text-wrap">{followUp.notes.length > 20 ? followUp.notes.substring(0, 20) + '...' : followUp.notes}</p>
+                                    </div>
+                                </div>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
-                <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
-                    {
-                        OnGoingReviews.map(OnGoingReview => (
-                            <div key={OnGoingReview.id} className="flex flex-col rounded-2xl mb-2 h-40" style={{...BorderStyle, minWidth: '165px'}}>
-                            <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
-                                <div className="flex justify-between w-full">
-                                    <p className="font-extrabold text-sm text-white">
-                                        {`${OnGoingReview.first_name} ${OnGoingReview.last_name}`.length > 11 ? `${OnGoingReview.first_name} ${OnGoingReview.last_name}`.substring(0, 13) + '...' : `${OnGoingReview.first_name} ${OnGoingReview.last_name}`}
-                                    </p>
-                                    <button onClick={() => handleDelete(OnGoingReview.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
-                                        <XCircleIcon className="h-4 w-4" />
-                                    </button>
-                                </div>
-                                <p className="text-sm text-white">{OnGoingReview.organization_name.length > 15 ? OnGoingReview.organization_name.substring(0, 15) + '...' : OnGoingReview.organization_name}</p>
-                            </div>
-                            <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
-                                <div>
-                                    <p className="text-xs font-semibold">
-                                    Meeting: {OnGoingReview.meeting_date ? new Date(OnGoingReview.meeting_date).toLocaleString() : ''}
-                                    </p>
-                                    <p className="text-xs">
-                                        {truncateEmail(OnGoingReview.email, 25)}
-                                    </p>
-                                    <p className="text-xs">{truncatePhoneNumber(OnGoingReview.phone_number, 15)}</p>
-                                </div>
-                                <div className="flex flex-col justify-center items-start">
-                                <p className="text-xs text-wrap">{OnGoingReview.notes.length > 20 ? OnGoingReview.notes.substring(0, 20) + '...' : OnGoingReview.notes}</p>
-                                </div>
-                            </div>
-                            </div>
-                        ))
-                    }
-                </div>
-            </div>
             ) : (
                 null
             )}
@@ -170,6 +170,6 @@ export default function OnGoingReview({ borderColour, titleColors }) {
     )
 }
 
-export function getOnGoingReviewsLength(OnGoingReviews) {
-    return OnGoingReviews ? OnGoingReviews.length : 0;
+export function getfollowUpsLength(followUps) {
+    return followUps ? followUps.length : 0;
 }

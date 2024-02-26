@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "../api";
 import { useEffect, useState } from 'react';
 import Swal from "sweetalert2";
 import { X, XCircleIcon } from "lucide-react";

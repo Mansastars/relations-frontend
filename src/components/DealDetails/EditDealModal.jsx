@@ -1,11 +1,11 @@
 // Pop-up NewDealModal
 import { X } from 'lucide-react';
-import { Button, DropDown, FormInput, FormInputRequired, FormNotes } from "./Reusables"
+import { Button, DropDown, FormInput, FormInputRequired, FormNotes } from "../Reusables"
 import { useRef } from 'react';
-import api from "./api";
+import api from "../api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DateForm } from './Reusables';
+import { DateForm } from '../Reusables';
 
 /**
  * Renders a modal for creating a new deal.
@@ -15,7 +15,7 @@ import { DateForm } from './Reusables';
  * @returns {JSX.Element} The rendered modal component.
 */
 
-function NewDealModal({onClose}) {
+function EditDealModal({onClose, dealDetails}) {
     const NewDealModalRef = useRef();
 
     const closeNewDealModal = (e) => {
@@ -24,8 +24,19 @@ function NewDealModal({onClose}) {
         }
     }
 
+    const formatDateTime = (isoDate) => {
+        if (!isoDate) return '';
+        const date = new Date(isoDate);
+        const formattedDate = date.toISOString().slice(0, 16); // Format "yyyy-MM-ddThh:mm"
+        return formattedDate;
+    };
+
     // Interaction with API post request
-    const [formValue, setFormValue] = useState({dealName:'', dealSize:0, negotiationValue: 0, dealSignedValue: 0, datetime:''})
+    const [formValue, setFormValue] = useState({
+        dealName: dealDetails.deal_name,
+        datetime: formatDateTime(dealDetails.dead_line)
+    })
+
     const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
@@ -48,20 +59,13 @@ function NewDealModal({onClose}) {
     
         const userData = {
             deal_name: formValue.dealName,
-            deal_size: formValue.dealSize,
             dead_line: meetingDate,
-            negotiation_value: formValue.negotiationValue,
-            signed_value: formValue.dealSignedValue
         };
     
         try {
-            const response = await api.post('/deals/create-deal', userData);
+            const response = await api.patch(`/deals/edit-deal/${dealDetails.id}`, userData);
             console.log(response);
             window.location.reload();
-            // Store deal ID in localStorag
-            localStorage.setItem('currentDealId', response.data.findDeal.id);
-            console.log(localStorage)
-            // navigate(`/dashboard/${response.data.findDeal.id}`);
         } catch (error) {
             console.log(error);
             setErrorMessage("Something went wrong. Please try again."); // set error message
@@ -70,29 +74,25 @@ function NewDealModal({onClose}) {
     };
 
     return (
-      <div ref={NewDealModalRef} onClick={closeNewDealModal} className=" fixed z-50 inset-0 bg-dark-blue bg-opacity-30 backdrop-blur-sm ml-56 max-[768px]:ml-20 flex justify-center overflow-y-auto h-screen">
+      <div ref={NewDealModalRef} onClick={closeNewDealModal} className=" fixed z-50 inset-0 bg-dark-blue bg-opacity-5 backdrop-blur-[1px] ml-56 max-[768px]:ml-20 flex justify-center overflow-y-auto h-screen">
         <div className=' mt-10 flex flex-col gap-5'>
             <button onClick={onClose} className=' place-self-end text-dark-blue'><X size={30}/></button>
-            <div className=' bg-white rounded-xl px-20 py-10 flex flex-col gap-7 items-center mx-4'>
-                <h1 className=' text-dark-blue text-3xl font-extrabold'>Create a New Deal</h1>
-                <form onSubmit={ handleSubmit } className=' flex flex-col gap-5 '>
+            <div className=' bg-white w-full rounded-xl px-20 max-md:px-5 py-10 flex flex-col gap-7 items-center mx-4 justify-center'>
+                <h1 className=' text-dark-blue text-3xl font-extrabold'>Update Deal</h1>
+                <form onSubmit={ handleSubmit } className=' flex flex-col gap-5 justify-center'>
                     {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
-                    <div className='flex flex-row flex-wrap gap-5 justify-center items-center'>
+                    <div className='flex flex-col gap-5 '>
                         <FormInputRequired type="text" title="Deal Name*" placeholder="Sundi" id="dealName" value={formValue.dealName} onChange={handleInput} />
-                        <FormInput type="number" title="Deal Size ($)*" placeholder="1,000,000" id="dealSize" value={formValue.dealSize} onChange={handleInput} />
                         <DateForm title="Deadline" value={formValue.datetime} onChange={handleInput} />
-                        <FormInput type="number" title="In-Negotiation Value ($)" placeholder="" id="negotiationValue" value={formValue.negotiationValue} onChange={handleInput} />
-                        <FormInput type="number" title="Deal Signed Value ($)" placeholder="" id="dealSignedValue" value={formValue.dealSignedValue} onChange={handleInput} />
                     </div>
                     <div className=' mt-8 w-full flex items-center justify-center'>
-                        <Button type="submit" text="Create a Deal" />
+                        <Button type="submit" text="Update Deal" />
                     </div>
                 </form>
             </div>
         </div>
-        {/* {newDealId && <ContactForm selectedDealId={newDealId} /> && <Research selectedDealId={newDealId} />} */}
       </div>
     )
   }
   
-  export default NewDealModal;
+  export default EditDealModal;

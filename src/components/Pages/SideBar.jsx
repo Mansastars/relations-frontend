@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import MansaLogo from "../assets/MansaLogo.png";
-import dashboard from "../assets/dashboard.svg";
-import support from "../assets/support.svg";
-import profile from "../assets/profile.svg";
-import logout from "../assets/logout.svg";
-import link from "../assets/link.svg";
-import { SidebarItem } from "./Reusables";
+import MansaLogo from "../../assets/MansaLogo.png";
+import dashboard from "../../assets/dashboard.svg";
+import support from "../../assets/support.svg";
+import profile from "../../assets/profile.svg";
+import logout from "../../assets/logout.svg";
+import link from "../../assets/link.svg";
+import { SidebarItem } from "../Reusables";
 
 function Sidebar() {
     const [activeItem, setActiveItem] = useState(1);
