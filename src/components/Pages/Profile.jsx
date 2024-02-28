@@ -1,6 +1,6 @@
 // This file contains content of the Proile page
 
-import { FormInputRequired } from "../Reusables";
+import { FormInputRequired, FullInput } from "../Reusables";
 import { Button } from "../Reusables";
 import { FormInput } from "../Reusables";
 import Sidebar from "./SideBar";
@@ -30,11 +30,11 @@ export default function Profile() {
                         </div>
                         <div className="flex flex-col gap-5 pb-8">
                             <div className="flex max-[768px]:flex-col gap-5 w-full">
-                                <FormInput type="text" title="First Name" placeholder="Sundi" htmlFor="first-name" name="first-name" id="first-name" />
-                                <FormInput type="text" title="Last Name" placeholder="Keita" htmlFor="Last-name" name="last-name" id="last-name" />
+                                <FullInput type="text" title="First Name" placeholder="Sundi" id="first-name" />
+                                <FullInput type="text" title="Last Name" placeholder="Keita" id="last-name" />
                             </div>
-                            <div className=" flex flex-col gap-1">
-                                <FormInput type="tel" title="Phone" placeholder="+23412234556" htmlFor="phone" name="phone" id="phone" />
+                            <div className=" flex flex-col gap-1 w-1/2 max-[768px]:w-full">
+                                <FullInput type="tel" title="Phone" placeholder="+23412234556" htmlFor="phone" name="phone" id="phone" />
                                 <p className=" text-dark-blue text-base">We collect this incase of emergencies.</p>
                             </div>
                         </div>
@@ -58,7 +58,7 @@ export default function Profile() {
                             <p className="text-dark-blue text-base">Brief description of your profile. URLs are hyperlinked.</p>
                         </div>
                     </form>
-                    <div className="flex flex-col pt-8 pb-8 w-full" style={BorderStyle}>
+                    <div className="flex flex-col pt-3 pb-8 w-full" style={BorderStyle}>
                         <h2 className=" text-dark-blue font-bold text-xl pb-6">Social Accounts</h2>
                         <button className=" flex flex-row items-center px-5 py-2 rounded-md border border-b-dark-blue gap-3 w-60 max-sm:w-full hover:border-mansa-blue" >
                             <Linkedin color="blue" />
@@ -76,7 +76,7 @@ export default function Profile() {
                             </div>
                         </div>
                         <div>
-                            <FormInputRequired type="email" title="Email" placeholder="sundi@sankore.com" htmlFor="email" name="email" id="email" />
+                            <FullInput type="email" title="Email" placeholder="sundi@sankore.com" id="email" />
                             <p className="text-dark-blue text-base">You will need this email to log in.</p>
                         </div>
                     </form>
@@ -92,8 +92,8 @@ export default function Profile() {
                         </div>
                         <div className=" flex flex-col gap-2">
                             <div className=" flex flex-col gap-6">
-                                <FormInputRequired type="password" title="Current Password" placeholder="" htmlFor="password" name="password" id="current-password" />
-                                <FormInputRequired type="password" title="New Password" placeholder="" htmlFor="password" name="password" id="new-password" />
+                                <FullInput type="password" title="Current Password" placeholder="" id="current-password" />
+                                <FullInput type="password" title="New Password" placeholder="" id="new-password" />
                             </div>
                             <p className="text-dark-blue text-base">Must be at least 8 characters long.</p>
                         </div>

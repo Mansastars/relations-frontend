@@ -16,7 +16,8 @@ function Modal({onClose}) {
     }
 
     // Interaction with API post request
-    const [formValue, setFormValue] = useState({ title:'', firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:0, notes:'', currentStage:'', datetime:'', linkedin_url:'', profile_url:''})
+    // linkedin_url:'', profile_url:''
+    const [formValue, setFormValue] = useState({ title:'', firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:0, notes:'', currentStage:'', datetime:'',})
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,8 +56,8 @@ function Modal({onClose}) {
             stage: formValue.currentStage,
             meeting_date: meetingDate,
             notes: formValue.notes,
-            linkedin_url: formValue.linkedin_url,
-            profile_pic: formValue.profile_url,
+            // linkedin_url: formValue.linkedin_url,
+            // profile_pic: formValue.profile_url,
         };
     
         try {
@@ -64,7 +65,8 @@ function Modal({onClose}) {
             setSuccessMessage('Contact created successfully.');
             window.location.reload();
             setErrorMessage('');
-            setFormValue({ title:'', firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:0, notes:'', currentStage:'', datetime:'', linkedin_url:'', profile_url:'' });
+            // linkedin_url:'', profile_url:''
+            setFormValue({ title:'', firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:0, notes:'', currentStage:'', datetime:'', });
             // Close the modal after a delay (e.g., 2 seconds)
             setTimeout(() => {
                 setIsSubmitting(false);
@@ -103,8 +105,8 @@ function Modal({onClose}) {
                             <FormInput type="number" title="Phone Number" placeholder="+123456789" id="phoneNumber" value={formValue.phoneNumber} onChange={handleInput} />
                             <DropDown label="Current Stage" id="currentStage" value={formValue.currentStage} onChange={handleInput} />
                             <DateForm title="Meeting Date" value={formValue.datetime} onChange={handleInput} />
-                            <FormInput type="url" title="Profile Image URL" placeholder="https://" id="profile_url" value={formValue.profile_url} onChange={handleInput} />
-                            <FormInput type="url" title="LinkedIn URL" placeholder="https://www.linkedin.com/in/..." id="linkedin_url" value={formValue.linkedin_url} onChange={handleInput} />
+                            {/* <FormInput type="url" title="Profile Image URL" placeholder="https://" id="profile_url" value={formValue.profile_url} onChange={handleInput} />
+                            <FormInput type="url" title="LinkedIn URL" placeholder="https://www.linkedin.com/in/..." id="linkedin_url" value={formValue.linkedin_url} onChange={handleInput} /> */}
                        </div>
                        <div>
                             <FormNotes value={formValue.notes} onChange={handleInput} />
