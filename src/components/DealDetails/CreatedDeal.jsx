@@ -56,18 +56,6 @@ export default function CreatedDeals() {
         });
     };
 
-    // Edit a deal
-    // const handleEdit = async (id) => {
-    //     try {
-    //         const response = await api.get(`/deals/single-deal/${id}`);
-    //         const dealDetails = response.data.deal; // Assuming response.data contains the deal details
-    //         setDealDetails(dealDetails);
-    //         setShowEditModal(true);
-    //     } catch (error) {
-    //         console.error('Error fetching deal details:', error);
-    //     }
-    // };
-
     const handleDealUpdate = async (dealId) => {
         try {
             const response = await api.get(`/deals/single-deal/${dealId}`);
@@ -118,12 +106,6 @@ export default function CreatedDeals() {
         }
     };
     
-    // const handleCloseEditModal = () => {
-    //     setShowEditModal(false);
-    //     setDealDetails(null);
-    // };
-
-    // Sort deals based on createdAt timestamp in descending order
     const sortedDeals = deals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     return (
@@ -161,12 +143,6 @@ export default function CreatedDeals() {
                         <div className=" pl-5 self-start">
                             
                         </div>
-                        {/* {showEditModal && dealDetails && (
-                        <EditDealModal
-                            onClose={handleCloseEditModal}
-                            dealDetails={dealDetails}
-                        />
-            )} */}
                     </div>
                 ))}
             </div>

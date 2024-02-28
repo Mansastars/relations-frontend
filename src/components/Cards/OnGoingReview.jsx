@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { X, XCircleIcon } from "lucide-react";
 import Swal from 'sweetalert2';
 import {Oval} from 'react-loader-spinner';
+import EditContactDetails from "../CardDetails/EditContactDetails";
 
 //Contact
 export default function OnGoingReview({ borderColour, titleColors }) {
@@ -32,6 +33,8 @@ export default function OnGoingReview({ borderColour, titleColors }) {
     const [OnGoingReviews, setOnGoingReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [contactDetails, setContactDetails] = useState(null);
 
     useEffect(() => {
         const fetchOnGoingReviews = async () => {
@@ -120,6 +123,23 @@ export default function OnGoingReview({ borderColour, titleColors }) {
         }
     };
 
+    // Edit a contact
+    const handleEdit = async (id) => {
+        try {
+            const response = await api.get(`contacts/single-contact/${currentDealId}/${id}`);
+            const contactDetails = response.data.contact; // Assuming response.data contains the deal details
+            setContactDetails(contactDetails)
+            setShowEditModal(true);
+        } catch (error) {
+            console.error('Error fetching contact details:', error);
+        }
+    };
+
+    const handleCloseEditModal = () => {
+        setShowEditModal(false);
+        setContactDetails(null);
+    };
+
     // Function to truncate phone number while ensuring inclusion of country code and '+' sign
     const truncatePhoneNumber = (phoneNumber, maxLength) => {
         // Remove all non-digit characters from the phone number
@@ -144,30 +164,34 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                 <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
                     {
                         OnGoingReviews.map(OnGoingReview => (
-                            <div key={OnGoingReview.id} className="flex flex-col rounded-2xl mb-2 h-40" style={{...BorderStyle, minWidth: '165px'}}>
+                            <div key={OnGoingReview.id} onDoubleClick={() => handleEdit(OnGoingReview.id)} className="flex flex-col rounded-2xl mb-2 h-40 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                             <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                                 <div className="flex justify-between w-full">
                                     <p className="font-extrabold text-sm text-white">
-                                        {`${OnGoingReview.first_name} ${OnGoingReview.last_name}`.length > 11 ? `${OnGoingReview.first_name} ${OnGoingReview.last_name}`.substring(0, 13) + '...' : `${OnGoingReview.first_name} ${OnGoingReview.last_name}`}
+                                        {`${OnGoingReview.title} ${OnGoingReview.first_name} ${OnGoingReview.last_name}`.length > 11 ? `${OnGoingReview.title} ${OnGoingReview.first_name} ${OnGoingReview.last_name}`.substring(0, 13) + '...' : `${OnGoingReview.title} ${OnGoingReview.first_name} ${OnGoingReview.last_name}`}
                                     </p>
                                     <button onClick={() => handleDelete(OnGoingReview.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                                         <XCircleIcon className="h-4 w-4" />
                                     </button>
                                 </div>
-                                <p className="text-sm text-white">{OnGoingReview.organization_name.length > 15 ? OnGoingReview.organization_name.substring(0, 15) + '...' : OnGoingReview.organization_name}</p>
+                                <p className="text-sm text-white">
+                                    {OnGoingReview.organization_name ? (OnGoingReview.organization_name.length > 15 ? OnGoingReview.organization_name.substring(0, 15) + '...' : OnGoingReview.organization_name) : 'No company entered'}
+                                </p>
                             </div>
                             <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
                                 <div>
                                     <p className="text-xs font-semibold">
-                                    Meeting: {OnGoingReview.meeting_date ? new Date(OnGoingReview.meeting_date).toLocaleString() : ''}
+                                        Meeting: {OnGoingReview.meeting_date ? new Date(OnGoingReview.meeting_date).toLocaleString() : 'No meeting date entered'}
                                     </p>
                                     <p className="text-xs">
-                                        {truncateEmail(OnGoingReview.email, 25)}
+                                        {OnGoingReview.email ? truncateEmail(OnGoingReview.email, 25) : 'No email entered'}
                                     </p>
-                                    <p className="text-xs">{truncatePhoneNumber(OnGoingReview.phone_number, 15)}</p>
+                                    <p className="text-xs">
+                                        {OnGoingReview.phone_number ? (truncatePhoneNumber(OnGoingReview.phone_number, 15)) : 'No phone number entered'}
+                                    </p>
                                 </div>
                                 <div className="flex flex-col justify-center items-start">
-                                <p className="text-xs text-wrap">{OnGoingReview.notes.length > 20 ? OnGoingReview.notes.substring(0, 20) + '...' : OnGoingReview.notes}</p>
+                                    <p className="text-xs text-wrap">{OnGoingReview.notes.length > 20 ? OnGoingReview.notes.substring(0, 20) + '...' : OnGoingReview.notes}</p>
                                 </div>
                             </div>
                             </div>
@@ -177,6 +201,13 @@ export default function OnGoingReview({ borderColour, titleColors }) {
             </div>
             ) : (
                 null
+            )}
+
+            {showEditModal && contactDetails && (
+                <EditContactDetails
+                    onClose={handleCloseEditModal}
+                    contactDetails={contactDetails}
+                />
             )}
       </>
     )

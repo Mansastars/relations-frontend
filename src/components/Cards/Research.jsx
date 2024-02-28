@@ -17,7 +17,7 @@ export default function Research({ borderColour }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
-    const [selectedResearch, setSelectedResearch] = useState(null);
+    const [contactDetails, setContactDetails] = useState(null);
 
     useEffect(() => {
         const fetchResearches = async () => {
@@ -92,23 +92,21 @@ export default function Research({ borderColour }) {
         });
     };
 
-    const handleEdit = (research) => {
-        setSelectedResearch(research);
-        setShowEditModal(true);
+    // Edit a contact
+    const handleEdit = async (id) => {
+        try {
+            const response = await api.get(`contacts/single-contact/${currentDealId}/${id}`);
+            const contactDetails = response.data.contact; // Assuming response.data contains the deal details
+            setContactDetails(contactDetails)
+            setShowEditModal(true);
+        } catch (error) {
+            console.error('Error fetching contact details:', error);
+        }
     };
 
     const handleCloseEditModal = () => {
         setShowEditModal(false);
-        setSelectedResearch(null);
-    };
-
-    const handleUpdateResearch = (updatedResearch) => {
-        setResearches(researches.map(research => {
-            if (research.id === updatedResearch.id) {
-                return updatedResearch;
-            }
-            return research;
-        }));
+        setContactDetails(null);
     };
 
     // Truncate email address
@@ -146,41 +144,44 @@ export default function Research({ borderColour }) {
             ) : (
             researches.map(research => (
                 // width: 'calc((100% - 224px) / 6 - 10px)', minWidth: '165px'
-                <div key={research.id} onDoubleClick={() => handleEdit(research)} className="flex flex-col rounded-2xl mb-2 h-40 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                <div key={research.id} onDoubleClick={() => handleEdit(research.id)} className="flex flex-col rounded-2xl mb-2 h-40 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
-                            {`${research.first_name} ${research.last_name}`.length > 11 ? `${research.first_name} ${research.last_name}`.substring(0, 13) + '...' : `${research.first_name} ${research.last_name}`}
+                            {`${research.title} ${research.first_name} ${research.last_name}`.length > 11 ? `${research.title} ${research.first_name} ${research.last_name}`.substring(0, 13) + '...' : `${research.title} ${research.first_name} ${research.last_name}`}
                         </p>
                         <button onClick={() => handleDelete(research.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                             <XCircleIcon className="h-4 w-4" />
                         </button>
                     </div>
-                    <p className="text-sm text-white">{research.organization_name.length > 15 ? research.organization_name.substring(0, 15) + '...' : research.organization_name}</p>
+                    <p className="text-sm text-white">
+                        {research.organization_name ? (research.organization_name.length > 15 ? research.organization_name.substring(0, 15) + '...' : research.organization_name) : 'No company entered'}
+                    </p>
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
                     <div>
                         <p className="text-xs font-semibold">
-                            Meeting: {research.meeting_date ? new Date(research.meeting_date).toLocaleString() : ''}
+                            Meeting: {research.meeting_date ? new Date(research.meeting_date).toLocaleString() : 'No meeting date entered'}
                         </p>
                         <p className="text-xs">
-                            {truncateEmail(research.email, 25)}
+                            {research.email ? truncateEmail(research.email, 25) : 'No email entered'}
                         </p>
-                        <p className="text-xs">{truncatePhoneNumber(research.phone_number, 15)}</p>
+                        <p className="text-xs">
+                            {research.phone_number ? (truncatePhoneNumber(research.phone_number, 15)) : 'No phone number entered'}
+                        </p>
                     </div>
                     <div className="flex flex-col justify-center items-start">
-                    <p className="text-xs text-wrap">{research.notes.length > 22 ? research.notes.substring(0, 22) + '...' : research.notes}</p>
+                        <p className="text-xs text-wrap">{research.notes.length > 22 ? research.notes.substring(0, 22) + '...' : research.notes}</p>
                     </div>
                 </div>
                 </div>
             ))
             )}
 
-            {showEditModal && selectedResearch && (
+            {showEditModal && contactDetails && (
                 <EditContactDetails
                     onClose={handleCloseEditModal}
-                    initialData={selectedResearch}
-                    onUpdate={handleUpdateResearch}
+                    contactDetails={contactDetails}
                 />
             )}
       </>
