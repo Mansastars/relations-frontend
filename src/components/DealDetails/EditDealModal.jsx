@@ -15,7 +15,7 @@ import { DateForm } from '../Reusables';
  * @returns {JSX.Element} The rendered modal component.
 */
 
-function EditDealModal({onClose, dealDetails}) {
+function EditDealModal({onClose, dealDetails, dealId}) {
     const NewDealModalRef = useRef();
 
     const closeNewDealModal = (e) => {

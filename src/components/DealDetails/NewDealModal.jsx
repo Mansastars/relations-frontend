@@ -53,7 +53,6 @@ function NewDealModal({onClose}) {
     
         try {
             const response = await api.post('/deals/create-deal', userData);
-            console.log(response);
             window.location.reload();
         } catch (error) {
             console.log(error);

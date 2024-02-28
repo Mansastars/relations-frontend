@@ -31,7 +31,6 @@ function SignUp() {
     
         try {
             const response = await api.post('/users/register', userData);
-            console.log(response);
             navigate("/auth/login");
         } catch (error) {
             console.log(error);

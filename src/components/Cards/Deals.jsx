@@ -2,6 +2,7 @@ import api from "../api";
 import { useEffect, useState } from 'react';
 import Swal from "sweetalert2";
 import { X, XCircleIcon } from "lucide-react";
+import {Oval} from 'react-loader-spinner';
 
 //Contact
 export default function Deals({ borderColour }) {
@@ -23,7 +24,6 @@ export default function Deals({ borderColour }) {
                 console.error('Deal ID not found in localStorage');
                 return;
             }
-            console.log(currentDealId)
 
             try {
                 const response = await api.get(`deals/deal-contacts/${currentDealId}`);
@@ -41,10 +41,22 @@ export default function Deals({ borderColour }) {
         fetchDeals();
     }, []);
 
-    console.log('Type of deals:', typeof deals);
+    // console.log('Type of deals:', typeof deals);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex justify-center items-center">
+              <Oval
+                visible={true}
+                height={20}
+                width={20}
+                color="#32384b"
+                ariaLabel="oval-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+        );
       }
     
     // Render error state if an error occurred during data fetching

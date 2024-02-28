@@ -61,7 +61,6 @@ function Modal({onClose}) {
     
         try {
             const response = await api.post(`/deals/create-contact/${currentDealId}`, userData);
-            console.log(response);
             setSuccessMessage('Contact created successfully.');
             window.location.reload();
             setErrorMessage('');

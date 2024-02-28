@@ -27,7 +27,6 @@ function Login() {
     
         try {
             const response = await api.post('/users/login', userData);
-            console.log(response);
             localStorage.setItem("user", JSON.stringify(response.data.user))
             localStorage.setItem("token", response.data.token)
             console.log(localStorage)

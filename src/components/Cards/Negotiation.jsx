@@ -2,6 +2,7 @@ import api from "../api";
 import { useEffect, useState } from 'react';
 import { X, XCircleIcon } from "lucide-react";
 import Swal from "sweetalert2";
+import {Oval} from 'react-loader-spinner';
 
 //Contact
 export default function Negotiation({ borderColour }) {
@@ -23,7 +24,6 @@ export default function Negotiation({ borderColour }) {
                 console.error('Deal ID not found in localStorage');
                 return;
             }
-            console.log(currentDealId)
 
             try {
                 const response = await api.get(`deals/negotiation-contacts/${currentDealId}`);
@@ -41,10 +41,22 @@ export default function Negotiation({ borderColour }) {
         fetchNegotiation();
     }, []);
 
-    console.log('Type of negotiation:', typeof negotiations);
+    // console.log('Type of negotiation:', typeof negotiations);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex justify-center items-center">
+              <Oval
+                visible={true}
+                height={20}
+                width={20}
+                color="#32384b"
+                ariaLabel="oval-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+        );
       }
     
     // Render error state if an error occurred during data fetching

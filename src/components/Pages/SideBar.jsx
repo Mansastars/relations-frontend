@@ -26,7 +26,7 @@ function Sidebar() {
         };
     }, []);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         localStorage.clear();
         window.location.href = 'https://relations.mansastars.com/';
     };

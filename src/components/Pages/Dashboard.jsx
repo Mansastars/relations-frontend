@@ -1,12 +1,10 @@
 // Dashboard implementation
 import Sidebar from "./SideBar";
-import { SearchBar } from "../Reusables";
 import { Button } from "../Reusables";
 import Modal from "../CardDetails/Modal";
 import { useState } from "react";
 import { Tables } from "../TableDetails/Tables";
 import MoveContactModal from "../CardDetails/MoveContactModal";
-import { useParams } from "react-router-dom";
 import api from "../api";
 import { useEffect } from "react";
 
@@ -23,7 +21,6 @@ function Dasboard() {
               try {
                   const response = await api.get(`deals/single-deal/${currentDealId}`);
                   // Assuming response.data contains the single deal object
-                  console.log(response);
                   const fetchedSingleDeal = response.data.deal;
                   setSingleDeals(fetchedSingleDeal);
               } catch (error) {
@@ -54,7 +51,7 @@ function Dasboard() {
           </div>
           <div className=" flex flex-row w-full items-center">
             <div className=" bg-dark-blue text-white font-bold text-2xl py-6 rounded-l-xl w-[40%] text-center">
-              {singleDeals.deal_name}
+              {singleDeals && singleDeals.deal_name && singleDeals.deal_name.length > 15 ? `${singleDeals.deal_name.substring(0, 15)}...` : singleDeals && singleDeals.deal_name}
             </div>
             <div className=" flex flex-col w-[60%]">
               <div className=" bg-mansa-blue text-white py-2 text-center rounded-tr-xl">
