@@ -48,6 +48,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/auth/sign_up" element={<SignUp />} />
+        <Route path="/auth/sign_up" element={<SignUp />} />
         <Route path="/auth/login" element={<Login />} />
         {/* Restricted route */}
         <Route
