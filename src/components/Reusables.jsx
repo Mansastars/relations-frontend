@@ -62,7 +62,7 @@ export function FormInput({ type, title, placeholder, id, value, onChange }) {
     )
 }
 
-// Form template for not required login
+// Form template for not required login FULL
 export function FullInput({ type, title, placeholder, id, value, onChange }) {
     return (
         <div className=" relative col-span-full w-full">
@@ -134,7 +134,7 @@ export function FormInputRequired({ type, title, placeholder, id, autoComplete, 
 }
 
 // Notes part of the add a contact form
-export function FormNotes({value, onChange}) {
+export function FormNotes({value, onChange,}) {
     return (
         <div className=" relative col-span-full">
             <label htmlFor="notes" className=" absolute -top-3 left-3 bg-white px-1 text-sm leading-6 text-dark-blue font-semibold">

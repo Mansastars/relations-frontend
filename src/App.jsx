@@ -1,12 +1,12 @@
-import Dashboard from "../src/components/Pages/Dashboard"
-import { BrowserRouter as Router, Route, Routes, Navigate, renderMatches } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Dashboard from "../src/components/Pages/Dashboard";
 import Profile from "./components/Pages/Profile";
-// import Dashboard from "../src/components/Dashboard";
 import NewDealPage from "../src/components/Pages/NewDeal";
 import SignUp from "./components/AuthPages/SignUp";
 import Login from "./components/AuthPages/Login";
 import { useState, useEffect } from "react";
-import {Oval} from 'react-loader-spinner';
+import { Oval } from 'react-loader-spinner';
+import MoveToLargeScreen from "./components/Pages/MoveToLargeScreen";
 
 function App() {
   const isSmallScreen = window.innerWidth <= 768;
@@ -44,10 +44,14 @@ function App() {
     );
   }
 
+  // Conditionally render the <Navigate> component for small screens
+  const smallScreenRedirect = isSmallScreen ? <Navigate key="smallScreenRedirect" to="/move-to-larger-screen" /> : null;
+
   return (
     <Router>
+      {/* Render the <Navigate> component here */}
+      {smallScreenRedirect}
       <Routes>
-        <Route path="/auth/sign_up" element={<SignUp />} />
         <Route path="/auth/sign_up" element={<SignUp />} />
         <Route path="/auth/login" element={<Login />} />
         {/* Restricted route */}
@@ -67,14 +71,8 @@ function App() {
             <Route path="/profile" element={<Navigate to="/auth/login" />} />
           </>
         )}
-        {/* Route for small screens */}
-        {isSmallScreen && (
-          <Route
-            path="/dashboard/:dealId"
-            element={<Navigate to="/move-to-larger-screen" />}
-          />
-        )}
-        <Route path="/move-to-larger-screen" element={<h2 className="text-center text-xl font-bold mt-20 bg-[#f2f3ff] text-dark-blue">Please move to a larger screen to access the dashboard.</h2>} />
+        {/* Route for larger screen redirection */}
+        <Route path="/move-to-larger-screen" element={<MoveToLargeScreen />} />
       </Routes>
     </Router>
   );

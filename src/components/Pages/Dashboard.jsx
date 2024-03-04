@@ -7,6 +7,7 @@ import { Tables } from "../TableDetails/Tables";
 import MoveContactModal from "../CardDetails/MoveContactModal";
 import api from "../api";
 import { useEffect } from "react";
+import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
 
 function Dasboard() {
     const [showModal, setShowModal] = useState(false)
@@ -36,7 +37,7 @@ function Dasboard() {
 
     return (
       <div className=" flex gap-5 h-screen">
-        <div className=" fixed w-56 max-[768px]:w-20 h-full min-h-screen">
+        <div className=" fixed w-56 max-[768px]:w-20 h-screen max-h-screen overflow-y-auto overflow-x-hidden">
           <Sidebar />
         </div>
         <div className=" flex flex-col gap-2 w-full pl-56 max-[768px]:pl-20 mx-2 overflow-auto">
@@ -55,14 +56,14 @@ function Dasboard() {
             </div>
             <div className=" flex flex-col w-[60%]">
               <div className=" bg-mansa-blue text-white py-2 text-center rounded-tr-xl">
-                Deal Size Amount: <span className=" font-semibold">${singleDeals.deal_size}</span>
+                Deal Size Amount: <span className=" font-semibold">${singleDeals.deal_size ? addCommasToNumber(singleDeals.deal_size) : '0'}</span>
               </div>
               <div className=" flex flex-row  ">
                 <div className=" bg-[orange] text-white w-1/2 max-md:w-full py-2 pl-5">
-                  In-Negotiation Value: <span className=" font-semibold">${singleDeals.negotiation_value}</span>
+                  In-Negotiation Value: <span className=" font-semibold">${singleDeals.negotiation_value ? addCommasToNumber(singleDeals.negotiation_value) : '0'}</span>
                 </div>
                 <div className=" bg-[green] text-white w-1/2 max-md:w-full py-2 pl-5 rounded-br-xl">
-                  Deal Signed Value: <span className=" font-semibold">${singleDeals.signed_value}</span>
+                  Deal Signed Value: <span className=" font-semibold">${singleDeals.signed_value ? addCommasToNumber(singleDeals.signed_value) : '0'}</span>
                 </div>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { X, XCircleIcon } from "lucide-react";
 import Swal from "sweetalert2";
 import {Oval} from 'react-loader-spinner';
 import EditContactDetails from "../CardDetails/EditContactDetails";
+import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
 
 // pitch
 export default function Pitch({ borderColour }) {
@@ -110,7 +111,7 @@ export default function Pitch({ borderColour }) {
                 try {
                     // YOUR_DELETE_ENDPOINT/${id}
                     await api.delete(`contacts/delete-contact/${currentDealId}/${id}`);
-                    // Remove the deleted research from the state
+                    // Remove the deleted pitch from the state
                     setPitches(pitches.filter(pitch => pitch.id !== id));
                     Swal.fire('Deleted!', 'Your contact entry has been deleted.', 'success');
                 } catch (error) {
@@ -144,7 +145,7 @@ export default function Pitch({ borderColour }) {
             <div></div>
             ) : (
             pitches.map(pitch => (
-                <div key={pitch.id} onDoubleClick={() => handleEdit(pitch.id)} className="flex flex-col rounded-2xl mb-2 h-40 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                <div key={pitch.id} onDoubleClick={() => handleEdit(pitch.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
@@ -160,6 +161,9 @@ export default function Pitch({ borderColour }) {
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
                     <div>
+                        <p className="text-xs font-semibold">
+                            Deal Size: {pitch.deal_size ? (pitch.deal_size.length > 15 ? '$' + addCommasToNumber(pitch.deal_size.substring(0, 15)) + '...' : '$' + addCommasToNumber(pitch.deal_size)) : '$0'}
+                        </p>
                         <p className="text-xs font-semibold">
                             Meeting: {pitch.meeting_date ? new Date(pitch.meeting_date).toLocaleString() : 'No meeting date entered'}
                         </p>

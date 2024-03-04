@@ -5,6 +5,7 @@ import { X, XCircleIcon } from "lucide-react";
 import Swal from 'sweetalert2';
 import {Oval} from 'react-loader-spinner';
 import EditContactDetails from "../CardDetails/EditContactDetails";
+import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
 
 //Contact
 export default function OnGoingReview({ borderColour, titleColors }) {
@@ -164,7 +165,7 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                 <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
                     {
                         OnGoingReviews.map(OnGoingReview => (
-                            <div key={OnGoingReview.id} onDoubleClick={() => handleEdit(OnGoingReview.id)} className="flex flex-col rounded-2xl mb-2 h-40 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                            <div key={OnGoingReview.id} onDoubleClick={() => handleEdit(OnGoingReview.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                             <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                                 <div className="flex justify-between w-full">
                                     <p className="font-extrabold text-sm text-white">
@@ -180,6 +181,9 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                             </div>
                             <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
                                 <div>
+                                <p className="text-xs font-semibold">
+                                    Deal Size: {OnGoingReview.deal_size ? (OnGoingReview.deal_size.length > 15 ? '$' + addCommasToNumber(OnGoingReview.deal_size.substring(0, 15)) + '...' : '$' + addCommasToNumber(OnGoingReview.deal_size)) : '$0'}
+                                </p>
                                     <p className="text-xs font-semibold">
                                         Meeting: {OnGoingReview.meeting_date ? new Date(OnGoingReview.meeting_date).toLocaleString() : 'No meeting date entered'}
                                     </p>

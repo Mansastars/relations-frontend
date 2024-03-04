@@ -55,7 +55,7 @@ function Login() {
                         <SignUpRequired type="email" title="Email*" placeholder="SundiJoe@gmail.com" id="email" autoComplete="email" value={formValue.email} onChange={handleInput} />
                         <div>
                             <SignUpRequired type="password" title="Password*" id="password" value={formValue.password} onChange={handleInput} />
-                            <a href="" className=' text-sm text-mansa-blue'><u>Forget password</u></a>
+                            <a href="" className=' text-sm text-mansa-blue'><u>Forgot password</u></a>
                         </div>
                     </div>
                     <Button type='submit' text="Log In" />

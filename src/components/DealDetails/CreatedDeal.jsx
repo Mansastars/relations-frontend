@@ -78,16 +78,22 @@ export default function CreatedDeals() {
                     `<div>` +
                     `<label class="swal2-label">Deadline</label>` +
                     `<input type="datetime-local" id="deadline" value="${formatDateTime(dealDetails.dead_line)}" class="swal2-input">` +
+                    `</div>` +
+                    `<div>` +
+                    `<label class="swal2-label">Dead Size</label>` +
+                    `<input type="number" id="dealSize" value="${dealDetails.deal_size}" class="swal2-input" placeholder="Deal Size">` +
                     `</div>`,
                 focusConfirm: false,
                 preConfirm: () => {
                     const deal_name = document.getElementById('dealName').value;
                     const deadlineInputValue = document.getElementById('deadline').value;
+                    const deal_size = document.getElementById('dealSize').value;
                     // Convert deadline input value to ISO format
                     const dead_line = new Date(deadlineInputValue).toISOString();
                     return {
                         deal_name,
-                        dead_line
+                        dead_line,
+                        deal_size,
                     };
                 }
             });
@@ -110,7 +116,7 @@ export default function CreatedDeals() {
 
     return (
         <div className="flex flex-col gap-10 items-start justify-center w-full bg-light-grey">
-            <h1 className="text-dark-blue font-bold text-4xl self-center sticky top-0 bg-light-grey w-full text-center pb-5">Existing Deals</h1>
+            <h1 className="text-dark-blue font-bold text-4xl self-center sticky top-0 bg-light-grey w-full text-center pb-5">Existing Dashboards</h1>
             <div className="flex flex-row flex-wrap justify-center items-start gap-5">
                 {sortedDeals.map(deal => (
                     <div

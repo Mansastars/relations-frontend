@@ -13,7 +13,7 @@ export default function Profile() {
 
     return (
         <div className=" flex gap-5">
-            <div className=" fixed w-56 max-[768px]:w-20 h-full min-h-screen">
+            <div className=" fixed w-56 max-[768px]:w-20 h-screen max-h-screen overflow-y-auto overflow-x-hidden">
                 <Sidebar />
             </div>
             <div className=" flex flex-col w-full pl-56 max-[768px]:pl-20 mx-2 items-center">

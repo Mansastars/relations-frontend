@@ -23,13 +23,13 @@ export default function NewDealPage() {
     return (
         <div>
             <div className=" flex gap-5 h-screen">
-                <div className=" fixed h-full min-h-screen"> 
+                <div className=" fixed w-56 max-[768px]:w-20 h-screen max-h-screen overflow-y-auto overflow-x-hidden"> 
                     <Sidebar />
                 </div>
                 <div className=" flex flex-col ml-56 max-[768px]:ml-20 gap-20 pl-2 w-full h-full mb-10 ">
                     <div className=" flex pt-2 items-center gap-4">
                         <div onClick={() => setShowNewDealModal(true)} className="flex">
-                            <Button text="Create a Deal" />
+                            <Button text="Create a Dashboard" />
                         </div>
                     </div>
                     <div className=" overflow-x-auto pb-14">

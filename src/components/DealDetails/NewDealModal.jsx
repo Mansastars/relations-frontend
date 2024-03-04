@@ -25,7 +25,7 @@ function NewDealModal({onClose}) {
     }
 
     // Interaction with API post request
-    const [formValue, setFormValue] = useState({dealName:'', datetime:''})
+    const [formValue, setFormValue] = useState({dealName:'', datetime:'', dealSize:''})
     const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
@@ -49,10 +49,11 @@ function NewDealModal({onClose}) {
         const userData = {
             deal_name: formValue.dealName,
             dead_line: meetingDate,
+            deal_size: formValue.dealSize
         };
     
         try {
-            const response = await api.post('/deals/create-deal', userData);
+            await api.post('/deals/create-deal', userData);
             window.location.reload();
         } catch (error) {
             console.log(error);
@@ -66,12 +67,13 @@ function NewDealModal({onClose}) {
         <div className=' mt-10 flex flex-col gap-5'>
             <button onClick={onClose} className=' place-self-end text-dark-blue'><X size={30}/></button>
             <div className=' bg-white w-full rounded-xl px-20 max-md:px-5 py-10 flex flex-col gap-7 items-center mx-4 justify-center'>
-                <h1 className=' text-dark-blue text-3xl font-extrabold'>Create a New Deal</h1>
+                <h1 className=' text-dark-blue text-3xl font-extrabold'>Create a New Dashboard</h1>
                 <form onSubmit={ handleSubmit } className=' flex flex-col gap-5 justify-center'>
                     {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
                     <div className='flex flex-col gap-5 '>
-                        <FormInputRequired type="text" title="Deal Name*" placeholder="Sundi" id="dealName" value={formValue.dealName} onChange={handleInput} />
+                        <FormInputRequired type="text" title="Dashboard Name*" placeholder="Sundi" id="dealName" value={formValue.dealName} onChange={handleInput} />
                         <DateForm title="Deadline" value={formValue.datetime} onChange={handleInput} />
+                        <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" id="dealSize" value={formValue.dealSize} onChange={handleInput} />
                     </div>
                     <div className=' mt-8 w-full flex items-center justify-center'>
                         <Button type="submit" text="Create a Deal" />

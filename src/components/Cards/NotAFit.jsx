@@ -4,6 +4,7 @@ import { X, XCircleIcon } from "lucide-react";
 import Swal from 'sweetalert2';
 import {Oval} from 'react-loader-spinner';
 import EditContactDetails from "../CardDetails/EditContactDetails";
+import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
 
 //Contact
 export default function NotAFit({ borderColour }) {
@@ -143,7 +144,7 @@ export default function NotAFit({ borderColour }) {
             <div></div>
             ) : (
             notAFits.map(notAFit => (
-                <div key={notAFit.id} onDoubleClick={() => handleEdit(notAFit.id)} className="flex flex-col rounded-2xl mb-2 h-40 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                <div key={notAFit.id} onDoubleClick={() => handleEdit(notAFit.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
@@ -160,6 +161,9 @@ export default function NotAFit({ borderColour }) {
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
                     <div>
                         <p className="text-xs font-semibold">
+                            Deal Size: {notAFit.deal_size ? (notAFit.deal_size.length > 15 ? '$' + addCommasToNumber(notAFit.deal_size.substring(0, 15)) + '...' : '$' + addCommasToNumber(notAFit.deal_size)) : '$0'}
+                        </p>
+                        <p className="text-xs font-semibold">
                             Meeting: {notAFit.meeting_date ? new Date(notAFit.meeting_date).toLocaleString() : 'No meeting date entered'}
                         </p>
                         <p className="text-xs">
@@ -170,7 +174,7 @@ export default function NotAFit({ borderColour }) {
                         </p>
                     </div>
                     <div className="flex flex-col justify-center items-start">
-                        <p className="text-xs text-wrap">{notAFit.notes.length > 22 ? notAFit.notes.substring(0, 22) + '...' : notAFit.notes}</p>
+                        <p className="text-xs text-wrap">{notAFit.notes.length > 20 ? notAFit.notes.substring(0, 20) + '...' : notAFit.notes}</p>
                     </div>
                 </div>
                 </div>
