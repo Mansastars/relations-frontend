@@ -10,9 +10,8 @@ import EditDealModal from "./EditDealModal";
 
 export default function CreatedDeals() {
     const [deals, setDeals] = useState([]);
-    // const [showEditModal, setShowEditModal] = useState(false);
-    // const [dealDetails, setDealDetails] = useState(null); // Declare dealDetails state
     const navigate = useNavigate()
+    const isSmallScreen = window.innerWidth <= 768;
 
     useEffect(() => {
         const fetchDeals = async () => {
@@ -43,11 +42,11 @@ export default function CreatedDeals() {
             cancelButtonText: 'No, keep it',
         }).then(async (result) => {
             if (result.isConfirmed) {
-                try {
+                try {screen
                     await api.delete(`/deals/delete-deal/${id}`);
                     setDeals(deals.filter(deal => deal.id !== id));
                     Swal.fire('Deleted!', 'Your deal has been deleted.', 'success');
-                    navigate(-1);
+                    navigate('/alldashboards');
                 } catch (error) {
                     console.error('Error:', error);
                     Swal.fire('Error', 'Failed to delete deal', 'error');
@@ -56,6 +55,7 @@ export default function CreatedDeals() {
         });
     };
 
+    // Update or Edit a deal
     const handleDealUpdate = async (dealId) => {
         try {
             const response = await api.get(`/deals/single-deal/${dealId}`);
@@ -114,9 +114,19 @@ export default function CreatedDeals() {
     
     const sortedDeals = deals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
+    // Check if the user is on a smaller screen or device
+    const handleClickDeal = (dealId) => {
+        if (isSmallScreen) {
+            navigate("/move-to-larger-screen");
+        } else {
+            localStorage.setItem('currentDealId', dealId);
+            navigate(`/dashboard/${dealId}`);
+        }
+    };
+
     return (
         <div className="flex flex-col gap-10 items-start justify-center w-full bg-light-grey">
-            <h1 className="text-dark-blue font-bold text-4xl self-center sticky top-0 bg-light-grey w-full text-center pb-5">Existing Dashboards</h1>
+            <h1 className="text-dark-blue font-bold text-4xl self-center  bg-light-grey w-full text-center pb-5">Existing Dashboards</h1>
             <div className="flex flex-row flex-wrap justify-center items-start gap-5">
                 {sortedDeals.map(deal => (
                     <div
@@ -125,7 +135,7 @@ export default function CreatedDeals() {
                     >     
                         <div
                             className="flex flex-col justify-start items-start w-full gap-2 cursor-pointer"
-                            onClick={() => {localStorage.setItem('currentDealId', deal.id), navigate(`/dashboard/${deal.id}`)}}
+                            onClick={() => handleClickDeal(deal.id)}
                         >
                             <div className=" flex flex-col w-full gap-2 bg-mansa-blue rounded-t-xl px-4 py-3">
                                 <button onClick={() => handleDelete(deal.id)} className="text-white hover:text-[#FF0000] cursor-pointer">

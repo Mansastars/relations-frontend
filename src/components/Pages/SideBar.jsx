@@ -42,29 +42,31 @@ function Sidebar() {
                 </div>
 
                 <div className="flex flex-col gap-x-2 max-[768px]:gap-x-0 gap-y-2 text-white items-start py-4 font-semibold text-base">
-                    <Link to="/alldeals" className="flex flex-row w-full">
+                    <Link to="/alldashboards" className="flex flex-row w-full">
                         <SidebarItem icon={dashboard} text={isSmallScreen ? "" : "Dashboards"} id='1' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </Link>
                     <Link to="/profile" className="flex flex-row w-full">
                         <SidebarItem icon={profile} text={isSmallScreen ? "" : "Profile"} id='2' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </Link>
                     <Link to="" className="flex flex-row w-full">
-                        <SidebarItem icon={Billing} text={isSmallScreen ? "" : "Billing"} id='2' activeItem={activeItem} setActiveItem={setActiveItem} />
+                        <SidebarItem icon={Billing} text={isSmallScreen ? "" : "Billing"} id='3' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </Link>
                     <a href="mailto:service@mansastars.com" target="_top" className="flex flex-row w-full">
-                        <SidebarItem icon={support} text={isSmallScreen ? "" : "Support"} id='3' activeItem={activeItem} setActiveItem={setActiveItem} />
+                        <SidebarItem icon={support} text={isSmallScreen ? "" : "Support"} id='4' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </a>
                     <a href="https://www.mansastars.com/monthly-investor-update" className="flex flex-row w-full">
-                        <SidebarItem icon={link} text={isSmallScreen ? "" : "Send Investors Update"} id='4' activeItem={activeItem} setActiveItem={setActiveItem} />
+                        <SidebarItem icon={link} text={isSmallScreen ? "" : "Send Investors Update"} id='5' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </a>
                     <a href="https://community.mansastars.com/home" className="flex flex-row w-full">
-                        <SidebarItem icon={Star} text={isSmallScreen ? "" : "VC/Founder Network"} id='5' activeItem={activeItem} setActiveItem={setActiveItem} />
+                        <SidebarItem icon={Star} text={isSmallScreen ? "" : "VC/Founder Network"} id='6' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </a>
                 </div>
             </div>
 
             <button onClick={handleLogout} className="flex flex-row justify-start max-[768px]:justify-center gap-6 max-md:gap-0 text-white py-10 px-2 bg-dark-blue">
-                <LogOutIcon />
+                <div className=" pl-2">
+                    <LogOutIcon />
+                </div>
                 {!isSmallScreen && <p>Log out</p>} {/* Render logout text only on larger screens */}
             </button>
         </div>

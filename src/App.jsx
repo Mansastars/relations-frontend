@@ -9,7 +9,6 @@ import { Oval } from 'react-loader-spinner';
 import MoveToLargeScreen from "./components/Pages/MoveToLargeScreen";
 
 function App() {
-  const isSmallScreen = window.innerWidth <= 768;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
@@ -44,19 +43,14 @@ function App() {
     );
   }
 
-  // Conditionally render the <Navigate> component for small screens
-  const smallScreenRedirect = isSmallScreen ? <Navigate key="smallScreenRedirect" to="/move-to-larger-screen" /> : null;
-
   return (
     <Router>
-      {/* Render the <Navigate> component here */}
-      {smallScreenRedirect}
       <Routes>
         <Route path="/auth/sign_up" element={<SignUp />} />
         <Route path="/auth/login" element={<Login />} />
         {/* Restricted route */}
         <Route
-          path="/alldeals"
+          path="/alldashboards"
           element={isAuthenticated ? <NewDealPage /> : <Navigate to="/auth/login" />}
         />
         {/* Routes protected by authentication */}

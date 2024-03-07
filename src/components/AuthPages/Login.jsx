@@ -2,11 +2,13 @@ import { Button, FormInputRequired, SignUpRequired } from '../Reusables'
 import { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
+import { EyeIcon, EyeOff } from 'lucide-react';
 
 function Login() {
     // Connection wth backend and error and success handling
     const [formValue, setFormValue] = useState({email:'', password:''})
     const [errorMessage, setErrorMessage] = useState("");
+    const [visible, setVisible] = useState(false)
     
     const navigate = useNavigate();
 
@@ -29,7 +31,7 @@ function Login() {
             const response = await api.post('/users/login', userData);
             localStorage.setItem("user", JSON.stringify(response.data.user))
             localStorage.setItem("token", response.data.token)
-            navigate("/alldeals");
+            navigate("/alldashboards");
         } catch (error) {
             console.log(error);
             if (error.response.data.message) {
@@ -39,6 +41,11 @@ function Login() {
             }
             window.scrollTo(0, 0); //scroll to the top of the page
         }
+    };
+
+    // Password
+    const toggleVisibility = () => {
+        setVisible(!visible);
     };
 
   return (
@@ -54,7 +61,15 @@ function Login() {
                     <div className=' w-full md:w-3/4 flex flex-col gap-8'>
                         <SignUpRequired type="email" title="Email*" placeholder="SundiJoe@gmail.com" id="email" autoComplete="email" value={formValue.email} onChange={handleInput} />
                         <div>
-                            <SignUpRequired type="password" title="Password*" id="password" value={formValue.password} onChange={handleInput} />
+                            <SignUpRequired
+                                type={visible ? "text" : "password"}
+                                title="Password*"
+                                id="password"
+                                placeholder='•••••••••'
+                                value={formValue.password}
+                                onChange={handleInput}
+                                icon={visible ? <EyeIcon size={20} onClick={toggleVisibility} /> : <EyeOff size={20} onClick={toggleVisibility} />}
+                            />
                             <a href="" className=' text-sm text-mansa-blue'><u>Forgot password</u></a>
                         </div>
                     </div>

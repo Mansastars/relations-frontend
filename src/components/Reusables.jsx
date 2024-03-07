@@ -86,13 +86,13 @@ export function FullInput({ type, title, placeholder, id, value, onChange }) {
 }
 
 // Form template for required inputs
-export function SignUpRequired({ type, title, placeholder, id, autoComplete, value, onChange }) {
+export function SignUpRequired({ type, title, placeholder, id, autoComplete, value, onChange, icon }) {
     return (
         <div className=" relative col-span-full w-full">
             <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
                 { title }
             </label>
-            <div className="mt-1">
+            <div className="mt-1 w-full">
                 <input
                     type={type}
                     name={id}
@@ -104,6 +104,9 @@ export function SignUpRequired({ type, title, placeholder, id, autoComplete, val
                     value={value}
                     onChange={onChange}
                 />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">
+                    {icon}
+                </div>
             </div>
         </div>
     )

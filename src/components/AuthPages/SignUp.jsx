@@ -1,13 +1,20 @@
 import { Button, FormInputRequired, SignUpRequired } from '../Reusables'
 import { useState } from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { EyeIcon, EyeOff } from 'lucide-react';
+import PrivacyPolicModal from './PrivacyPolicModal';
+import TermOfUsageModal from './TermOfUsageModal';
 
 function SignUp() {
 
     // Connection wth backend and error and success handling
     const [formValue, setFormValue] = useState({firstName:'', lastName:'', email:'', password:'', confirmPassword:''})
     const [errorMessage, setErrorMessage] = useState("");
+    const [visible, setVisible] = useState(false)
+    const [ConfirmVisible, setConfirmVisible] = useState(false)
+    const [openModal, setOpenModal] = useState(false);
+    const [openTermOfUsageModal, setOpenTermOfUsageModal] = useState(false)
     
     const navigate = useNavigate();
 
@@ -43,6 +50,15 @@ function SignUp() {
         }
     };
 
+    // Password
+    const toggleVisibility = () => {
+        setVisible(!visible);
+    };
+    // Confirm Password
+    const toggleConfirmVisibility = () => {
+        setConfirmVisible(!ConfirmVisible);
+    };
+
   return (
     <div className="mx-2 flex justify-center">
         <div className='bg-white p-5 md:p-16 flex flex-col mt-10 mb-5 rounded-2xl h-full w-1/2 max-md:w-4/5'>
@@ -64,14 +80,60 @@ function SignUp() {
                         </div>
                         <div className=' w-full flex flex-col gap-5'>
                             <SignUpRequired type="email" title="Email*" placeholder="SundiJoe@gmail.com" id="email" autoComplete="email" value={formValue.email} onChange={handleInput} />
-                            <SignUpRequired type="password" title="Password*" id="password" value={formValue.password} onChange={handleInput} />
-                            <SignUpRequired type="password" title="Confirm Password*" id="confirmPassword" value={formValue.confirmPassword} onChange={handleInput} />
+                          
+                            <SignUpRequired
+                                type={visible ? "text" : "password"}
+                                title="Password*"
+                                id="password"
+                                value={formValue.password}
+                                placeholder='•••••••••'
+                                onChange={handleInput}
+                                icon={visible ? <EyeIcon size={20} onClick={toggleVisibility} /> : <EyeOff size={20} onClick={toggleVisibility} />}
+                            />
+                          
+                            <SignUpRequired
+                                type={ConfirmVisible ? "text" : "password"}
+                                title="Confirm Password*"
+                                id="confirmPassword"
+                                placeholder='•••••••••'
+                                value={formValue.confirmPassword}
+                                onChange={handleInput}
+                                icon={ConfirmVisible ? <EyeIcon size={20} onClick={toggleConfirmVisibility} /> : <EyeOff size={20} onClick={toggleConfirmVisibility} />}
+                            />
+
+                            <div className=' flex flex-row gap-2 items-center'>
+                                <input
+                                    type="checkbox"
+                                    name="T&C"
+                                    required
+                                    className=' text-mansa-blue'
+                                />
+                                <p className=' text-xs'>Yes, I agree to the <span 
+                                        onClick={() => setOpenModal(true)} 
+                                        className=' text-mansa-blue underline cursor-pointer'
+                                    > 
+                                        Privacy Policy
+                                    </span> and <span
+                                        onClick={() => setOpenTermOfUsageModal(true)} 
+                                        className=' text-mansa-blue underline cursor-pointer'
+                                    >
+                                        Terms of Usage</span>.
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <Button type='submit' text="Sign Up" />
                 </form>
             </div>
         </div>
+        <PrivacyPolicModal 
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+        />
+        <TermOfUsageModal 
+            open={openTermOfUsageModal}
+            onClose={() => setOpenTermOfUsageModal(false)}
+        />
     </div>
   )
 }
