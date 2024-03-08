@@ -131,14 +131,7 @@ export default function TermSheet({ borderColour, titleColors }) {
     const truncateEmail = (email, maxLength) => {
         if (email.length <= maxLength) return email;
 
-        const username = email.substring(0, email.lastIndexOf('@'));
-        const domain = email.substring(email.lastIndexOf('@') + 1);
-
-        if (username.length > maxLength - domain.length - 3) {
-            return `${username.substring(0, maxLength - domain.length - 3)}...@${domain}`;
-        } else {
-            return `${username}@${domain}`;
-        }
+        return `${email.substring(0, maxLength - 3)}...`;
     };
 
     // Function to truncate phone number while ensuring inclusion of country code and '+' sign
@@ -165,11 +158,11 @@ export default function TermSheet({ borderColour, titleColors }) {
                 <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
                     {
                         termSheets.map(termSheet => (
-                            <div key={termSheet.id} onDoubleClick={() => handleEdit(termSheet.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                            <div key={termSheet.id} onDoubleClick={() => handleEdit(termSheet.id)} title="Double click to edit contact" className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                                     <div className="flex justify-between w-full">
                                         <p className="font-extrabold text-sm text-white">
-                                            {`${termSheet.title} ${termSheet.first_name} ${termSheet.last_name}`.length > 11 ? `${termSheet.title} ${termSheet.first_name} ${termSheet.last_name}`.substring(0, 13) + '...' : `${termSheet.title} ${termSheet.first_name} ${termSheet.last_name}`}
+                                            {`${termSheet.title} ${termSheet.first_name} ${termSheet.last_name}`.length > 13 ? `${termSheet.title} ${termSheet.first_name} ${termSheet.last_name}`.substring(0, 10) + '...' : `${termSheet.title} ${termSheet.first_name} ${termSheet.last_name}`}
                                         </p>
                                         <button onClick={() => handleDelete(termSheet.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                                             <XCircleIcon className="h-4 w-4" />
@@ -188,7 +181,7 @@ export default function TermSheet({ borderColour, titleColors }) {
                                             Meeting: {termSheet.meeting_date ? new Date(termSheet.meeting_date).toLocaleString() : 'No meeting date entered'}
                                         </p>
                                         <p className="text-xs">
-                                            {termSheet.email ? truncateEmail(termSheet.email, 25) : 'No email entered'}
+                                            {termSheet.email ? truncateEmail(termSheet.email, 20) : 'No email entered'}
                                         </p>
                                         <p className="text-xs">
                                             { termSheet.phone_number ? (truncatePhoneNumber(termSheet.phone_number, 15)) : 'No phone number entered'}

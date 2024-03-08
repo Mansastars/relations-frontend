@@ -13,61 +13,63 @@ import { LogOutIcon } from "lucide-react";
 
 function Sidebar() {
     const [activeItem, setActiveItem] = useState(1);
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
 
     useEffect(() => {
         const handleResize = () => {
             setIsSmallScreen(window.innerWidth <= 768);
         };
 
-        handleResize(); // Call the function once to set initial state
-
-        window.addEventListener('resize', handleResize); // Add event listener for resize
+        window.addEventListener('resize', handleResize);
 
         return () => {
-            window.removeEventListener('resize', handleResize); // Cleanup by removing event listener
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
-    const handleLogout = async () => {
+    const handleLogout = () => {
         localStorage.clear();
         window.location.href = 'https://relations.mansastars.com/';
     };
 
+    const handleItemClick = (itemId) => {
+        setActiveItem(itemId);
+    };
+
     return (
         <div className="flex flex-col pt-6 w-56 max-[768px]:w-20 bg-dark-blue h-screen max-h-full justify-between">
-            <div className=" flex flex-col gap-10 h-screen max-h-full bg-dark-blue">
-                <div className=" self-center max-w-[200px] max-[768px]:self-start">
-                    <img src={MansaLogo} alt="Mansa Logo" /> {/* Always display the same logo */}
+            <div className="flex flex-col gap-10 h-screen max-h-full bg-dark-blue">
+                <div className="self-center max-w-[200px] max-[768px]:self-start">
+                    <img src={MansaLogo} alt="Mansa Logo" />
                 </div>
 
                 <div className="flex flex-col gap-x-2 max-[768px]:gap-x-0 gap-y-2 text-white items-start py-4 font-semibold text-base">
-                    <Link to="/alldashboards" className="flex flex-row w-full">
+                    <Link to="/alldashboards" onClick={() => handleItemClick(1)} className="flex flex-row w-full">
                         <SidebarItem icon={dashboard} text={isSmallScreen ? "" : "Dashboards"} id='1' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </Link>
-                    <Link to="/profile" className="flex flex-row w-full">
+                    <Link to="/profile" onClick={() => handleItemClick(2)} className="flex flex-row w-full">
                         <SidebarItem icon={profile} text={isSmallScreen ? "" : "Profile"} id='2' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </Link>
-                    <Link to="" className="flex flex-row w-full">
+                    <Link to="" onClick={() => handleItemClick(3)} className="flex flex-row w-full">
                         <SidebarItem icon={Billing} text={isSmallScreen ? "" : "Billing"} id='3' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </Link>
-                    <a href="mailto:service@mansastars.com" target="_top" className="flex flex-row w-full">
+                    <a href="mailto:service@mansastars.com" target="_top" onClick={() => handleItemClick(4)} className="flex flex-row w-full">
                         <SidebarItem icon={support} text={isSmallScreen ? "" : "Support"} id='4' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </a>
-                    <a href="https://www.mansastars.com/monthly-investor-update" className="flex flex-row w-full">
+                    <a href="https://www.mansastars.com/monthly-investor-update" onClick={() => handleItemClick(5)} className="flex flex-row w-full">
                         <SidebarItem icon={link} text={isSmallScreen ? "" : "Send Investors Update"} id='5' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </a>
-                    <a href="https://community.mansastars.com/home" className="flex flex-row w-full">
+                    <a href="https://community.mansastars.com/home" onClick={() => handleItemClick(6)} className="flex flex-row w-full">
                         <SidebarItem icon={Star} text={isSmallScreen ? "" : "VC/Founder Network"} id='6' activeItem={activeItem} setActiveItem={setActiveItem} />
                     </a>
                 </div>
             </div>
 
             <button onClick={handleLogout} className="flex flex-row justify-start max-[768px]:justify-center gap-6 max-md:gap-0 text-white py-10 px-2 bg-dark-blue">
-                <div className=" pl-2">
+                <div className="pl-2">
                     <LogOutIcon />
                 </div>
-                {!isSmallScreen && <p>Log out</p>} {/* Render logout text only on larger screens */}
+                {!isSmallScreen && <p>Log out</p>}
             </button>
         </div>
     );

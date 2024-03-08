@@ -114,14 +114,7 @@ export default function Contact({ borderColour }) {
     const truncateEmail = (email, maxLength) => {
         if (email.length <= maxLength) return email;
 
-        const username = email.substring(0, email.lastIndexOf('@'));
-        const domain = email.substring(email.lastIndexOf('@') + 1);
-
-        if (username.length > maxLength - domain.length - 3) {
-            return `${username.substring(0, maxLength - domain.length - 3)}...@${domain}`;
-        } else {
-            return `${username}@${domain}`;
-        }
+        return `${email.substring(0, maxLength - 3)}...`;
     };
 
     // Function to truncate phone number while ensuring inclusion of country code and '+' sign
@@ -144,11 +137,11 @@ export default function Contact({ borderColour }) {
             <div></div>
             ) : (
             contacts.map(contact => (
-                <div key={contact.id} onDoubleClick={() => handleEdit(contact.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                <div key={contact.id} title="Double click to edit contact" onDoubleClick={() => handleEdit(contact.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
-                            {`${contact.title} ${contact.first_name} ${contact.last_name}`.length > 11 ? `${contact.title} ${contact.first_name} ${contact.last_name}`.substring(0, 13) + '...' : `${contact.title} ${contact.first_name} ${contact.last_name}`}
+                            {`${contact.title} ${contact.first_name} ${contact.last_name}`.length > 13 ? `${contact.title} ${contact.first_name} ${contact.last_name}`.substring(0, 10) + '...' : `${contact.title} ${contact.first_name} ${contact.last_name}`}
                         </p>
                         <button onClick={() => handleDelete(contact.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                             <XCircleIcon className="h-4 w-4" />
@@ -167,7 +160,7 @@ export default function Contact({ borderColour }) {
                             Meeting: {contact.meeting_date ? new Date(contact.meeting_date).toLocaleString() : 'No meeting date entered'}
                         </p>
                         <p className="text-xs">
-                            {contact.email ? truncateEmail(contact.email, 25) : 'No email entered'}
+                            {contact.email ? truncateEmail(contact.email, 20) : 'No email entered'}
                         </p>
                         <p className="text-xs">
                             {contact.phone_number ? (truncatePhoneNumber(contact.phone_number, 15)) : 'No phone number entered'}

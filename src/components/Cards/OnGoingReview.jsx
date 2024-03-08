@@ -114,15 +114,9 @@ export default function OnGoingReview({ borderColour, titleColors }) {
     const truncateEmail = (email, maxLength) => {
         if (email.length <= maxLength) return email;
 
-        const username = email.substring(0, email.lastIndexOf('@'));
-        const domain = email.substring(email.lastIndexOf('@') + 1);
-
-        if (username.length > maxLength - domain.length - 3) {
-            return `${username.substring(0, maxLength - domain.length - 3)}...@${domain}`;
-        } else {
-            return `${username}@${domain}`;
-        }
+        return `${email.substring(0, maxLength - 3)}...`;
     };
+
 
     // Edit a contact
     const handleEdit = async (id) => {
@@ -165,11 +159,11 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                 <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
                     {
                         OnGoingReviews.map(OnGoingReview => (
-                            <div key={OnGoingReview.id} onDoubleClick={() => handleEdit(OnGoingReview.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                            <div key={OnGoingReview.id} title="Double click to edit contact" onDoubleClick={() => handleEdit(OnGoingReview.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer " style={{...BorderStyle, minWidth: '165px'}}>
                             <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                                 <div className="flex justify-between w-full">
                                     <p className="font-extrabold text-sm text-white">
-                                        {`${OnGoingReview.title} ${OnGoingReview.first_name} ${OnGoingReview.last_name}`.length > 11 ? `${OnGoingReview.title} ${OnGoingReview.first_name} ${OnGoingReview.last_name}`.substring(0, 13) + '...' : `${OnGoingReview.title} ${OnGoingReview.first_name} ${OnGoingReview.last_name}`}
+                                        {`${OnGoingReview.title} ${OnGoingReview.first_name} ${OnGoingReview.last_name}`.length > 13 ? `${OnGoingReview.title} ${OnGoingReview.first_name} ${OnGoingReview.last_name}`.substring(0, 10) + '...' : `${OnGoingReview.title} ${OnGoingReview.first_name} ${OnGoingReview.last_name}`}
                                     </p>
                                     <button onClick={() => handleDelete(OnGoingReview.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                                         <XCircleIcon className="h-4 w-4" />
@@ -188,7 +182,7 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                                         Meeting: {OnGoingReview.meeting_date ? new Date(OnGoingReview.meeting_date).toLocaleString() : 'No meeting date entered'}
                                     </p>
                                     <p className="text-xs">
-                                        {OnGoingReview.email ? truncateEmail(OnGoingReview.email, 25) : 'No email entered'}
+                                        {OnGoingReview.email ? truncateEmail(OnGoingReview.email, 20) : 'No email entered'}
                                     </p>
                                     <p className="text-xs">
                                         {OnGoingReview.phone_number ? (truncatePhoneNumber(OnGoingReview.phone_number, 15)) : 'No phone number entered'}

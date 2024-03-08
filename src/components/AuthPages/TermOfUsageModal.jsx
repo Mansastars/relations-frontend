@@ -7,7 +7,7 @@ function TermOfUsageModal({ open, onClose }) {
         {open && (
             <Modal dismissible show={open} onClose={onClose}>
                 <Modal.Header>
-                    <h1 className=' text-dark-blue'>MANSA'S TERMS OF USAGE</h1>
+                    <p className=' text-dark-blue'>MANSA'S TERMS OF USAGE</p>
                 </Modal.Header>
                 <Modal.Body>
                     <TermOfUsage />

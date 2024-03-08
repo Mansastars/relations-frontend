@@ -72,14 +72,7 @@ export default function Pitch({ borderColour }) {
     const truncateEmail = (email, maxLength) => {
         if (email.length <= maxLength) return email;
 
-        const username = email.substring(0, email.lastIndexOf('@'));
-        const domain = email.substring(email.lastIndexOf('@') + 1);
-
-        if (username.length > maxLength - domain.length - 3) {
-            return `${username.substring(0, maxLength - domain.length - 3)}...@${domain}`;
-        } else {
-            return `${username}@${domain}`;
-        }
+        return `${email.substring(0, maxLength - 3)}...`;
     };
 
     // Function to truncate phone number while ensuring inclusion of country code and '+' sign
@@ -145,11 +138,11 @@ export default function Pitch({ borderColour }) {
             <div></div>
             ) : (
             pitches.map(pitch => (
-                <div key={pitch.id} onDoubleClick={() => handleEdit(pitch.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                <div key={pitch.id} onDoubleClick={() => handleEdit(pitch.id)} title="Double click to edit contact" className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
-                            {`${pitch.title} ${pitch.first_name} ${pitch.last_name}`.length > 11 ? `${pitch.title} ${pitch.first_name} ${pitch.last_name}`.substring(0, 13) + '...' : `${pitch.title} ${pitch.first_name} ${pitch.last_name}`}
+                            {`${pitch.title} ${pitch.first_name} ${pitch.last_name}`.length > 13 ? `${pitch.title} ${pitch.first_name} ${pitch.last_name}`.substring(0, 10) + '...' : `${pitch.title} ${pitch.first_name} ${pitch.last_name}`}
                         </p>
                         <button onClick={() => handleDelete(pitch.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                             <XCircleIcon className="h-4 w-4" />
@@ -168,7 +161,7 @@ export default function Pitch({ borderColour }) {
                             Meeting: {pitch.meeting_date ? new Date(pitch.meeting_date).toLocaleString() : 'No meeting date entered'}
                         </p>
                         <p className="text-xs">
-                            {pitch.email ? truncateEmail(pitch.email, 25) : 'No email entered'}
+                            {pitch.email ? truncateEmail(pitch.email, 20) : 'No email entered'}
                         </p>
                         <p className="text-xs">
                             {pitch.phone_number ? (truncatePhoneNumber(pitch.phone_number, 15)) : 'No phone number entered'}

@@ -72,14 +72,7 @@ export default function Deals({ borderColour }) {
     const truncateEmail = (email, maxLength) => {
         if (email.length <= maxLength) return email;
 
-        const username = email.substring(0, email.lastIndexOf('@'));
-        const domain = email.substring(email.lastIndexOf('@') + 1);
-
-        if (username.length > maxLength - domain.length - 3) {
-            return `${username.substring(0, maxLength - domain.length - 3)}...@${domain}`;
-        } else {
-            return `${username}@${domain}`;
-        }
+        return `${email.substring(0, maxLength - 3)}...`;
     };
 
     // Delete a card
@@ -144,11 +137,11 @@ export default function Deals({ borderColour }) {
             <div></div>
             ) : (
             deals.map(deal => (
-                <div key={deal.id} onDoubleClick={() => handleEdit(deal.id)} className="flex flex-col rounded-2xl max-w-34 mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                <div key={deal.id} onDoubleClick={() => handleEdit(deal.id)} title="Double click to edit contact" className="flex flex-col rounded-2xl max-w-34 mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
-                            {`${deal.title} ${deal.first_name} ${deal.last_name}`.length > 11 ? `${deal.title} ${deal.first_name} ${deal.last_name}`.substring(0, 13) + '...' : `${deal.title} ${deal.first_name} ${deal.last_name}`}
+                            {`${deal.title} ${deal.first_name} ${deal.last_name}`.length > 13 ? `${deal.title} ${deal.first_name} ${deal.last_name}`.substring(0, 10) + '...' : `${deal.title} ${deal.first_name} ${deal.last_name}`}
                         </p>
                         <button onClick={() => handleDelete(deal.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                             <XCircleIcon className="h-4 w-4" />
@@ -167,7 +160,7 @@ export default function Deals({ borderColour }) {
                             Meeting: {deal.meeting_date ? new Date(deal.meeting_date).toLocaleString() : 'No meeting date entered'}
                         </p>
                         <p className="text-xs">
-                            {deal.email ? truncateEmail(deal.email, 25) : 'No email entered'}
+                            {deal.email ? truncateEmail(deal.email, 20) : 'No email entered'}
                         </p>
                         <p className="text-xs">
                             {deal.phone_number ? (truncatePhoneNumber(deal.phone_number, 15)) : 'No phone number entered'}</p>

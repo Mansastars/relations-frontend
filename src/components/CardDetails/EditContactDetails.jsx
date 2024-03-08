@@ -62,7 +62,6 @@ function EditContactDetails({ onClose, contactDetails }) {
         }
 
         const user = localStorage.getItem('user');
-        console.log(user);
         const userData = {
             userId: user.id,
             title: formValue.title,

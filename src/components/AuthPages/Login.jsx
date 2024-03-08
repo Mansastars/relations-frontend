@@ -70,7 +70,7 @@ function Login() {
                                 onChange={handleInput}
                                 icon={visible ? <EyeIcon size={20} onClick={toggleVisibility} /> : <EyeOff size={20} onClick={toggleVisibility} />}
                             />
-                            <a href="" className=' text-sm text-mansa-blue'><u>Forgot password</u></a>
+                            <a href="" className=' text-sm text-mansa-blue'><u>Forgot password?</u></a>
                         </div>
                     </div>
                     <Button type='submit' text="Log In" />

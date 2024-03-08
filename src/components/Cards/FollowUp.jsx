@@ -131,14 +131,7 @@ export default function FollowUp({ borderColour, titleColors }) {
     const truncateEmail = (email, maxLength) => {
         if (email.length <= maxLength) return email;
 
-        const username = email.substring(0, email.lastIndexOf('@'));
-        const domain = email.substring(email.lastIndexOf('@') + 1);
-
-        if (username.length > maxLength - domain.length - 3) {
-            return `${username.substring(0, maxLength - domain.length - 3)}...@${domain}`;
-        } else {
-            return `${username}@${domain}`;
-        }
+        return `${email.substring(0, maxLength - 3)}...`;
     };
 
     // Function to truncate phone number while ensuring inclusion of country code and '+' sign
@@ -165,18 +158,18 @@ export default function FollowUp({ borderColour, titleColors }) {
                     <div style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
                         {
                             followUps.map(followUp => (
-                                <div key={followUp.id} onDoubleClick={() => handleEdit(followUp.id)} className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
+                                <div key={followUp.id} onDoubleClick={() => handleEdit(followUp.id)} title="Double click to edit contact" className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer" style={{...BorderStyle, minWidth: '165px'}}>
                                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                                     <div className="flex justify-between w-full">
                                         <p className="font-extrabold text-sm text-white">
-                                            {`${followUp.title} ${followUp.first_name} ${followUp.last_name}`.length > 11 ? `${followUp.title} ${followUp.first_name} ${followUp.last_name}`.substring(0, 13) + '...' : `${followUp.title} ${followUp.first_name} ${followUp.last_name}`}
+                                            {`${followUp.title} ${followUp.first_name} ${followUp.last_name}`.length > 13 ? `${followUp.title} ${followUp.first_name} ${followUp.last_name}`.substring(0, 10) + '...' : `${followUp.title} ${followUp.first_name} ${followUp.last_name}`}
                                         </p>
                                         <button onClick={() => handleDelete(followUp.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                                             <XCircleIcon className="h-4 w-4" />
                                         </button>
                                     </div>
                                     <p className="text-sm text-white">
-                                        { followUp.organization_name ? (followUp.organization_name.length > 15 ? followUp.organization_name.substring(0, 15) + '...' : followUp.organization_name) : 'No company entered'}
+                                        { followUp.organization_name ? (followUp.organization_name.length > 13 ? followUp.organization_name.substring(0, 10) + '...' : followUp.organization_name) : 'No company entered'}
                                     </p>
                                 </div>
                                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
@@ -188,7 +181,7 @@ export default function FollowUp({ borderColour, titleColors }) {
                                             Meeting: {followUp.meeting_date ? new Date(followUp.meeting_date).toLocaleString() : 'No meeting date entered'}
                                         </p>
                                         <p className="text-xs">
-                                            {followUp.email ? truncateEmail(followUp.email, 25) : 'No email entered'}
+                                            {followUp.email ? truncateEmail(followUp.email, 20) : 'No email entered'}
                                         </p>
                                         <p className="text-xs">
                                             {followUp.phone_number ? (truncatePhoneNumber(followUp.phone_number, 15)) : 'No phone number entered'}</p>

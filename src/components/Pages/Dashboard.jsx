@@ -2,19 +2,22 @@
 import Sidebar from "./SideBar";
 import { Button } from "../Reusables";
 import Modal from "../CardDetails/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tables } from "../TableDetails/Tables";
 import MoveContactModal from "../CardDetails/MoveContactModal";
 import api from "../api";
-import { useEffect } from "react";
 import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
 import FreeTrialBanner from "./FreeTrialBanner";
+import Loader from "../ReusableComponents/Loader";
+import { useAuthentication } from "../../hooks/CheckAuth"
+import { Navigate } from "react-router-dom";
 
 function Dasboard() {
     const [showModal, setShowModal] = useState(false)
     const [showMoveContactModal, setShowMoveContactModal] = useState(false)
     const [singleDeals, setSingleDeals] = useState([]);
     const currentDealId = localStorage.getItem('currentDealId');
+    const { isAuthenticated, checkingAuth } = useAuthentication();
 
     useEffect(() => {
       const fetchSingleDeals = async () => {
@@ -35,6 +38,17 @@ function Dasboard() {
 
       fetchSingleDeals();
     }, [currentDealId]); // Include currentDealId in the dependency array
+
+    // Check if user is authenticated
+    if (checkingAuth) {
+        return(
+            <Loader />
+        ) // You can show a loading indicator while checking authentication
+    }
+  
+  if (!isAuthenticated) {
+      return <Navigate to="/auth/login" />;
+  }
 
     return (
      <div>

@@ -126,12 +126,12 @@ export default function CreatedDeals() {
 
     return (
         <div className="flex flex-col gap-10 items-start justify-center w-full bg-light-grey">
-            <h1 className="text-dark-blue font-bold text-4xl self-center  bg-light-grey w-full text-center pb-5">Existing Dashboards</h1>
+            <h1 className="text-dark-blue font-bold text-4xl max-sm:text-2xl self-center  bg-light-grey w-full text-center pb-5">Existing Dashboards</h1>
             <div className="flex flex-row flex-wrap justify-center items-start gap-5">
                 {sortedDeals.map(deal => (
                     <div
                         key={deal.id}
-                        className="flex flex-col justify-start items-start w-72 max-lg:w-64 gap-2 rounded-xl border border-mansa-blue hover:border-dark-blue"
+                        className="flex flex-col justify-start items-start w-72 max-lg:w-64 max-sm:w-56 gap-2 rounded-xl border border-mansa-blue hover:border-dark-blue"
                     >     
                         <div
                             className="flex flex-col justify-start items-start w-full gap-2 cursor-pointer"
@@ -142,7 +142,7 @@ export default function CreatedDeals() {
                                     <XCircleIcon className="h-4 w-4" />
                                 </button>
                                 <div className=" flex flex-row gap-2 items-center">
-                                    <h2 className="font-bold text-2xl text-white text-nowrap w-full ">
+                                    <h2 className="font-bold text-2xl max-sm:text-xl text-white text-nowrap w-full ">
                                         {deal.deal_name.length > 14 ? `${deal.deal_name.substring(0, 14)}...` : deal.deal_name}
                                     </h2>
                                     <button onClick={() => handleDealUpdate(deal.id)} className=" text-white hover:text-dark-blue cursor-pointer">

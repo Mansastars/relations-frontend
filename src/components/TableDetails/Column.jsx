@@ -31,7 +31,7 @@ export function Column({ titles, titleColors, contents }) {
             <div className={ColumnClasses} style={ ColumnStyle}>
                 <div className="font-bold text-xl p-5 text-center w-full " style={TitleStyle}>{titles}</div>
             </div>
-            <div className=" w-full" style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
+            <div className=" w-full overflow-x-hidden" style={{overflowY: 'auto', maxHeight: 'calc(100vh - 100px)'}}>
                 {contents}
             </div>
         </div>

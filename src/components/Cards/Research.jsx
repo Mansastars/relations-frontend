@@ -117,14 +117,7 @@ export default function Research({ borderColour }) {
     const truncateEmail = (email, maxLength) => {
         if (email.length <= maxLength) return email;
 
-        const username = email.substring(0, email.lastIndexOf('@'));
-        const domain = email.substring(email.lastIndexOf('@') + 1);
-
-        if (username.length > maxLength - domain.length - 3) {
-            return `${username.substring(0, maxLength - domain.length - 3)}...@${domain}`;
-        } else {
-            return `${username}@${domain}`;
-        }
+        return `${email.substring(0, maxLength - 3)}...`;
     };
 
     // Function to truncate phone number while ensuring inclusion of country code and '+' sign
@@ -153,11 +146,12 @@ export default function Research({ borderColour }) {
                 onDoubleClick={() => handleEdit(research.id)}
                 className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer"
                 style={{...BorderStyle, minWidth: '165px'}}
+                title="Double click to edit contact"
                 >
                     <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                         <div className="flex justify-between w-full">
                             <p className="font-extrabold text-sm text-white">
-                                {`${research.title} ${research.first_name} ${research.last_name}`.length > 11 ? `${research.title} ${research.first_name} ${research.last_name}`.substring(0, 13) + '...' : `${research.title} ${research.first_name} ${research.last_name}`}
+                                {`${research.title} ${research.first_name} ${research.last_name}`.length > 13 ? `${research.title} ${research.first_name} ${research.last_name}`.substring(0, 10) + '...' : `${research.title} ${research.first_name} ${research.last_name}`}
                             </p>
                             <button onClick={() => handleDelete(research.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                                 <XCircleIcon className="h-4 w-4" />
@@ -176,7 +170,7 @@ export default function Research({ borderColour }) {
                                 Meeting: {research.meeting_date ? new Date(research.meeting_date).toLocaleString() : 'No meeting date entered'}
                             </p>
                             <p className="text-xs">
-                                {research.email ? truncateEmail(research.email, 25) : 'No email entered'}
+                                {research.email ? truncateEmail(research.email, 20) : 'No email entered'}
                             </p>
                             <p className="text-xs">
                                 {research.phone_number ? (truncatePhoneNumber(research.phone_number, 15)) : 'No phone number entered'}

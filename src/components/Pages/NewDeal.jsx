@@ -6,22 +6,36 @@ import { useState } from "react"
 import NewDealModal from "../DealDetails/NewDealModal"
 import CreatedDeals from "../DealDetails/CreatedDeal"
 import FreeTrialBanner from "./FreeTrialBanner"
+import { useAuthentication } from "../../hooks/CheckAuth"
+import Loader from "../ReusableComponents/Loader"
+import { Navigate } from "react-router-dom";
 
 // The all dashbord page. All dashboards appear here annd one can also create a dashboard on this page.
 export default function NewDealPage() {
     const [showNewDealModal, setShowNewDealModal] = useState(false)
+    const { isAuthenticated, checkingAuth } = useAuthentication();
+
+    if (checkingAuth) {
+        return(
+            <Loader />
+        ) // You can show a loading indicator while checking authentication
+    }
+    
+    if (!isAuthenticated) {
+        return <Navigate to="/auth/login" />;
+    }
 
     return (
         <div className=" h-screen w-full">
-            <div className=" sticky top-0">
+            <div className=" sticky top-0 w-full">
                 <FreeTrialBanner />
             </div>
-            <div className=" flex gap-5 w-full h-screen">
+            <div className=" flex gap-3 h-screen">
                 <div className="">
                     {/* w-fit max-[768px]:w-20 h-screen max-h-screen overflow-y-auto */}
                     <Sidebar />
                 </div>
-                <div className=" flex flex-col gap-20 w-full h-full ">
+                <div className=" flex flex-col gap-20 w-full max-sm:w-fit max-sm:pr-2 h-full ">
                     <div className=" flex pt-2 items-center gap-4">
                         <div onClick={() => setShowNewDealModal(true)} className="flex">
                             <Button text="Create a Dashboard" />
