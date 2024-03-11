@@ -53,7 +53,7 @@ function App() {
         {/* Restricted route */}
         <Route
           path="/alldeals"
-          element={isAuthenticated ? <NewDealPage /> : <Navigate to="/auth/login" />}
+          element={<NewDealPage />}
         />
         {/* Routes protected by authentication */}
         {isAuthenticated ? (
