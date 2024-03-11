@@ -55,18 +55,10 @@ function App() {
           path="/alldeals"
           element={<NewDealPage />}
         />
-        {/* Routes protected by authentication */}
-        {isAuthenticated ? (
-          <>
+        
             <Route path="/dashboard/:dealId" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
-          </>
-        ) : (
-          <>
-            <Route path="/dashboard/:dealId" element={<Navigate to="/auth/login" />} />
-            <Route path="/profile" element={<Navigate to="/auth/login" />} />
-          </>
-        )}
+         
         {/* Route for small screens */}
         {isSmallScreen && (
           <Route
