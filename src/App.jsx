@@ -7,6 +7,9 @@ import SignUp from "./components/AuthPages/SignUp";
 import Login from "./components/AuthPages/Login";
 import { useState, useEffect } from "react";
 import {Oval} from 'react-loader-spinner';
+import Cancel from "./components/Stripe/cancel";
+import Success from "./components/Stripe/success";
+import Payment from "./components/Stripe/payment";
 
 function App() {
   const isSmallScreen = window.innerWidth <= 768;
@@ -50,6 +53,9 @@ function App() {
         <Route path="/auth/sign_up" element={<SignUp />} />
         <Route path="/auth/sign_up" element={<SignUp />} />
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/cancel-payment" element={<Cancel/>}/>
+        <Route path="/successful-payment" element={<Success/>}/>
+        <Route path="/payment" element={<Payment/>}/>
         {/* Restricted route */}
         <Route
           path="/alldeals"
