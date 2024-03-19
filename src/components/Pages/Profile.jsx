@@ -5,27 +5,29 @@ import { Button } from "../Reusables";
 import FreeTrialBanner from "./FreeTrialBanner";
 import Sidebar from "./SideBar";
 import { Linkedin } from 'lucide-react';
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuthentication } from "../../hooks/CheckAuth";
 import Loader from "../ReusableComponents/Loader";
+import { useAuth } from "../../hooks/AuthContext";
+import { useEffect } from "react";
+import SidePanel from "./SidePanel";
 
 export default function Profile() {
-    const { isAuthenticated, checkingAuth } = useAuthentication();
-
-    // Check if user is authenticated
-    if (checkingAuth) {
-        return(
-            <Loader />
-        ) // You can show a loading indicator while checking authentication
-    }
-    
-    if (!isAuthenticated) {
-        return <Navigate to="/auth/login" />;
-    }
+    const navigate = useNavigate(); // Use useNavigate hook to navigate programmatically
+      
+    const { isAuthenticated } = useAuth(); // Access isAuthenticated from useAuth hook
 
     const BorderStyle = {
         borderBottom: '1px solid  #d3d3d3',
     };
+
+    // Check if user is authenticated
+    useEffect(() => {
+        // Redirect to login page if not authenticated
+        if (!isAuthenticated) {
+          navigate('/auth/login');
+        }
+      }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
 
     return (
         <div className="">
@@ -34,10 +36,10 @@ export default function Profile() {
             </div>
             <div className=" flex gap-3 h-screen">
                 <div className=" h-screen">
-                    <Sidebar />
+                    <SidePanel />
                 </div>
                 <div className=" flex flex-col w-full items-center overflow-y-auto">
-                    <div className=" bg-white py-10 px-6 flex flex-col justify-center mt-10 mb-10 rounded-2xl items-start gap-10 w-10/12 max-sm:w-[90%]">
+                    <div className=" bg-white py-10 px-6 max-sm:px-1 flex flex-col justify-center mt-10 mb-10 rounded-2xl items-start gap-10 w-10/12 max-sm:w-full">
                         <form action="" className=" w-full">
                             <div className=" flex flex-row max-sm:flex-col justify-between pb-8">
                                 <div>

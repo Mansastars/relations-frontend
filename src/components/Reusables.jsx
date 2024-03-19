@@ -33,8 +33,8 @@ export function SearchBar() {
 // Buttons
 export function Button({text}) {
     return (
-        <button className=" bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl">
-            {text}
+        <button className=" bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue">
+            <p className=" font-bold">{text}</p>
         </button>
     )
 }

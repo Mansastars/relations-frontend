@@ -1,0 +1,51 @@
+import { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
+import api from "../api";
+import Sucess from '../../assets/Sucess.png'
+import { Button } from '../Reusables';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+function PaymentSuccessPage() {
+    const navigate = useNavigate();
+
+    const successNavigate = useEffect(() => {
+        toast.success("Payment Successful!")
+        setTimeout(() => {
+            navigate("/alldashboards");
+        }, 5000)
+    }, []);
+
+    const handlePaymentSuccess = async () => {
+        try{
+            const sessionID = new URLSearchParams(location.search).get('session_id');
+            const response = await api.get(`/users/successful-payment?session_id=${sessionID}`);
+            if (response.data.message === 'jwt expired') {
+                navigate('/auth/login')
+            } else {
+                successNavigate
+            }
+        }catch(error){
+            console.error(error.message)
+        }       
+};
+
+  return (
+    <div className='w-screen px-4 my-10 min-h-[80vh] flex flex-col gap-10 justify-center items-center'>
+        <div className=' text-dark-blue mx-auto flex flex-col gap-7 justify-center items-center'>
+            <img src={Sucess} className=' w-28 h-28' alt="Payment Successful" />
+            <h3 className="text-4xl font-bold text-center">
+                Payment Successful!
+            </h3>
+            <p className=' text-center font-semibold text-lg'>
+                Congratulations! Your payment has been successfully processed. <br />
+                Thank you for choosing our services.
+            </p>
+        </div>
+        <Button text={"View Dashboards"} onClick={handlePaymentSuccess()} />
+        <ToastContainer />
+    </div>
+  )
+}
+
+export default PaymentSuccessPage

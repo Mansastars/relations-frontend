@@ -9,15 +9,18 @@ import api from "../api";
 import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
 import FreeTrialBanner from "./FreeTrialBanner";
 import Loader from "../ReusableComponents/Loader";
-import { useAuthentication } from "../../hooks/CheckAuth"
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/AuthContext"
+import SidePanel from "./SidePanel";
 
 function Dasboard() {
+    const navigate = useNavigate(); // Use useNavigate hook to navigate programmatically
+      
+    const { isAuthenticated } = useAuth(); // Access isAuthenticated from useAuth hook
     const [showModal, setShowModal] = useState(false)
     const [showMoveContactModal, setShowMoveContactModal] = useState(false)
     const [singleDeals, setSingleDeals] = useState([]);
     const currentDealId = localStorage.getItem('currentDealId');
-    const { isAuthenticated, checkingAuth } = useAuthentication();
 
     useEffect(() => {
       const fetchSingleDeals = async () => {
@@ -40,24 +43,21 @@ function Dasboard() {
     }, [currentDealId]); // Include currentDealId in the dependency array
 
     // Check if user is authenticated
-    if (checkingAuth) {
-        return(
-            <Loader />
-        ) // You can show a loading indicator while checking authentication
-    }
-  
-  if (!isAuthenticated) {
-      return <Navigate to="/auth/login" />;
-  }
+    useEffect(() => {
+        // Redirect to login page if not authenticated
+        if (!isAuthenticated) {
+          navigate('/auth/login');
+        }
+      }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
 
     return (
      <div>
-        <div className=" sticky top-0">
+        <div className=" sticky top-0 z-50">
           <FreeTrialBanner />
         </div>
         <div className=" flex gap-3 h-screen">
           <div className="">
-            <Sidebar />
+            <SidePanel />
           </div>
           <div className=" flex flex-col gap-2 w-full mr-2 overflow-auto">
             <div className=" flex pt-2 items-center gap-4">

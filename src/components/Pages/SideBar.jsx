@@ -10,8 +10,10 @@ import Star from "../../assets/Star.svg";
 import Billing from "../../assets/Billing.svg";
 import { SidebarItem } from "../Reusables";
 import { LogOutIcon } from "lucide-react";
+import { useAuth } from "../../hooks/AuthContext";
 
 function Sidebar() {
+    const { logout } = useAuth();
     const [activeItem, setActiveItem] = useState(1);
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
 
@@ -27,9 +29,15 @@ function Sidebar() {
         };
     }, []);
 
-    const handleLogout = () => {
-        localStorage.clear();
-        window.location.href = 'https://relations.mansastars.com/';
+    const handleLogout = async () => {
+        try {
+            // Calling the logout function from the authentication context
+            await logout();
+            // After successful logout, redirect the user to the login page or any other page
+            // window.location.href = 'https://relations.mansastars.com/';
+          } catch (error) {
+            console.error('Logout error:', error);
+          }
     };
 
     const handleItemClick = (itemId) => {

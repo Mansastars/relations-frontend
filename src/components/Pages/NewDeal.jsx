@@ -6,42 +6,42 @@ import { useState } from "react"
 import NewDealModal from "../DealDetails/NewDealModal"
 import CreatedDeals from "../DealDetails/CreatedDeal"
 import FreeTrialBanner from "./FreeTrialBanner"
-import { useAuthentication } from "../../hooks/CheckAuth"
 import Loader from "../ReusableComponents/Loader"
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/AuthContext"
+import { useEffect } from "react"
+import SidePanel from "./SidePanel"
 
 // The all dashbord page. All dashboards appear here annd one can also create a dashboard on this page.
 export default function NewDealPage() {
     const [showNewDealModal, setShowNewDealModal] = useState(false)
-    const { isAuthenticated, checkingAuth } = useAuthentication();
-
-    if (checkingAuth) {
-        return(
-            <Loader />
-        ) // You can show a loading indicator while checking authentication
-    }
+    const navigate = useNavigate(); // Use useNavigate hook to navigate programmatically
     
-    if (!isAuthenticated) {
-        return <Navigate to="/auth/login" />;
-    }
+    const { isAuthenticated } = useAuth(); // Access isAuthenticated from useAuth hook
 
+    useEffect(() => {
+        // Redirect to login page if not authenticated
+        if (!isAuthenticated) {
+          navigate('/auth/login');
+        }
+      }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
+    
     return (
         <div className=" h-screen w-full">
-            <div className=" sticky top-0 w-full">
+            <div className=" sticky top-0 w-full z-50">
                 <FreeTrialBanner />
             </div>
-            <div className=" flex gap-3 h-screen">
+            <div className=" flex gap-3 h-screen w-full">
                 <div className="">
-                    {/* w-fit max-[768px]:w-20 h-screen max-h-screen overflow-y-auto */}
-                    <Sidebar />
+                    <SidePanel />
                 </div>
-                <div className=" flex flex-col gap-20 w-full max-sm:w-fit max-sm:pr-2 h-full ">
+                <div className=" flex flex-col gap-20 w-full max-sm:w-full max-sm:pr-2 h-full ">
                     <div className=" flex pt-2 items-center gap-4">
                         <div onClick={() => setShowNewDealModal(true)} className="flex">
                             <Button text="Create a Dashboard" />
                         </div>
                     </div>
-                    <div className=" overflow-x-auto pb-5">
+                    <div className=" overflow-x-auto pb-5 max-sm:flex max-sm:justify-center items-center">
                         <CreatedDeals />
                     </div>
                 </div>

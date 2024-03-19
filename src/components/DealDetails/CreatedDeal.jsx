@@ -20,6 +20,9 @@ export default function CreatedDeals() {
                 // Assuming response.data contains the array of deals
                 const fetchedDeals = response.data.deals;
                 setDeals(fetchedDeals);
+                if (response.data.message === 'jwt expired') {
+                    navigate('/auth/login')
+                }
             } catch (error) {
                 console.error('Error fetching deals:', error);
             }
@@ -106,7 +109,6 @@ export default function CreatedDeals() {
                 window.location.reload();
             }
         } catch (error) {
-            console.log(dealId);
             console.error('Error updating deal details:', error);
             Swal.fire('Error', 'Failed to update deal details', 'error');
         }
@@ -125,7 +127,7 @@ export default function CreatedDeals() {
     };
 
     return (
-        <div className="flex flex-col gap-10 items-start justify-center w-full bg-light-grey">
+        <div className="flex flex-col gap-10 items-start justify-center w-full bg-light-grey max-sm:items-center">
             <h1 className="text-dark-blue font-bold text-4xl max-sm:text-2xl self-center  bg-light-grey w-full text-center pb-5">Existing Dashboards</h1>
             <div className="flex flex-row flex-wrap justify-center items-start gap-5">
                 {sortedDeals.map(deal => (

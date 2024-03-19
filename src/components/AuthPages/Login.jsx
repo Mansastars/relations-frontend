@@ -3,12 +3,16 @@ import { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeOff } from 'lucide-react';
+import { useAuth } from '../../hooks/AuthContext';
 
 function Login() {
     // Connection wth backend and error and success handling
+    const { login } = useAuth();
+
     const [formValue, setFormValue] = useState({email:'', password:''})
     const [errorMessage, setErrorMessage] = useState("");
     const [visible, setVisible] = useState(false)
+    const [loading, setLoading] = useState(false);
     
     const navigate = useNavigate();
 
@@ -21,6 +25,7 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
     
         const userData = {
             email: formValue.email,
@@ -28,18 +33,20 @@ function Login() {
         };
     
         try {
-            const response = await api.post('/users/login', userData);
-            localStorage.setItem("user", JSON.stringify(response.data.user))
-            localStorage.setItem("token", response.data.token)
+            await login(userData)
+            // const response = await api.post('/users/login', userData);
+            // localStorage.setItem("user", JSON.stringify(response.data.user))
+            // localStorage.setItem("token", response.data.token)
             navigate("/alldashboards");
         } catch (error) {
             console.log(error);
-            if (error.response.data.message) {
+            if (error.response && error.response.data && error.response.data.message) {
                 setErrorMessage(error.response.data.message);
             } else {
-                setErrorMessage("Something went wrong. Please try again."); // set error message
+                setErrorMessage("Something went wrong. Please try again."); // set generic error message
             }
-            window.scrollTo(0, 0); //scroll to the top of the page
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -73,7 +80,7 @@ function Login() {
                             <a href="" className=' text-sm text-mansa-blue'><u>Forgot password?</u></a>
                         </div>
                     </div>
-                    <Button type='submit' text="Log In" />
+                    <Button type='submit' text={loading ? "Logging In..." : "Log In"} disabled={loading} />
                 </form>
             </div>
         </div>

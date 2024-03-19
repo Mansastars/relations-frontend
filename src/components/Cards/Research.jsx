@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import EditContactDetails from "../CardDetails/EditContactDetails";
 import {Oval} from 'react-loader-spinner';
-import { Tooltip } from "flowbite-react";
 import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
+import { useNavigate } from "react-router-dom";
 
 // Research
 export default function Research({ borderColour }) {
@@ -20,8 +20,7 @@ export default function Research({ borderColour }) {
     const [error, setError] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
     const [contactDetails, setContactDetails] = useState(null);
-    const [showTooltip, setShowTooltip] = useState(false);
-    let timeoutId;
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchResearches = async () => {
@@ -38,6 +37,9 @@ export default function Research({ borderColour }) {
                 setResearches(response.data.data);
                 // Set loading to false to indicate that data loading is complete
                 setLoading(false);
+                if (response.data.message === 'jwt expired') {
+                    navigate('/auth/login')
+                }
             } catch (error) {
                 setError(error);
                 // Set loading to false to indicate that data loading is complete

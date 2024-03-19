@@ -15,6 +15,7 @@ function SignUp() {
     const [ConfirmVisible, setConfirmVisible] = useState(false)
     const [openModal, setOpenModal] = useState(false);
     const [openTermOfUsageModal, setOpenTermOfUsageModal] = useState(false)
+    const [loading, setLoading] = useState(false);
     
     const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ function SignUp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
     
         const userData = {
             first_name: formValue.firstName,
@@ -37,16 +39,18 @@ function SignUp() {
         };
     
         try {
-            const response = await api.post('/users/register', userData);
+            await api.post('/users/register', userData);
             navigate("/auth/login");
         } catch (error) {
             console.log(error);
-            if (error.response.data.message) {
+            if (error.response && error.response.data && error.response.data.message) {
                 setErrorMessage(error.response.data.message);
             } else {
-                setErrorMessage("Something went wrong. Please try again."); // set error message
+                setErrorMessage("Something went wrong. Please try again."); // set generic error message
             }
             window.scrollTo(0, 0); //scroll to the top of the page
+        } finally {
+            setLoading(false); // Stop loading
         }
     };
 
@@ -122,7 +126,7 @@ function SignUp() {
                             </div>
                         </div>
                     </div>
-                    <Button type='submit' text="Sign Up" />
+                    <Button type='submit' text={loading ? "Signing Up..." : "Sign Up"} disabled={loading} />
                 </form>
             </div>
         </div>
