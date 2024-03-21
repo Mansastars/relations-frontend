@@ -5,9 +5,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import x_button from '../../assets/x-button.png'
 import { useEffect } from "react";
+import { useAuth } from "../../hooks/AuthContext";
 
 const PaymentCancellation = () => {
     const navigate = useNavigate()
+    const { isAuthenticated } = useAuth(); // Access isAuthenticated from useAuth hook
+
+    useEffect(() => {
+        // Redirect to login page if not authenticated
+        if (!isAuthenticated) {
+            navigate('/auth/login');
+        }
+    }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
 
     useEffect(() => {
         // Display cancellation toast when the component mounts

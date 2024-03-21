@@ -9,8 +9,10 @@ function FreeTrialBanner() {
     const [email, setEmail] = useState("");
     const [userId, setUserId] = useState("");
     const [planType, setPlanType] = useState("");
+    const [showTrialBanner, setShowTrialBanner] = useState(false); // Track banner visibility
     const navigate = useNavigate();
     const userData = JSON.parse(localStorage.getItem('user'));
+    const showBanner = localStorage.getItem('showBanner');
 
     // Code to subcribe in stripe
     useEffect(() => {
@@ -23,16 +25,18 @@ function FreeTrialBanner() {
     }, []);
 
     useEffect(() => {
-        if (userData.createdAt) {
-            const trialStartDate = new Date(userData.createdAt);
-            const trialEndDate = new Date(trialStartDate);
-            trialEndDate.setDate(trialStartDate.getDate() + 7); // Trial period is 7 days
-            const currentDate = new Date();
-            const remainingTime = trialEndDate - currentDate;
-            const remainingDays = Math.ceil(remainingTime / (1000 * 60 * 60 * 24));
-            setDaysLeft(remainingDays);
-        }
-    }, [userData.createdAt]);
+        const trialStartDate = new Date(userData.createdAt);
+        const trialEndDate = new Date(trialStartDate);
+        trialEndDate.setDate(trialStartDate.getDate() + 7); // Trial period is 7 days
+        const currentDate = new Date();
+        const remainingTime = trialEndDate - currentDate;
+        const remainingDays = Math.ceil(remainingTime / (1000 * 60 * 60 * 24));
+        setDaysLeft(remainingDays);
+    }, [showBanner]);
+
+    useEffect(() => {
+        setShowTrialBanner(showBanner === 'true' && daysLeft > 0);
+    }, [showBanner, daysLeft]);
 
     const checkout = async (plan, userId) => {
         const data = {
@@ -55,8 +59,6 @@ function FreeTrialBanner() {
             console.error('Error:', error);
         }
     };
-
-    const showTrialBanner = localStorage.getItem('showBanner') === 'true' && daysLeft > 0 && !userData.is_subscribed;
 
     // Limited time offer
 

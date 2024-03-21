@@ -5,13 +5,23 @@ import Sucess from '../../assets/Sucess.png'
 import { Button } from '../Reusables';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../../hooks/AuthContext';
 
 function PaymentSuccessPage() {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth(); // Access isAuthenticated from useAuth hook
+
+    useEffect(() => {
+        // Redirect to login page if not authenticated
+        if (!isAuthenticated) {
+            navigate('/auth/login');
+        }
+    }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
 
     const successNavigate = useEffect(() => {
         toast.success("Payment Successful!")
         setTimeout(() => {
+
             navigate("/alldashboards");
         }, 5000)
     }, []);
@@ -20,11 +30,21 @@ function PaymentSuccessPage() {
         try{
             const sessionID = new URLSearchParams(location.search).get('session_id');
             const response = await api.get(`/users/successful-payment?session_id=${sessionID}`);
+
+            const userDetails = await api.get(`/users/profile/`)
+            
+            localStorage.setItem('user', JSON.stringify(userDetails.data.user));
+
+            localStorage.setItem('showBanner', userDetails.data.showBanner.toString());
+
+            localStorage.setItem('showBilling', userDetails.data.showBilling.toString());
+
             if (response.data.message === 'jwt expired') {
                 navigate('/auth/login')
             } else {
                 successNavigate
             }
+
         }catch(error){
             console.error(error.message)
         }       

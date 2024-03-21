@@ -41,7 +41,7 @@ export default function NewDealPage() {
                             <Button text="Create a Dashboard" />
                         </div>
                     </div>
-                    <div className=" overflow-x-auto pb-5 max-sm:flex max-sm:justify-center items-center">
+                    <div className=" overflow-x-auto pb-5 items-center">
                         <CreatedDeals />
                     </div>
                 </div>

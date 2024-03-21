@@ -19,7 +19,8 @@ export const AuthProvider = ({ children }) => {
         // Save user data and token to localStorage
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
-        localStorage.setItem('showBanner', JSON.stringify(showBanner));
+        localStorage.setItem('showBanner', response.data.showBanner.toString());
+        localStorage.setItem('showBilling', response.data.showBilling.toString());
         localStorage.setItem('numberOfDaysLeft', numberOfDaysLeft);
   
         // Update isAuthenticated state

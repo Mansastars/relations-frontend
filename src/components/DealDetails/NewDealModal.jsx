@@ -67,7 +67,7 @@ function NewDealModal({onClose}) {
         <div className=' mt-10 flex flex-col gap-5'>
             <button onClick={onClose} className=' place-self-end text-dark-blue'><X size={30}/></button>
             <div className=' bg-white w-full rounded-xl px-20 max-md:px-5 py-10 flex flex-col gap-7 items-center mx-4 justify-center'>
-                <h1 className=' text-dark-blue text-3xl font-extrabold'>Create a New Dashboard</h1>
+                <h1 className=' text-dark-blue text-3xl max-sm:text-xl font-extrabold'>Create a New Dashboard</h1>
                 <form onSubmit={ handleSubmit } className=' flex flex-col gap-5 justify-center'>
                     {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
                     <div className='flex flex-col gap-5 '>

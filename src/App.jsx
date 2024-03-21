@@ -6,6 +6,7 @@ import ProtectedRoute from './hooks/ProtectedRoute';
 import SidePanel from './components/Pages/SidePanel';
 import PaymentSuccessPage from './components/Stripe/PaymentSuccessPage';
 import PaymentCancellation from './components/Stripe/PaymentCancellation';
+import Billing from './components/Pages/Billing';
 
 // Lazy loading implementation
 const SignUp = lazy(() => import("./components/AuthPages/SignUp"));
@@ -37,6 +38,7 @@ function App() {
 
               <Route path="/profile" element={<Profile />} />
               <Route path="/pricing" element={<PaymentOption />} />
+              <Route path="/billing" element={<Billing />} />
 
               <Route path="/successful-payment" element={<PaymentSuccessPage />} />
               <Route path="/cancel-payment" element={<PaymentCancellation />}/>

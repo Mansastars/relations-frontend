@@ -19,7 +19,13 @@ export default function CreatedDeals() {
                 const response = await api.get('/deals/deals');
                 // Assuming response.data contains the array of deals
                 const fetchedDeals = response.data.deals;
+                
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                localStorage.setItem('showBanner', response.data.showBanner.toString());
+                localStorage.setItem('showBilling', response.data.showBilling.toString());
+
                 setDeals(fetchedDeals);
+                
                 if (response.data.message === 'jwt expired') {
                     navigate('/auth/login')
                 }
@@ -145,7 +151,7 @@ export default function CreatedDeals() {
                                 </button>
                                 <div className=" flex flex-row gap-2 items-center">
                                     <h2 className="font-bold text-2xl max-sm:text-xl text-white text-nowrap w-full ">
-                                        {deal.deal_name.length > 14 ? `${deal.deal_name.substring(0, 14)}...` : deal.deal_name}
+                                        {deal.deal_name.length > 14 ? `${deal.deal_name.substring(0, 11)}...` : deal.deal_name}
                                     </h2>
                                     <button onClick={() => handleDealUpdate(deal.id)} className=" text-white hover:text-dark-blue cursor-pointer">
                                         <Edit2Icon size={24} />
