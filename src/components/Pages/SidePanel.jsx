@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import MansaLogo from "../../assets/MansaLogo.png";
 import dashboard from "../../assets/dashboard.svg";
@@ -13,7 +13,9 @@ import { ArrowLeftCircle, LogOutIcon, MenuIcon, X } from "lucide-react";
 import { useAuth } from "../../hooks/AuthContext";
 
 function SidePanel() {
-    const [isOpen, setIsOpen] = useState(false); // Initially set to true, assuming the side panel is open
+    const [isOpen, setIsOpen] = useState(() => {
+        return window.innerWidth > 768 ? true : false;
+    }); // Initially set to true, assuming the side panel is open
     const { logout } = useAuth();
 
     const togglePanel = () => {
@@ -33,7 +35,7 @@ function SidePanel() {
     return (
         <div 
         className={
-            ` h-screen flex flex-col ${isOpen ? ' w-56' : ' w-20 justify-center'} bg-dark-blue text-white
+            ` h-screen flex flex-col ${isOpen ? ' w-56' : ' w-20 max-sm:w-16 justify-center'} bg-dark-blue text-white
             transition-all duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-0'} overflow-y-auto max-h-full max-sm:h-full`
             }
         >
@@ -46,7 +48,7 @@ function SidePanel() {
                     {isOpen ? (
                         <X size={32} className=' text-white hover:text-red-700 absolute top-2 right-2' />
                     ) : (
-                        <ArrowLeftCircle size={30} className=' text-white hover:text-mansa-blue mt-8 max-sm:hidden' />
+                        <ArrowLeftCircle size={30} className=' text-white hover:text-mansa-blue mt-8 max-[768px]:hidden' />
                     )}
                 </button>
             </div>

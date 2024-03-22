@@ -11,7 +11,7 @@ import EditDealModal from "./EditDealModal";
 export default function CreatedDeals() {
     const [deals, setDeals] = useState([]);
     const navigate = useNavigate()
-    const isSmallScreen = window.innerWidth <= 768;
+    const isSmallScreen = window.innerWidth < 765;
 
     useEffect(() => {
         const fetchDeals = async () => {
@@ -146,9 +146,11 @@ export default function CreatedDeals() {
                             onClick={() => handleClickDeal(deal.id)}
                         >
                             <div className=" flex flex-col w-full gap-2 bg-mansa-blue rounded-t-xl px-4 py-3">
-                                <button onClick={() => handleDelete(deal.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
-                                    <XCircleIcon className="h-4 w-4" />
-                                </button>
+                                <div>
+                                    <button onClick={() => handleDelete(deal.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
+                                        <XCircleIcon className="h-4 w-4" />
+                                    </button>
+                                </div>
                                 <div className=" flex flex-row gap-2 items-center">
                                     <h2 className="font-bold text-2xl max-sm:text-xl text-white text-nowrap w-full ">
                                         {deal.deal_name.length > 14 ? `${deal.deal_name.substring(0, 11)}...` : deal.deal_name}
