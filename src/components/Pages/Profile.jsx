@@ -231,7 +231,7 @@ export default function Profile() {
                                 </div>
                                 <p className="text-dark-blue text-base">Brief description of your profile.</p>
                             </div>
-                            <ToastContainer />
+                            {/* <ToastContainer /> */}
                         </form>
 
                         <form onSubmit={handleEmailSubmit} className=" w-full pb-8" style={BorderStyle}>
@@ -248,7 +248,7 @@ export default function Profile() {
                                 <FullInput type="email" title="Email" placeholder="sundi@sankore.com" id="email" value={formValue.email} onChange={handleEmailInput} />
                                 <p className="text-dark-blue text-base">You will need this email to log in.</p>
                             </div>
-                            <ToastContainer />
+                            {/* <ToastContainer /> */}
                         </form>
 
                         <form onSubmit={handlePasswordSubmit} className=" w-full pb-8" style={BorderStyle}>
@@ -290,7 +290,7 @@ export default function Profile() {
                                 </div>
                                 <p className="text-dark-blue text-base">Must be at least 8 characters long.</p>
                             </div>
-                            <ToastContainer />
+                            {/* <ToastContainer /> */}
                         </form>
 
                         <div className=" w-full pb-8" style={BorderStyle}>
@@ -311,7 +311,7 @@ export default function Profile() {
                                 </div>
                             </div>
                         </div>
-
+                        <ToastContainer />
                     </div>
                 </div>
         </div>
