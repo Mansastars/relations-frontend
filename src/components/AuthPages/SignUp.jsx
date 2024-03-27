@@ -65,7 +65,7 @@ function SignUp() {
 
   return (
     <div className="mx-2 flex justify-center">
-        <div className='bg-white p-5 md:p-16 flex flex-col mt-10 mb-5 rounded-2xl h-full w-1/2 max-md:w-4/5'>
+        <div className='bg-white p-5 md:p-16 flex flex-col mt-10 mb-5 rounded-2xl h-full w-1/2 max-md:w-[90%]'>
             <div className=' flex flex-col gap-5 h-fit '>
                 <div className=' flex flex-col justify-center items-center'>
                     <h1 className=' text-dark-blue font-extrabold text-5xl mb-5'>Sign Up</h1>
@@ -92,7 +92,7 @@ function SignUp() {
                                 value={formValue.password}
                                 placeholder='•••••••••'
                                 onChange={handleInput}
-                                icon={visible ? <EyeIcon size={20} onClick={toggleVisibility} /> : <EyeOff size={20} onClick={toggleVisibility} />}
+                                icon={visible ? <EyeIcon size={16} onClick={toggleVisibility} /> : <EyeOff size={16} onClick={toggleVisibility} />}
                             />
                           
                             <SignUpRequired
@@ -102,7 +102,7 @@ function SignUp() {
                                 placeholder='•••••••••'
                                 value={formValue.confirmPassword}
                                 onChange={handleInput}
-                                icon={ConfirmVisible ? <EyeIcon size={20} onClick={toggleConfirmVisibility} /> : <EyeOff size={20} onClick={toggleConfirmVisibility} />}
+                                icon={ConfirmVisible ? <EyeIcon size={16} onClick={toggleConfirmVisibility} /> : <EyeOff size={16} onClick={toggleConfirmVisibility} />}
                             />
 
                             <div className=' flex flex-row gap-2 items-center'>

@@ -82,7 +82,7 @@ function FreeTrialBanner() {
         {showLimitedTimeOffer &&
         <div className=' flex gap-3 items-center text-black'>
             <Tag size={24} />
-            <p className=' font-bold text-xl max-sm:text-base'>Limited Time Offer! <span onClick={() => checkout(Number(23.99), userId)} className=' underline cursor-pointer'>Subscribe</span> for only €23.99.</p>
+            <p className=' font-bold text-xl max-sm:text-base'>Limited Time Offer! <span onClick={() => checkout(Number(23.99), userId)} className=' underline cursor-pointer'>Subscribe</span> for only €23.99 until 31.03.2024.</p>
         </div>
         }
 

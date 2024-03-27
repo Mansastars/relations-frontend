@@ -63,7 +63,7 @@ export function FormInput({ type, title, placeholder, id, value, onChange }) {
 }
 
 // Form template for not required login FULL
-export function FullInput({ type, title, placeholder, id, value, onChange }) {
+export function FullInput({ type, title, placeholder, id, value, onChange, icon }) {
     return (
         <div className=" relative col-span-full w-full">
             <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
@@ -80,6 +80,9 @@ export function FullInput({ type, title, placeholder, id, value, onChange }) {
                     value={value}
                     onChange={onChange}
                 />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">
+                    {icon}
+                </div>
             </div>
         </div>
     )
@@ -112,7 +115,7 @@ export function SignUpRequired({ type, title, placeholder, id, autoComplete, val
     )
 }
 
-// Form template for required inputs
+// Form template for required inputs FULL
 export function FormInputRequired({ type, title, placeholder, id, autoComplete, value, onChange }) {
     return (
         <div className=" relative col-span-full w-60 max-lg:w-full">
@@ -225,6 +228,18 @@ export const TimeForm = ({value, onChange}) => {
             value={value}
             onChange={onChange}
             />
+        </div>
+    )
+}
+
+export const SocialAccount = () => {
+    return(
+        <div className="flex flex-col pt-3 pb-8 w-full" style={BorderStyle}>
+            <h2 className=" text-dark-blue font-bold text-xl pb-6">Social Accounts</h2>
+            <button className=" flex items-center gap-5 border-2 border-[blue] w-fit bg-white text-[blue] px-6 py-3 rounded-xl transition-all duration-200 shadow" >
+                <Linkedin color="blue" />
+                <p className="font-bold">Continue with LinkedIn</p>
+            </button>
         </div>
     )
 }
