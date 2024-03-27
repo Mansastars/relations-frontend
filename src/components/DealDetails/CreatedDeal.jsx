@@ -1,12 +1,11 @@
 // Created Deals
-import { DeleteIcon, Edit2Icon } from "lucide-react";
+import { Edit2Icon } from "lucide-react";
 import api from "../api";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { XCircleIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import EditDealModal from "./EditDealModal";
 
 export default function CreatedDeals() {
     const [deals, setDeals] = useState([]);

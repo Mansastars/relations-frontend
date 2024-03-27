@@ -34,9 +34,6 @@ function Login() {
     
         try {
             await login(userData)
-            // const response = await api.post('/users/login', userData);
-            // localStorage.setItem("user", JSON.stringify(response.data.user))
-            // localStorage.setItem("token", response.data.token)
             navigate("/alldashboards");
         } catch (error) {
             console.log(error);
@@ -57,7 +54,7 @@ function Login() {
 
   return (
     <div className=" mx-2 flex justify-center relative top-10">
-        <div className='bg-white px-5 py-5 flex flex-col mt-10 mb-5 rounded-2xl h-full w-1/2 max-md:w-4/5'>
+        <div className='bg-white px-5 py-5 flex flex-col mt-10 mb-5 rounded-2xl h-full w-1/2 max-md:w-[90%]'>
             <div className=' flex flex-col justify-center items-center gap-5 h-fit '>
                 <div className=' flex flex-col justify-center items-center'>
                     <h1 className=' text-dark-blue font-extrabold text-5xl mb-5'>Log In</h1>
@@ -75,7 +72,7 @@ function Login() {
                                 placeholder='•••••••••'
                                 value={formValue.password}
                                 onChange={handleInput}
-                                icon={visible ? <EyeIcon size={20} onClick={toggleVisibility} /> : <EyeOff size={20} onClick={toggleVisibility} />}
+                                icon={visible ? <EyeIcon size={16} onClick={toggleVisibility} /> : <EyeOff size={16} onClick={toggleVisibility} />}
                             />
                             <a href="" className=' text-sm text-mansa-blue'><u>Forgot password?</u></a>
                         </div>
