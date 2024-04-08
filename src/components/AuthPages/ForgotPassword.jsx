@@ -91,9 +91,9 @@ function ForgotPassword() {
                         <div>
                           <SignUpRequired
                               type={visible ? "text" : "password"}
-                              title="Password*"
+                              title="New Password*"
                               id="new_password"
-                              placeholder='•••••••••'
+                              placeholder='Enter new Password'
                               value={formValue.new_password}
                               onChange={handleInput}
                               icon={visible ? <EyeIcon size={16} onClick={toggleVisibility} /> : <EyeOff size={16} onClick={toggleVisibility} />}
@@ -109,7 +109,7 @@ function ForgotPassword() {
                             type={confirmVisible ? "text" : "password"}
                             title="Confirm Password*"
                             id="confirm_password"
-                            placeholder='•••••••••'
+                            placeholder='Confirm new Password'
                             value={formValue.confirm_password}
                             onChange={handleInput}
                             icon={confirmVisible ? <EyeIcon size={16} onClick={toggleConfirmVisibility} /> : <EyeOff size={16} onClick={toggleConfirmVisibility} />}
