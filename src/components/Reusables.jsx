@@ -2,6 +2,8 @@
 import { useState } from "react"
 import "../App.css"
 import search from "../assets/search.svg"
+import 'react-phone-number-input/style.css'
+import PhoneInput, { formatPhoneNumber, formatPhoneNumberIntl, isValidPhoneNumber } from 'react-phone-number-input'
 
 // Sidebar items content
 export function SidebarItem({icon, text, activeItem, setActiveItem, id}) {
@@ -31,54 +33,79 @@ export function SearchBar() {
 }
 
 // Buttons
-export function Button({text}) {
+export function Button({text, onClick}) {
     return (
-        <button className=" bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue">
+        <button onClick={onClick} className=" bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue">
             <p className=" font-bold">{text}</p>
         </button>
     )
 }
 
-// Form template for not required inputs
-export function FormInput({ type, title, placeholder, id, value, onChange }) {
+// Form template for not required inputs (NOT FULL)
+export function FormInput({ type, title, placeholder, id, value, onChange, min }) {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
     return (
-        <div className=" relative col-span-full w-60 max-lg:w-full">
-            <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+        <div className={` relative col-span-full w-60 max-lg:w-full ${isFocused ? 'focus' : ''}`}>
+            <label htmlFor={id} className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
                 { title }
             </label>
-            <div className="mt-1">
+            <div className={`mt-1 ${isFocused ? 'focus' : ''}`}>
                 <input
                     type={type}
                     name={id}
                     id={id}
                     autoComplete={id}
                     placeholder={placeholder}
-                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-grey-400 focus:outline-none focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    min={min}
+                    className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                     value={value}
                     onChange={onChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                 />
             </div>
         </div>
     )
 }
 
-// Form template for not required login FULL
-export function FullInput({ type, title, placeholder, id, value, onChange, icon }) {
+// Form template for not required login FULL (FULL)
+export function FullInput({ type, title, placeholder, id, value, onChange, icon, min }) {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
     return (
-        <div className=" relative col-span-full w-full">
-            <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+        <div className={` relative col-span-full w-full ${isFocused ? 'focus' : ''}`}>
+            <label htmlFor={id} className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
                 { title }
             </label>
-            <div className="mt-1">
+            <div className={`mt-1 ${isFocused ? 'focus' : ''}`}>
                 <input
                     type={type}
                     name={id}
                     id={id}
                     autoComplete={id}
                     placeholder={placeholder}
-                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-grey-400 focus:outline-none focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                     value={value}
+                    min={min}
                     onChange={onChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">
                     {icon}
@@ -88,24 +115,37 @@ export function FullInput({ type, title, placeholder, id, value, onChange, icon 
     )
 }
 
-// Form template for required inputs
-export function SignUpRequired({ type, title, placeholder, id, autoComplete, value, onChange, icon }) {
+// Form template for required inputs (FULL)
+export function SignUpRequired({ type, title, placeholder, id, autoComplete, value, onChange, icon, min }) {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
     return (
-        <div className=" relative col-span-full w-full">
-            <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+        <div className={`relative col-span-full w-full ${isFocused ? 'focus' : ''}`}>
+            <label htmlFor={id} className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
                 { title }
             </label>
-            <div className="mt-1 w-full">
+            <div className={`mt-1 w-full ${isFocused ? 'focus' : ''}`}>
                 <input
                     type={type}
                     name={id}
                     id={id}
                     autoComplete={autoComplete}
                     placeholder={placeholder}
+                    min={min}
                     required
-                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-grey-400 focus:outline-none focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                     value={value}
                     onChange={onChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">
                     {icon}
@@ -115,14 +155,24 @@ export function SignUpRequired({ type, title, placeholder, id, autoComplete, val
     )
 }
 
-// Form template for required inputs FULL
-export function FormInputRequired({ type, title, placeholder, id, autoComplete, value, onChange }) {
+// Form template for required inputs (NOT FULL)
+export function FormInputRequired({ type, title, placeholder, id, autoComplete, value, onChange, min }) {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
     return (
-        <div className=" relative col-span-full w-60 max-lg:w-full">
-            <label htmlFor={id} className=" absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+        <div className={`relative col-span-full w-60 max-lg:w-full ${isFocused ? 'focus' : ''}`}>
+            <label htmlFor={id} className={` absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
                 { title }
             </label>
-            <div className="mt-1">
+            <div className={`mt-1 ${isFocused ? 'focus' : ''}`}>
                 <input
                     type={type}
                     name={id}
@@ -130,9 +180,12 @@ export function FormInputRequired({ type, title, placeholder, id, autoComplete, 
                     autoComplete={autoComplete}
                     placeholder={placeholder}
                     required
-                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-grey-400 focus:outline-none focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                     value={value}
                     onChange={onChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    min={min}
                 />
             </div>
         </div>
@@ -141,21 +194,33 @@ export function FormInputRequired({ type, title, placeholder, id, autoComplete, 
 
 // Notes part of the add a contact form
 export function FormNotes({value, onChange,}) {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
     return (
-        <div className=" relative col-span-full">
-            <label htmlFor="notes" className=" absolute -top-3 left-3 bg-white px-1 text-sm leading-6 text-dark-blue font-semibold">
+        <div className={`relative col-span-full ${isFocused ? 'focus' : ''}`}>
+            <label htmlFor="notes" className={`absolute -top-3 left-3 bg-white px-1 text-sm leading-6 font-semibold ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
             Notes
             </label>
-            <div className="mt-1">
+            <div className={`mt-1 ${isFocused ? 'focus' : ''}`}>
             <textarea
                 id="notes"
                 name="notes"
                 rows={1}
-                className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                 placeholder="Example text."
                 maxLength={35}
                 value={value}
                 onChange={onChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
             />
             </div>
         </div>
@@ -164,20 +229,32 @@ export function FormNotes({value, onChange,}) {
 
 // Drop Down Menu for the Create a contact form
 export function DropDown({label, id, value, onChange}) {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
     return (
-        <div className=" relative sm:col-span-3 w-60 max-lg:w-full">
-            <label htmlFor={id} className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">
+        <div className={`relative sm:col-span-3 w-60 max-lg:w-full ${isFocused ? 'focus' : ''}`}>
+            <label htmlFor={id} className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
                 {label}
             </label>
-            <div className="mt-1 w-full">
+            <div className={`mt-1 w-full ${isFocused ? 'focus' : ''}`}>
                 <select
                 id={id}
                 name={id}
                 autoComplete={id}
                 required
-                className="block w-full rounded-md border border-dark-blue py-3.5 text-dark-blue focus:outline-none focus:border-2 focus:border-mansa-blue shadow-sm sm:max-w-xs sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                 value={value}
                 onChange={onChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 >
                 <option value="">Choose option</option>
                 <option value="Research">Research</option>
@@ -199,35 +276,99 @@ export function DropDown({label, id, value, onChange}) {
 
 // Form for data time
 export const DateForm = ({title, value, onChange}) => {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
     return (
-        <div className="relative sm:col-span-3 w-60 max-lg:w-full">
-        <label htmlFor="datetime" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">{title}</label>
-        <div className="mt-1">
+        <div className={`relative sm:col-span-3 max-lg:w-full ${isFocused ? 'focus' : ''}`}>
+        <label htmlFor="datetime" className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
+            {title}
+        </label>
+        <div className={`mt-1 ${isFocused ? 'focus' : ''}`}>
             <input
             type="datetime-local"
             id="datetime"
             name="datetime"
-            className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+            className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
             value={value}
             onChange={onChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             />
         </div>
     </div>
     )
 }
 
-export const TimeForm = ({value, onChange}) => {
+export function FullPhoneInput({ title, id, placeholder, value, onChange }) {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
     return (
-        <div className="relative sm:col-span-3 w-40">
-            <label htmlFor="time" className="absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 text-dark-blue">Meeting Time</label>
-            <input
-            type="time"
-            id="time"
-            name="time"
-            className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-            value={value}
-            onChange={onChange}
-            />
+        <div className={`relative col-span-full w-full ${isFocused ? 'focus' : ''}`}>
+            <label htmlFor="phone" className={`absolute -top-3 left-14 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
+                { title }
+            </label>
+            <div className={`mt-1 ${isFocused ? 'focus' : ''}`}>
+                <PhoneInput
+                    id={id}
+                    international
+                    // defaultCountry="US"
+                    //className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    value={value}
+                    onChange={onChange}
+                    placeholder={placeholder}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+            </div>
+        </div>
+    )
+}
+
+export function SmallPhoneInput({ title, id, placeholder, value, onChange }) {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
+    return (
+        <div className={` relative col-span-full w-60 max-lg:w-full ${isFocused ? 'focus' : ''}`}>
+            <label htmlFor="phone" className={`absolute -top-3 left-14 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
+                { title }
+            </label>
+            <div className={`mt-1 ${isFocused ? 'focus' : ''}`}>
+                <PhoneInput
+                    id={id}
+                    international
+                    // defaultCountry="US"
+                    // className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    value={value}
+                    onChange={onChange}
+                    placeholder={placeholder}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+            </div>
         </div>
     )
 }

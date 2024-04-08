@@ -52,9 +52,6 @@ function FreeTrialBanner() {
             const session = response.data.session;
             localStorage.setItem("sessionId", JSON.stringify(session.id))
             window.location = session.url;
-            if (response.data.message === 'jwt expired') {
-                navigate('/auth/login')
-            }
         } catch (error) {
             console.error('Error:', error);
         }

@@ -37,9 +37,6 @@ export default function Research({ borderColour }) {
                 setResearches(response.data.data);
                 // Set loading to false to indicate that data loading is complete
                 setLoading(false);
-                if (response.data.message === 'jwt expired') {
-                    navigate('/auth/login')
-                }
             } catch (error) {
                 setError(error);
                 // Set loading to false to indicate that data loading is complete

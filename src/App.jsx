@@ -1,12 +1,8 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Loader from './components/ReusableComponents/Loader';
-import { AuthProvider, useAuth } from './hooks/AuthContext';
+import { AuthProvider } from './hooks/AuthContext';
 import ProtectedRoute from './hooks/ProtectedRoute';
-import SidePanel from './components/Pages/SidePanel';
-import PaymentSuccessPage from './components/Stripe/PaymentSuccessPage';
-import PaymentCancellation from './components/Stripe/PaymentCancellation';
-import Billing from './components/Pages/Billing';
 
 // Lazy loading implementation
 const SignUp = lazy(() => import("./components/AuthPages/SignUp"));
@@ -16,6 +12,12 @@ const Profile = lazy(() => import("./components/Pages/Profile"));
 const NewDealPage = lazy(() => import("../src/components/Pages/NewDeal"));
 const MoveToLargeScreen = lazy(() => import("./components/Pages/MoveToLargeScreen"));
 const PaymentOption = lazy(() => import("./components/Pages/PaymentOption"));
+const Billing = lazy(() => import("./components/Pages/Billing"));
+const PaymentSuccessPage = lazy(() => import("./components/Stripe/PaymentSuccessPage"));
+const PaymentCancellation = lazy(() => import("./components/Stripe/PaymentCancellation"));
+const VerifyEmail = lazy(() => import("./components/AuthPages/VerifyEmail"));
+const ForgotPassword = lazy(() => import("./components/AuthPages/ForgotPassword"));
+const Verify = lazy(() => import("./components/AuthPages/Verify"));
 
 function App() {
   return (
@@ -26,6 +28,9 @@ function App() {
             <Routes>
               <Route path="/auth/sign_up" element={<SignUp />} />
               <Route path="/auth/login" element={<Login />} />
+              <Route path="/verify_email" element={<VerifyEmail />} />
+              <Route path="/reset-password/:verificationToken" element={<ForgotPassword />} />
+              <Route path="/verify/:verificationToken" element={<Verify />} />
 
               {/* Use ProtectedRoute as a Route component */}
               <Route path="/alldashboards" element={<ProtectedRoute />}>

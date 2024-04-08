@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import MansaLogo from "../../assets/MansaLogo.png";
 import dashboard from "../../assets/dashboard.svg";
 import support from "../../assets/support.svg";
@@ -17,6 +17,7 @@ function SidePanel() {
         return window.innerWidth > 768 ? true : false;
     }); // Initially set to true, assuming the side panel is open
     const { logout } = useAuth();
+    const location = useLocation();
 
     const togglePanel = () => {
         setIsOpen(!isOpen);
@@ -55,21 +56,21 @@ function SidePanel() {
             {/* Navigation Items */}
             <div className={`flex w-full flex-col  ${isOpen ? ' justify-start mt-5 mb-5' : ' items-center justify-center mt-2 pb-5'} `}>
                 <ul className=' space-y-4'>
-                    <li className={` hover:bg-mansa-blue transition-all duration-200 cursor-pointer`}>
+                    <li className={`${location.pathname === '/alldashboards' ? 'bg-mansa-blue' : 'hover:bg-mansa-blue'} transition-all duration-200 cursor-pointer`}>
                         <Link to="/alldashboards" className={`flex items-center w-full px-4 py-2 ${isOpen ? ' space-x-6' : 'gap-0 space-x-0'} `}>
                             <img src={dashboard} alt="" className={`w-8 h-6 block`} />
                             {isOpen && <span className=' font-bold text-base'>Dashboards</span>}
                         </Link>
                     </li>
 
-                    <li className={` hover:bg-mansa-blue transition-all duration-200 cursor-pointer`}>
+                    <li className={`${location.pathname === '/profile' ? 'bg-mansa-blue' : 'hover:bg-mansa-blue'} transition-all duration-200 cursor-pointer`}>
                         <Link to="/profile" className={`flex items-center w-full px-4 py-2 ${isOpen ? ' space-x-6' : 'gap-0 space-x-0'} `}>
                             <img src={profile} alt="" className={`w-8 h-6 block`} />
                             {isOpen && <span className=' font-bold text-base'>Profile</span>}
                         </Link>
                     </li>
 
-                    <li className={` hover:bg-mansa-blue transition-all duration-200 cursor-pointer`}>
+                    <li className={` ${location.pathname === '/billing' ? 'bg-mansa-blue' : 'hover:bg-mansa-blue'} transition-all duration-200 cursor-pointer`}>
                         <Link to="/billing" className={`flex items-center w-full px-4 py-2 ${isOpen ? ' space-x-6' : 'gap-0 space-x-0'} `}>
                             <img src={Billing} alt="" className={`w-8 h-6 block`} />
                             {isOpen && <span className=' font-bold text-base'>Billing</span>}

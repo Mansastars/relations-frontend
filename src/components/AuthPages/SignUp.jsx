@@ -5,17 +5,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeOff } from 'lucide-react';
 import PrivacyPolicModal from './PrivacyPolicModal';
 import TermOfUsageModal from './TermOfUsageModal';
+import checkPasswordStrength from '../ReusableComponents/checkPasswordStrength';
+import ConfirmEmail from './ConfirmEmail';
 
 function SignUp() {
 
     // Connection wth backend and error and success handling
     const [formValue, setFormValue] = useState({firstName:'', lastName:'', email:'', password:'', confirmPassword:''})
     const [errorMessage, setErrorMessage] = useState("");
-    const [visible, setVisible] = useState(false)
-    const [ConfirmVisible, setConfirmVisible] = useState(false)
+    const [visible, setVisible] = useState(false);
+    const [ConfirmVisible, setConfirmVisible] = useState(false);
     const [openModal, setOpenModal] = useState(false);
-    const [openTermOfUsageModal, setOpenTermOfUsageModal] = useState(false)
+    const [openTermOfUsageModal, setOpenTermOfUsageModal] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [passwordStrength, setPasswordStrength] = useState(0);
+    const [canSubmit, setCanSubmit] = useState(false);
+    const [openConfirmEmailModal, setOpenConfirmEmailModal] = useState(false);
     
     const navigate = useNavigate();
 
@@ -23,6 +28,10 @@ function SignUp() {
         if (e && e.target) {
             const { name, value } = e.target;
             setFormValue((prevFormValue) => ({ ...prevFormValue, [name]: value }));
+
+            const strength = checkPasswordStrength(formValue.password);
+            setPasswordStrength(strength);
+            setCanSubmit(strength >= 2);
         }
     }
 
@@ -37,14 +46,20 @@ function SignUp() {
             password: formValue.password,
             confirm_password: formValue.confirmPassword
         };
-    
+
         try {
-            await api.post('/users/register', userData);
-            navigate("/auth/login");
+            if (canSubmit) {
+                await api.post('/users/register', userData);
+                setOpenConfirmEmailModal(true)
+            }
+            else{
+                setErrorMessage("Password must be at least eight characters long.");
+                window.scrollTo(0, 0);
+            }
         } catch (error) {
             console.log(error);
             if (error.response && error.response.data && error.response.data.message) {
-                setErrorMessage(error.response.data.message);
+                setErrorMessage(error.response.data.message);  
             } else {
                 setErrorMessage("Something went wrong. Please try again."); // set generic error message
             }
@@ -52,6 +67,12 @@ function SignUp() {
         } finally {
             setLoading(false); // Stop loading
         }
+    };
+
+    const closeModal = () => {
+        setFormValue({firstName:'', lastName:'', email:'', password:'', confirmPassword:''})
+        setOpenConfirmEmailModal(false);
+        navigate("/auth/login");
     };
 
     // Password
@@ -65,15 +86,15 @@ function SignUp() {
 
   return (
     <div className="mx-2 flex justify-center">
-        <div className='bg-white p-5 md:p-16 flex flex-col mt-10 mb-5 rounded-2xl h-full w-1/2 max-md:w-[90%]'>
+        <div className='bg-white p-5 md:p-16 flex flex-col mt-10 mb-5 rounded-2xl h-full w-1/2 max-lg:w-[70%] max-md:w-[90%]'>
             <div className=' flex flex-col gap-5 h-fit '>
                 <div className=' flex flex-col justify-center items-center'>
                     <h1 className=' text-dark-blue font-extrabold text-5xl mb-5'>Sign Up</h1>
-                    <p className=' text-base text-dark-blue'>You have an account <a href="/auth/login" className=' text-mansa-blue'><u>Log In</u></a></p>
+                    <p className=' text-base text-dark-blue'>You have an account <Link to="/auth/login" className=' text-mansa-blue hover:text-dark-blue'><u>Log In</u></Link></p>
                 </div>
                 <form action="" onSubmit={ handleSubmit } className=' flex flex-col gap-5 justify-center items-center ' >
                     <div className=' w-full flex flex-col gap-5'>
-                        {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
+                        {errorMessage && <p className=" text-red-500 font-semibold text-center">{errorMessage}</p>}
                         <div className=' flex gap-5 max-sm:flex-col'>
                             <div className=' w-full'>
                                 <SignUpRequired type="text" title="First Name*" placeholder="Sundi" id="firstName" autoComplete="first-name" value={formValue.firstName} onChange={handleInput} />
@@ -85,15 +106,23 @@ function SignUp() {
                         <div className=' w-full flex flex-col gap-5'>
                             <SignUpRequired type="email" title="Email*" placeholder="SundiJoe@gmail.com" id="email" autoComplete="email" value={formValue.email} onChange={handleInput} />
                           
-                            <SignUpRequired
-                                type={visible ? "text" : "password"}
-                                title="Password*"
-                                id="password"
-                                value={formValue.password}
-                                placeholder='•••••••••'
-                                onChange={handleInput}
-                                icon={visible ? <EyeIcon size={16} onClick={toggleVisibility} /> : <EyeOff size={16} onClick={toggleVisibility} />}
-                            />
+                            <div>
+                                <SignUpRequired
+                                    type={visible ? "text" : "password"}
+                                    title="Password*"
+                                    id="password"
+                                    value={formValue.password}
+                                    placeholder='•••••••••'
+                                    onChange={handleInput}
+                                    icon={visible ? <EyeIcon size={16} onClick={toggleVisibility} /> : <EyeOff size={16} onClick={toggleVisibility} />}
+                                />
+                                {/* Display password strength */}
+                                {passwordStrength > 0 && (
+                                    <p className={`text-sm ${passwordStrength >= 2 ? 'text-green-500' : 'text-red-500'}`}>
+                                        {passwordStrength >= 2 ? 'Strong password' : 'Weak password'}
+                                    </p>
+                                )}
+                            </div>
                           
                             <SignUpRequired
                                 type={ConfirmVisible ? "text" : "password"}
@@ -114,12 +143,12 @@ function SignUp() {
                                 />
                                 <p className=' text-xs'>Yes, I agree to the <span 
                                         onClick={() => setOpenModal(true)} 
-                                        className=' text-mansa-blue underline cursor-pointer'
+                                        className=' text-mansa-blue underline cursor-pointer hover:text-dark-blue'
                                     > 
                                         Privacy Policy
                                     </span> and <span
                                         onClick={() => setOpenTermOfUsageModal(true)} 
-                                        className=' text-mansa-blue underline cursor-pointer'
+                                        className=' text-mansa-blue underline cursor-pointer hover:text-dark-blue'
                                     >
                                         Terms of Usage</span>.
                                 </p>
@@ -138,6 +167,14 @@ function SignUp() {
             open={openTermOfUsageModal}
             onClose={() => setOpenTermOfUsageModal(false)}
         />
+
+        {setOpenConfirmEmailModal &&
+            <ConfirmEmail
+            userEmail={formValue.email}
+            onClose={closeModal}
+            show={openConfirmEmailModal}
+            />
+        }
     </div>
   )
 }

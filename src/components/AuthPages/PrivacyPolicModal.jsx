@@ -1,5 +1,4 @@
 import { Modal } from 'flowbite-react';
-import { useState } from 'react';
 import PrivacyPolicy from './PrivacyPolicy';
 
 function PrivacyPolicModal({ open, onClose }) {
