@@ -1,11 +1,10 @@
 // This file contains content of the Proile page
 
-import { FormInputRequired, FullInput } from "../Reusables";
+import { FullInput, FullPhoneInput } from "../Reusables";
 import { Button } from "../Reusables";
 import FreeTrialBanner from "./FreeTrialBanner";
 import { EyeIcon, EyeOff, Linkedin } from 'lucide-react';
-import { Navigate, useNavigate } from "react-router-dom";
-import Loader from "../ReusableComponents/Loader";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthContext";
 import { useEffect, useState } from "react";
 import SidePanel from "./SidePanel";
@@ -13,6 +12,7 @@ import Swal from "sweetalert2";
 import api from "../api";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import checkPasswordStrength from "../ReusableComponents/checkPasswordStrength";
 
 export default function Profile() {
     const navigate = useNavigate(); // Use useNavigate hook to navigate programmatically
@@ -25,6 +25,9 @@ export default function Profile() {
     const [emailIsSubmitting, setEmailIsSubmitting] = useState(false);
     const [passwordIsSubmitting, setPasswordIsSubmitting] = useState(false);
     const [formValue, setFormValue] = useState({first_name: '', last_name: '', phone_number: '', bio: '', email: '', old_password: '', new_password: '', confirm_password: ''});
+    const [phone, setPhone] = useState('');
+    const [passwordStrength, setPasswordStrength] = useState(0);
+    const [canSubmit, setCanSubmit] = useState(false);
 
     const BorderStyle = {
         borderBottom: '1px solid  #d3d3d3',
@@ -36,6 +39,11 @@ export default function Profile() {
           navigate('/auth/login');
         }
     }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
+
+    // Phone
+    const handlePhoneChange = (value) => {
+        setPhone(value);
+    };
 
     // Get user's details
     useEffect(() => {
@@ -74,12 +82,13 @@ export default function Profile() {
         const userData = {
             first_name: formValue.first_name,
             last_name: formValue.last_name,
-            phone_number: formValue.phone_number,
+            phone_number: phone,
             bio: formValue.bio,
         };
 
         try {
             const res = await api.patch(`users/update-profile`, userData);
+            // window.location.reload()
             toast.success(`${res.data.message}`)
         } catch (error) {
             console.log(error);
@@ -122,6 +131,9 @@ export default function Profile() {
             const { name, value } = e.target;
             setFormValue((prevFormValue) => ({ ...prevFormValue, [name]: value }));
         }
+        const strength = checkPasswordStrength(formValue.new_password);
+        setPasswordStrength(strength);
+        setCanSubmit(strength >= 2);
     }
 
     // Submit user's password update
@@ -135,9 +147,13 @@ export default function Profile() {
         };
 
         try {
-            const res = await api.patch(`users/change-password`, userData);
-            setFormValue({old_password: '', new_password: '', confirm_password: ''})
-            toast.success(`${res.data.message}`)
+            if (canSubmit) {
+                const res = await api.patch(`users/change-password`, userData);
+                setFormValue({old_password: '', new_password: '', confirm_password: ''})
+                toast.success(`${res.data.message}`)
+            } else {
+                toast.error(`Password must be at least eight characters long.`);
+            }
         } catch (error) {
             console.log(error);
             toast.error(`${error.response.data.message}`);
@@ -204,11 +220,11 @@ export default function Profile() {
                             </div>
                             <div className="flex flex-col gap-5 pb-8">
                                 <div className="flex max-[768px]:flex-col gap-5 w-full">
-                                    <FullInput type="text" title="First Name" placeholder="Sundi" id="first_name" value={formValue.first_name} onChange={handleGeneralInfoInput} />
-                                    <FullInput type="text" title="Last Name" placeholder="Keita" id="last_name" value={formValue.last_name} onChange={handleGeneralInfoInput} />
+                                    <FullInput type="text" title="First Name" placeholder="" id="first_name" value={formValue.first_name} onChange={handleGeneralInfoInput} />
+                                    <FullInput type="text" title="Last Name" placeholder="" id="last_name" value={formValue.last_name} onChange={handleGeneralInfoInput} />
                                 </div>
                                 <div className=" flex flex-col gap-1 w-1/2 max-[768px]:w-full">
-                                    <FullInput type="tel" title="Phone" placeholder="+23412234556" id="phone_number" value={formValue.phone_number} onChange={handleGeneralInfoInput} />
+                                    <FullPhoneInput title="Phone Number" placeholder="" id="phone_number" value={formValue.phone_number} onChange={handlePhoneChange} />
                                     <p className=" text-dark-blue text-base">We collect this incase of emergencies.</p>
                                 </div>
                             </div>
@@ -223,8 +239,8 @@ export default function Profile() {
                                             id="bio"
                                             name="bio"
                                             rows={2}
-                                            className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border-2 focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-                                            placeholder="Software Engineer"
+                                            className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                                            placeholder=""
                                             value={formValue.bio} onChange={handleGeneralInfoInput}
                                         />
                                     </div>
@@ -245,7 +261,7 @@ export default function Profile() {
                                 </div>
                             </div>
                             <div>
-                                <FullInput type="email" title="Email" placeholder="sundi@sankore.com" id="email" value={formValue.email} onChange={handleEmailInput} />
+                                <FullInput type="email" title="Email" placeholder="" id="email" value={formValue.email} onChange={handleEmailInput} />
                                 <p className="text-dark-blue text-base">You will need this email to log in.</p>
                             </div>
                             {/* <ToastContainer /> */}
@@ -266,23 +282,31 @@ export default function Profile() {
                                     <FullInput
                                         type={currentVisible ? "text" : "password"}
                                         title="Current Password"
-                                        placeholder="•••••••••"
+                                        placeholder=""
                                         id="old_password"
                                         icon={currentVisible ? <EyeIcon size={14} onClick={toggleCurrentVisibility} /> : <EyeOff size={14} onClick={toggleCurrentVisibility} />}
                                         value={formValue.old_password} onChange={handlePasswordInput}
                                     />
-                                    <FullInput
-                                        type={newVisible ? "text" : "password"}
-                                        title="New Password"
-                                        placeholder="•••••••••"
-                                        id="new_password"
-                                        icon={newVisible ? <EyeIcon size={14} onClick={toggleNewVisibility} /> : <EyeOff size={14} onClick={toggleNewVisibility} />}
-                                        value={formValue.new_password} onChange={handlePasswordInput}
-                                    />
+                                    <div>
+                                        <FullInput
+                                            type={newVisible ? "text" : "password"}
+                                            title="New Password"
+                                            placeholder=""
+                                            id="new_password"
+                                            icon={newVisible ? <EyeIcon size={14} onClick={toggleNewVisibility} /> : <EyeOff size={14} onClick={toggleNewVisibility} />}
+                                            value={formValue.new_password} onChange={handlePasswordInput}
+                                        />
+                                        {/* Display password strength */}
+                                        {passwordStrength > 0 && (
+                                            <p className={`text-sm ${passwordStrength >= 2 ? 'text-green-500' : 'text-red-500'}`}>
+                                                {passwordStrength >= 2 ? 'Strong password' : 'Weak password'}
+                                            </p>
+                                        )}
+                                    </div>
                                     <FullInput
                                     type={confirmVisible ? "text" : "password"}
                                     title="Confirm Password"
-                                    placeholder="•••••••••"
+                                    placeholder=""
                                     id="confirm_password"
                                     icon={confirmVisible ? <EyeIcon size={14} onClick={toggleConfirmVisibility} /> : <EyeOff size={14} onClick={toggleConfirmVisibility} />}
                                     value={formValue.confirm_password} onChange={handlePasswordInput}
@@ -296,14 +320,14 @@ export default function Profile() {
                         <div className=" w-full pb-8" style={BorderStyle}>
                             <div className=" flex flex-col gap-5 pb-8 max-sm:flex-col" >
                                 <div className=" flex flex-col gap-5">
-                                    <h1 className="font-bold text-3xl text-[red]">Delete Account</h1>
+                                    <h1 className="font-bold text-3xl text-red-500">Delete Account</h1>
                                     <p className="text-dark-blue text-base font-semibold">
                                         By clicking the button below, you will permanently delete your account. Are you sure you want to proceed?
                                     </p>
                                 </div>
                                 <div className=''>
                                     <button
-                                    className=" bg-[red]  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue"
+                                    className=" bg-red-500  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue"
                                     onClick={() => handleDelete()}
                                     >
                                         <p className=" font-bold">Delete Account</p>

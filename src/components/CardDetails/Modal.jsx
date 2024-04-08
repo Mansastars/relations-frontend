@@ -1,6 +1,6 @@
 // Pop-up Modal
 import { X } from 'lucide-react';
-import { Button, DateForm, DropDown, FormInput, FormInputRequired, FormNotes, TimeForm } from "../Reusables"
+import { Button, DateForm, DropDown, FormInput, FormInputRequired, FormNotes, SmallPhoneInput } from "../Reusables"
 import { useRef } from 'react';
 import api from "../api";
 import { useState } from "react";
@@ -17,10 +17,15 @@ function Modal({onClose}) {
 
     // Interaction with API post request
     // linkedin_url:'', profile_url:''
-    const [formValue, setFormValue] = useState({ title:'', firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:0, notes:'', currentStage:'', datetime:'',})
+    const [formValue, setFormValue] = useState({ title:'', firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:'', notes:'', currentStage:'', datetime:'',})
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [phone, setPhone] = useState('');
+
+    const handlePhoneChange = (value) => {
+        setPhone(value);
+    };
 
     const handleInput = (e) => {
         if (e && e.target) {
@@ -52,7 +57,7 @@ function Modal({onClose}) {
             organization_name: formValue.company,
             deal_size: formValue.dealSize,
             email: formValue.email,
-            phone_number:formValue.phoneNumber,
+            phone_number: phone,
             stage: formValue.currentStage,
             meeting_date: meetingDate,
             notes: formValue.notes,
@@ -62,11 +67,12 @@ function Modal({onClose}) {
     
         try {
             const response = await api.post(`/deals/create-contact/${currentDealId}`, userData);
+            console.log(response);
             setSuccessMessage('Contact created successfully.');
             window.location.reload();
             setErrorMessage('');
             // linkedin_url:'', profile_url:''
-            setFormValue({ title:'', firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:0, notes:'', currentStage:'', datetime:'', });
+            setFormValue({ title:'', firstName:'', lastName:'', company: '', dealSize:0, email:'', phoneNumber:'', notes:'', currentStage:'', datetime:'', });
             // Close the modal after a delay (e.g., 2 seconds)
             setTimeout(() => {
                 setIsSubmitting(false);
@@ -86,9 +92,9 @@ function Modal({onClose}) {
     return (
       <div ref={modalRef} onClick={closeModal} className=" fixed z-50 inset-0 bg-dark-blue bg-opacity-30 backdrop-blur-sm flex justify-center overflow-y-auto h-screen">
         <div className=' mt-10 flex flex-col gap-5 w-full'>
-            <button onClick={onClose} className=' mr-20 self-end text-dark-blue'><X size={30}/></button>
-            <div className=' bg-white rounded-xl px-20 max-md:px-5 py-10 flex flex-col gap-7 items-center mx-20'>
-                <h1 className=' text-dark-blue text-3xl font-extrabold'>Add a new contact to your pipeline</h1>
+            <button onClick={onClose} className=' mr-20 max-sm:mr-10 self-end text-dark-blue'><X size={30}/></button>
+            <div className=' bg-white rounded-xl px-20 max-md:px-5 py-10 flex flex-col gap-7 items-center mx-20 max-md:mx-10'>
+                <h1 className=' text-dark-blue text-3xl max-md:text-2xl max-sm:text-xl font-extrabold'>Add a new contact to your pipeline</h1>
                 <form action="" onSubmit={handleSubmit} className=' flex flex-col gap-5 w-full'>
                     {successMessage && <p className=" text-mansa-blue font-semibold">{successMessage}</p>}
                     {errorMessage && <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>}
@@ -100,9 +106,9 @@ function Modal({onClose}) {
                         </div>
                        <div className=' flex flex-row flex-wrap gap-x-5 gap-y-8 justify-center max-md:justify-start'>
                             <FormInput type="text" title="Company" placeholder="Mansa, LLC" id="company" value={formValue.company} onChange={handleInput} />
-                            <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" id="dealSize" value={formValue.dealSize} onChange={handleInput} />
+                            <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" id="dealSize" min={0} value={formValue.dealSize} onChange={handleInput} />
                             <FormInput type="email" title="Contact Email" placeholder="sundi@sankore.com" id="email" value={formValue.email} onChange={handleInput} />
-                            <FormInput type="number" title="Phone Number" placeholder="+123456789" id="phoneNumber" value={formValue.phoneNumber} onChange={handleInput} />
+                            <SmallPhoneInput title="Phone Number" placeholder="+123456789" id="phoneNumber" value={formValue.phoneNumber} onChange={handlePhoneChange} />
                             <DropDown label="Current Stage" id="currentStage" value={formValue.currentStage} onChange={handleInput} />
                             <DateForm title="Meeting Date" value={formValue.datetime} onChange={handleInput} />
                             {/* <FormInput type="url" title="Profile Image URL" placeholder="https://" id="profile_url" value={formValue.profile_url} onChange={handleInput} />

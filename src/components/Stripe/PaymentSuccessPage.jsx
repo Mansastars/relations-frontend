@@ -39,11 +39,8 @@ function PaymentSuccessPage() {
 
             localStorage.setItem('showBilling', userDetails.data.showBilling.toString());
 
-            if (response.data.message === 'jwt expired') {
-                navigate('/auth/login')
-            } else {
-                successNavigate
-            }
+            
+            successNavigate
 
         }catch(error){
             console.error(error.message)

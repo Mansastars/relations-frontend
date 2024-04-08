@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import api from "../api";
 import { useState } from "react";
 import { X } from 'lucide-react'; 
-import { Button, DateForm, DropDown, FormInput, FormInputRequired, FormNotes, TimeForm } from "../Reusables";
+import { Button, DateForm, DropDown, FormInput, FormInputRequired, FormNotes, SmallPhoneInput } from "../Reusables";
 
 function EditContactDetails({ onClose, contactDetails }) {
     const [successMessage, setSuccessMessage] = useState('');
@@ -46,6 +46,13 @@ function EditContactDetails({ onClose, contactDetails }) {
         notes: contactDetails.notes
     })
 
+    const [phone, setPhone] = useState(formValue.phone_number);
+    const handlePhoneChange = (value) => {
+        setPhone(value);
+    };
+
+    console.log(formValue);
+
     let meetingDate;
 
     if (formValue.datetime) {
@@ -70,7 +77,7 @@ function EditContactDetails({ onClose, contactDetails }) {
             organization_name: formValue.organization_name,
             deal_size: formValue.deal_size,
             email: formValue.email,
-            phone_number: formValue.phone_number,
+            phone_number: phone,
             stage: formValue.stage,
             meeting_date: meetingDate,
             notes: formValue.notes
@@ -97,9 +104,9 @@ function EditContactDetails({ onClose, contactDetails }) {
     return (
         <div ref={modalRef} onClick={closeModal} className="fixed z-50 inset-0 bg-dark-blue bg-opacity-30 backdrop-blur-sm flex justify-center overflow-y-auto h-screen">
             <div className=' mt-10 flex flex-col gap-5'>
-                <button onClick={onClose} className='mr-20 self-end text-dark-blue'><X size={30} /></button>
-                <div className='bg-white rounded-xl px-20 py-10 flex flex-col gap-7 items-center mx-20'>
-                    <h1 className='text-dark-blue text-3xl font-extrabold'>Edit Contact Details</h1>
+                <button onClick={onClose} className='mr-20 max-md:mr-10 self-end text-dark-blue'><X size={30} /></button>
+                <div className='bg-white rounded-xl px-20 max-md:px-5 py-10 flex flex-col gap-7 items-center mx-20 max-md:mx-10'>
+                    <h1 className='text-dark-blue text-3xl max-md:text-2xl max-sm:text-xl font-extrabold'>Edit Contact Details</h1>
                     <form action="" onSubmit={handleSubmit} className='flex flex-col gap-5'>
                         {successMessage && <p className="text-mansa-blue font-semibold">{successMessage}</p>}
                         {errorMessage && <p className="text-[#ff0000] font-semibold">{errorMessage}</p>}
@@ -108,13 +115,12 @@ function EditContactDetails({ onClose, contactDetails }) {
                             <FormInput type="text" title="First Name" placeholder="Sundi" id="first_name" value={formValue.first_name} onChange={handleInput} />
                             <FormInput type="text" title="Last Name" placeholder="Keita" id="last_name" value={formValue.last_name} onChange={handleInput} />
                             <FormInput type="text" title="Company" placeholder="Mansa, LLC" id="organization_name" value={formValue.organization_name} onChange={handleInput} />
-                            <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" id="deal_size" value={formValue.deal_size} onChange={handleInput} />
+                            <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" id="deal_size" min={0} value={formValue.deal_size} onChange={handleInput} />
                             <FormInput type="email" title="Contact Email" placeholder="sundi@sankore.com" id="email" value={formValue.email} onChange={handleInput} />
-                            <FormInput type="number" title="Phone Number" placeholder="+123456789" id="phone_number" value={formValue.phone_number} onChange={handleInput} />
+                            {/* <FormInput type="number" title="Phone Number" placeholder="+123456789" id="phone_number" value={formValue.phone_number} onChange={handleInput} /> */}
+                            <SmallPhoneInput title="Phone Number" placeholder="+123456789" id="phoneNumber" value={formValue.phone_number} onChange={handlePhoneChange} />
                             <DropDown label="Current Stage" id="stage" value={formValue.stage} onChange={handleInput} />
-                            <div className=''>
-                                <DateForm title="Meeting Date" value={formValue.datetime} onChange={handleInput} />
-                            </div>
+                            <DateForm title="Meeting Date" value={formValue.datetime} onChange={handleInput} />
                         </div>
                         <div>
                             <FormNotes value={formValue.notes} onChange={handleInput} />

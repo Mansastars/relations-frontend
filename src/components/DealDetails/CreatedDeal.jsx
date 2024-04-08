@@ -24,10 +24,6 @@ export default function CreatedDeals() {
                 localStorage.setItem('showBilling', response.data.showBilling.toString());
 
                 setDeals(fetchedDeals);
-                
-                if (response.data.message === 'jwt expired') {
-                    navigate('/auth/login')
-                }
             } catch (error) {
                 console.error('Error fetching deals:', error);
             }
@@ -89,7 +85,7 @@ export default function CreatedDeals() {
                     `</div>` +
                     `<div>` +
                     `<label class="swal2-label">Dead Size</label>` +
-                    `<input type="number" id="dealSize" value="${dealDetails.deal_size}" class="swal2-input" placeholder="Deal Size">` +
+                    `<input type="number" id="dealSize" min=0 value="${dealDetails.deal_size}" class="swal2-input" placeholder="Deal Size">` +
                     `</div>`,
                 focusConfirm: false,
                 preConfirm: () => {
