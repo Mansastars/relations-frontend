@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MansaLogo from "../../assets/MansaLogo.png";
 import dashboard from "../../assets/dashboard.svg";
 import support from "../../assets/support.svg";
@@ -11,6 +11,7 @@ import Billing from "../../assets/Billing.svg";
 import { SidebarItem } from "../Reusables";
 import { ArrowLeftCircle, LogOutIcon, MenuIcon, X } from "lucide-react";
 import { useAuth } from "../../hooks/AuthContext";
+import api from '../api';
 
 function SidePanel() {
     const [isOpen, setIsOpen] = useState(() => {
@@ -18,6 +19,8 @@ function SidePanel() {
     }); // Initially set to true, assuming the side panel is open
     const { logout } = useAuth();
     const location = useLocation();
+    const Navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
     const togglePanel = () => {
         setIsOpen(!isOpen);
@@ -32,6 +35,36 @@ function SidePanel() {
             console.error('Logout error:', error);
           }
     };
+
+    const handleBilling = async () => {
+        const userData = JSON.parse(localStorage.getItem("user"));
+
+        setIsLoading(true);
+
+        if (!userData.is_subscribed) {
+            // Redirect to pricing page
+            Navigate('/pricing')
+            setIsLoading(false);
+            return;
+        }
+
+        try {
+            const res = await api.post(`users/customer-portal`, { email: userData.email })
+
+            if (res.data && res.data.url) {
+                // Redirect to billing URL
+                window.location.href = res.data.url;
+            } else {
+                // Show alert if response doesn't contain URL
+                swal("Error", "An error occurred while processing your request", "error");
+            }
+        } catch (error) {
+            swal("Error", "An error occurred while processing your request", "error");
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     return (
         <div 
@@ -70,11 +103,11 @@ function SidePanel() {
                         </Link>
                     </li>
 
-                    <li className={` ${location.pathname === '/billing' ? 'bg-mansa-blue' : 'hover:bg-mansa-blue'} transition-all duration-200 cursor-pointer`}>
-                        <Link to="/billing" className={`flex items-center w-full px-4 py-2 ${isOpen ? ' space-x-6' : 'gap-0 space-x-0'} `}>
+                    <li className={` ${location.pathname === '/pricing' ? 'bg-mansa-blue' : 'hover:bg-mansa-blue'} transition-all duration-200 cursor-pointer`}>
+                        <div onClick={handleBilling} className={`flex items-center w-full px-4 py-2 ${isOpen ? ' space-x-6' : 'gap-0 space-x-0'} `}>
                             <img src={Billing} alt="" className={`w-8 h-6 block`} />
-                            {isOpen && <span className=' font-bold text-base'>Billing</span>}
-                        </Link>
+                            {isOpen && (<span className=' font-bold text-base'>{isLoading ? 'Loading...' : 'Billing'}</span>)}
+                        </div>
                     </li>
 
                     <li className={` hover:bg-mansa-blue transition-all duration-200 cursor-pointer`}>

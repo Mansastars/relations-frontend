@@ -14,6 +14,7 @@ function PaymentOption() {
     const [planType, setPlanType] = useState("");
     const navigate = useNavigate()
     const { isAuthenticated } = useAuth(); // Access isAuthenticated from useAuth hook
+    const userData = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
         // Redirect to login page if not authenticated
@@ -59,6 +60,7 @@ function PaymentOption() {
 
   return (
     <div className=' h-screen'>
+        {/* Limited Offer Banner */}
         {showBanner &&
             <div className=' bg-[#033CEE] w-full sticky top-0 z-50 text-white px-5 py-2 flex flex-col justify-between items-center'>
                 <div className=' flex gap-3 items-center'>
@@ -78,7 +80,7 @@ function PaymentOption() {
 
             <div className=' text-dark-blue flex flex-col items-center w-full gap-10 pb-20 overflow-y-auto'>
                 <div className=' text-center pt-7'>
-                    <p className=' font-semibold'>Your trial has ended...</p>
+                    <p className=' font-semibold'>{!userData.on_trial && 'Your trial has ended...'}</p>
                     <p className=' font-semibold'>Save up to <span className=' text-2xl font-extrabold'>15%</span> of all our plans with our annual subcription</p>
                 </div>
 
