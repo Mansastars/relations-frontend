@@ -12,6 +12,7 @@ import { SidebarItem } from "../Reusables";
 import { ArrowLeftCircle, LogOutIcon, MenuIcon, X } from "lucide-react";
 import { useAuth } from "../../hooks/AuthContext";
 import api from '../api';
+import Swal from "sweetalert2";
 
 function SidePanel() {
     const [isOpen, setIsOpen] = useState(() => {
@@ -56,10 +57,10 @@ function SidePanel() {
                 window.location.href = res.data.url;
             } else {
                 // Show alert if response doesn't contain URL
-                swal("Error", "An error occurred while processing your request", "error");
+                Swal.fire("Error", "An error occurred while processing your request", "error");
             }
         } catch (error) {
-            swal("Error", "An error occurred while processing your request", "error");
+            Swal.fire("Error", "An error occurred while processing your request", "error");
             console.error(error);
         } finally {
             setIsLoading(false);
