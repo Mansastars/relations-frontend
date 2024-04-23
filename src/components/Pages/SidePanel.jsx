@@ -39,10 +39,11 @@ function SidePanel() {
 
     const handleBilling = async () => {
         const userData = JSON.parse(localStorage.getItem("user"));
+        console.log(userData);
 
         setIsLoading(true);
 
-        if (!userData.is_subscribed) {
+        if (!userData.subscription_name) {
             // Redirect to pricing page
             Navigate('/pricing')
             setIsLoading(false);
