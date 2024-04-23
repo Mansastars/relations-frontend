@@ -39,7 +39,6 @@ function SidePanel() {
 
     const handleBilling = async () => {
         const userData = JSON.parse(localStorage.getItem("user"));
-        console.log(userData);
 
         setIsLoading(true);
 
