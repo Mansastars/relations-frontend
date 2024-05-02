@@ -150,7 +150,7 @@ export default function Research({ borderColour }) {
                     <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                         <div className="flex justify-between w-full">
                             <p className="font-extrabold text-sm text-white">
-                                {`${research.title} ${research.first_name} ${research.last_name}`.length > 13 ? `${research.title} ${research.first_name} ${research.last_name}`.substring(0, 10) + '...' : `${research.title} ${research.first_name} ${research.last_name}`}
+                                {`${research.first_name} ${research.last_name}`.length > 13 ? `${research.first_name} ${research.last_name}`.substring(0, 10) + '...' : `${research.first_name} ${research.last_name}`}
                             </p>
                             <button onClick={() => handleDelete(research.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                                 <XCircleIcon className="h-4 w-4" />

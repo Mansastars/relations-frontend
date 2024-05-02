@@ -141,7 +141,7 @@ export default function Deals({ borderColour }) {
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
-                            {`${deal.title} ${deal.first_name} ${deal.last_name}`.length > 13 ? `${deal.title} ${deal.first_name} ${deal.last_name}`.substring(0, 10) + '...' : `${deal.title} ${deal.first_name} ${deal.last_name}`}
+                            {`${deal.first_name} ${deal.last_name}`.length > 13 ? `${deal.first_name} ${deal.last_name}`.substring(0, 10) + '...' : `${deal.first_name} ${deal.last_name}`}
                         </p>
                         <button onClick={() => handleDelete(deal.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                             <XCircleIcon className="h-4 w-4" />

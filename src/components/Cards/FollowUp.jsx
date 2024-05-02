@@ -162,7 +162,7 @@ export default function FollowUp({ borderColour, titleColors }) {
                                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                                     <div className="flex justify-between w-full">
                                         <p className="font-extrabold text-sm text-white">
-                                            {`${followUp.title} ${followUp.first_name} ${followUp.last_name}`.length > 13 ? `${followUp.title} ${followUp.first_name} ${followUp.last_name}`.substring(0, 10) + '...' : `${followUp.title} ${followUp.first_name} ${followUp.last_name}`}
+                                            {`${followUp.first_name} ${followUp.last_name}`.length > 13 ? `${followUp.first_name} ${followUp.last_name}`.substring(0, 10) + '...' : `${followUp.first_name} ${followUp.last_name}`}
                                         </p>
                                         <button onClick={() => handleDelete(followUp.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                                             <XCircleIcon className="h-4 w-4" />

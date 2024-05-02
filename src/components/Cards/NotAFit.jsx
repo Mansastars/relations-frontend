@@ -141,7 +141,7 @@ export default function NotAFit({ borderColour }) {
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
-                            {`${notAFit.title} ${notAFit.first_name} ${notAFit.last_name}`.length > 13 ? `${notAFit.title} ${notAFit.first_name} ${notAFit.last_name}`.substring(0, 10) + '...' : `${notAFit.title} ${notAFit.first_name} ${notAFit.last_name}`}
+                            {`${notAFit.first_name} ${notAFit.last_name}`.length > 13 ? `${notAFit.first_name} ${notAFit.last_name}`.substring(0, 10) + '...' : `${notAFit.first_name} ${notAFit.last_name}`}
                         </p>
                         <button onClick={() => handleDelete(notAFit.id)} className="text-white cursor-pointer">
                             <XCircleIcon className="h-4 w-4" />
