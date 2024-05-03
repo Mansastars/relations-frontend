@@ -6,6 +6,7 @@ import SidePanel from './SidePanel'
 import api from '../api'
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthContext"
+import '../../index.css'
 
 function PaymentOption() {
     const [monthly, setMonthly] = useState(true)

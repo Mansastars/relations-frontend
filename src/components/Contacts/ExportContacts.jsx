@@ -2,6 +2,7 @@ import React from 'react'
 import exportFromJSON from 'export-from-json'
 import { Button } from '../Reusables'
 import Swal from 'sweetalert2';
+import api from '../api';
 
 function ExportContacts() {
 
@@ -13,15 +14,44 @@ function ExportContacts() {
             showCancelButton: true,
             confirmButtonText: 'Yes, export it!',
             cancelButtonText: 'Cancel'
-        }).then((result) => {
+        }).then(async(result) => {
             if (result.isConfirmed) {
                 // API call to get contacts
-                const data = [{ foo: 'foo'}, { bar: 'bar' }]
+                try {
+                    const response = await api.get('contacts/allcontacts')
+                    const data = response.data.data;
 
-                const fileName = 'Contacts'
-                const exportType =  exportFromJSON.types.csv
+                    const userData = JSON.parse(localStorage.getItem('user'))
 
-                exportFromJSON({ data, fileName, exportType })
+                    const fileName = `${userData.first_name}_Contacts`
+                    const exportType =  exportFromJSON.types.csv
+
+                    exportFromJSON({
+                        data,
+                        fileName,
+                        fields: {
+                            first_name: 'First Name',
+                            last_name: 'Last Name',
+                            gender: 'Gender',
+                            organization_name: 'Organization',
+                        },
+                        exportType,
+                    });
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Contacts exported successfully.',
+                    });
+                } catch (error) {
+                    console.log(error);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Export Error!',
+                        text: 'Failed to export contacts. Please try again.',
+                    });
+                }
             }
         });
     }

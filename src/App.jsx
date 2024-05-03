@@ -41,9 +41,12 @@ function App() {
                 <Route index element={<Dashboard />} />
               </Route>
 
+              <Route path="/contacts" element={<ProtectedRoute />}>
+                <Route index element={<Contacts />} />
+              </Route>
+
               <Route path="/profile" element={<Profile />} />
               <Route path="/pricing" element={<PaymentOption />} />
-              <Route path="/contacts" element={<Contacts />} />
 
               <Route path="/successful-payment" element={<PaymentSuccessPage />} />
               <Route path="/cancel-payment" element={<PaymentCancellation />}/>

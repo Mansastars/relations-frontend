@@ -217,7 +217,7 @@ export function FormNotes({value, onChange,}) {
             <textarea
                 id="notes"
                 name="notes"
-                rows={2}
+                rows={3}
                 className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                 placeholder="Example text."
                 // maxLength={35}

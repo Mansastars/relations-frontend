@@ -27,8 +27,6 @@ function ImportContacts() {
     maxFiles: 1,
   });
 
-  console.log('Accepted file', acceptedFiles[0]);
-
   // Event handling and styling
   const style = useMemo(() => ({
     ...baseStyle,
@@ -49,7 +47,7 @@ function ImportContacts() {
         title: 'Invalid File Format!',
         text: `'${fileRejections[0].file.path}' is not in .csv format.`,
       });
-    } 
+    }
   }
   
   // Handles the accepted .csv file
@@ -66,8 +64,6 @@ function ImportContacts() {
             skipEmptyLines: true,
             dynamicTyping: true, // Convert numeric values to numbers
           });
-
-          console.log('Parsed data: ', parsedData);
 
           // Check if the first index of parsed data is null, indicating no header row
           if (parsedData.data[0] === null) {
@@ -98,7 +94,7 @@ function ImportContacts() {
               });
               return extractedEntry;
             });
-            console.log('Extracted Data:', extractedData);
+            // console.log('Extracted Data:', extractedData);
             Swal.fire({
               icon: 'success',
               title: 'Success!',
@@ -129,10 +125,10 @@ function ImportContacts() {
     handleFileRejection();
   }, [acceptedFiles, fileRejections]);
 
-  useEffect(() => {
-    // handleDataExtraction()
-    console.log('Parsed JSON Data:', jsonData);
-  }, [jsonData]);
+  // useEffect(() => {
+  //   // handleDataExtraction()
+  //   console.log('Parsed JSON Data:', jsonData);
+  // }, [jsonData]);
 
   return (
     <div className='px-3 flex flex-col my-5 w-full justify-center items-center overflow-x-auto'>
@@ -147,7 +143,13 @@ function ImportContacts() {
         </div>
       </section>
 
-      <ExtractedData extractedData={extractedData} acceptedFiles={acceptedFiles} />
+      <ExtractedData
+      extractedData={extractedData}
+      clearData={() => {
+        extractedData = []
+        acceptedFiles.pop()
+      }}
+      />
     </div>
   );
 }

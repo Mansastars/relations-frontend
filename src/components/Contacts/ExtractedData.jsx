@@ -1,27 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import { Button, Modal, Table, Tooltip } from "flowbite-react";
 import { FullInput } from '../Reusables';
 import { Button as CustomButton } from '../Reusables';
 import api from '../api';
 
-function ExtractedData({ extractedData, acceptedFiles }) {
-    console.log('Extracted data from the extracted data component', extractedData);
-    console.log('Accepted file::: ', acceptedFiles);
+function ExtractedData({ extractedData, clearData }) {
+    // console.log('Extracted data from the extracted data component', extractedData);
     const [isEditing, setIsEditing] = useState(false);
     const [editedData, setEditedData] = useState({});
     const [editedRowIndex, setEditedRowIndex] = useState(null);
+    const [data, setData] = useState(extractedData);
+
+    useEffect(() => {
+      setData(extractedData); // Update data when extractedData prop changes
+    }, [extractedData]);
 
     const handleEdit = (index) => {
         setIsEditing(true);
-        setEditedData({ ...extractedData[index] });
+        setEditedData({ ...data[index] });
         setEditedRowIndex(index);
     };
 
     const handleSave = () => {
         // Update the corresponding row in extractedData with editedData
-        extractedData[editedRowIndex] = editedData;
-        setIsEditing(false);
+        const newData = [...data];
+      newData[editedRowIndex] = editedData;
+      setData(newData);
+      setIsEditing(false);
     };
 
     const handleSubmit = async () => {
@@ -37,7 +43,7 @@ function ExtractedData({ extractedData, acceptedFiles }) {
       }).then(async (result) => {
           if (result.isConfirmed) {
               // Send post request to backend for submission
-              const modifiedData = extractedData.map((row) => ({
+              const modifiedData = data.map((row) => ({
                 first_name: row['first name'],
                 last_name: row['last name'],
                 email: row['email'],
@@ -47,13 +53,14 @@ function ExtractedData({ extractedData, acceptedFiles }) {
 
               try {
                 const response = await api.post(`contacts/import-contacts`, { data: modifiedData })
-                console.log(response);
-                acceptedFiles.pop()
                 Swal.fire({
                   icon: 'success',
                   title: 'Success!',
                   text: 'Data submitted successfully.'
-                });
+                }).then(() => {
+                  clearData();
+                  setData([]);
+                })
               } catch (error) {
                 console.log('error', error);
                 Swal.fire({
@@ -82,7 +89,7 @@ function ExtractedData({ extractedData, acceptedFiles }) {
               </Table.HeadCell>
             </Table.Head>
           <Table.Body className="divide-y">
-            {extractedData.map((rowData, index) => (
+            {data.map((rowData, index) => (
               <Table.Row key={index} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   {rowData['first name']}
@@ -105,7 +112,7 @@ function ExtractedData({ extractedData, acceptedFiles }) {
         </Table>
 
         {/* Submit button */}
-        {extractedData.length !== 0  && 
+        {data.length !== 0  && 
         <div className=' my-12'>
           <CustomButton text='Confirm Submission' onClick={handleSubmit} className='' />
         </div>}
