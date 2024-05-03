@@ -162,7 +162,7 @@ export default function Partner({ borderColour, titleColors }) {
                             <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                                 <div className="flex justify-between w-full">
                                     <p className="font-extrabold text-sm text-white">
-                                        {`${partner.title} ${partner.first_name} ${partner.last_name}`.length > 13 ? `${partner.title} ${partner.first_name} ${partner.last_name}`.substring(0, 10) + '...' : `${partner.title} ${partner.first_name} ${partner.last_name}`}
+                                        {`${partner.first_name} ${partner.last_name}`.length > 13 ? `${partner.first_name} ${partner.last_name}`.substring(0, 10) + '...' : `${partner.first_name} ${partner.last_name}`}
                                     </p>
                                     <button onClick={() => handleDelete(partner.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                                         <XCircleIcon className="h-4 w-4" />

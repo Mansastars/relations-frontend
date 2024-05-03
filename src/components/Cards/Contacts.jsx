@@ -141,7 +141,7 @@ export default function Contact({ borderColour }) {
                 <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                     <div className="flex justify-between w-full">
                         <p className="font-extrabold text-sm text-white">
-                            {`${contact.title} ${contact.first_name} ${contact.last_name}`.length > 13 ? `${contact.title} ${contact.first_name} ${contact.last_name}`.substring(0, 10) + '...' : `${contact.title} ${contact.first_name} ${contact.last_name}`}
+                            {`${contact.first_name} ${contact.last_name}`.length > 13 ? `${contact.first_name} ${contact.last_name}`.substring(0, 10) + '...' : `${contact.first_name} ${contact.last_name}`}
                         </p>
                         <button onClick={() => handleDelete(contact.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                             <XCircleIcon className="h-4 w-4" />

@@ -162,7 +162,7 @@ export default function Prospect({ borderColour, titleColors }) {
                                     <div className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start" style={{ background: borderColour }}>
                                         <div className="flex justify-between w-full">
                                             <p className="font-extrabold text-sm text-white">
-                                                {`${prospect.title} ${prospect.first_name} ${prospect.last_name}`.length > 13 ? `${prospect.title} ${prospect.first_name} ${prospect.last_name}`.substring(0, 10) + '...' : `${prospect.title} ${prospect.first_name} ${prospect.last_name}`}
+                                                {`${prospect.first_name} ${prospect.last_name}`.length > 13 ? `${prospect.first_name} ${prospect.last_name}`.substring(0, 10) + '...' : `${prospect.first_name} ${prospect.last_name}`}
                                             </p>
                                             <button onClick={() => handleDelete(prospect.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
                                                 <XCircleIcon className="h-4 w-4" />

@@ -4,8 +4,9 @@ import SidePanel from './SidePanel'
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthContext"
 import { useEffect } from "react"
+import ContactsTab from '../Contacts/ContactsTab';
 
-function Billing() {
+function Contacts() {
     const navigate = useNavigate()
     const { isAuthenticated } = useAuth(); // Access isAuthenticated from useAuth hook
 
@@ -21,17 +22,17 @@ function Billing() {
         <div className=" sticky top-0 w-full z-50">
             <FreeTrialBanner />
         </div>
-        <div className=" flex gap-3 h-screen w-full">
+        <div className=" flex h-screen w-full">
             <div className="">
                 <SidePanel />
             </div>
 
-            <div className=' flex flex-col items-center justify-center w-full'>
-                <p className=' text-5xl font-bold'>Coming Soon!</p>
+            <div className=' w-full overflow-y-auto overflow-x-hidden'>
+                <ContactsTab />
             </div>
         </div>
     </div>
   )
 }
 
-export default Billing
+export default Contacts

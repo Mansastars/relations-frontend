@@ -12,12 +12,12 @@ const Profile = lazy(() => import("./components/Pages/Profile"));
 const NewDealPage = lazy(() => import("../src/components/Pages/NewDeal"));
 const MoveToLargeScreen = lazy(() => import("./components/Pages/MoveToLargeScreen"));
 const PaymentOption = lazy(() => import("./components/Pages/PaymentOption"));
-const Billing = lazy(() => import("./components/Pages/Billing"));
 const PaymentSuccessPage = lazy(() => import("./components/Stripe/PaymentSuccessPage"));
 const PaymentCancellation = lazy(() => import("./components/Stripe/PaymentCancellation"));
 const VerifyEmail = lazy(() => import("./components/AuthPages/VerifyEmail"));
 const ForgotPassword = lazy(() => import("./components/AuthPages/ForgotPassword"));
 const Verify = lazy(() => import("./components/AuthPages/Verify"));
+const Contacts = lazy(() => import("./components/Pages/Contacts"));
 
 function App() {
   return (
@@ -41,9 +41,12 @@ function App() {
                 <Route index element={<Dashboard />} />
               </Route>
 
+              <Route path="/contacts" element={<ProtectedRoute />}>
+                <Route index element={<Contacts />} />
+              </Route>
+
               <Route path="/profile" element={<Profile />} />
               <Route path="/pricing" element={<PaymentOption />} />
-              <Route path="/billing" element={<Billing />} />
 
               <Route path="/successful-payment" element={<PaymentSuccessPage />} />
               <Route path="/cancel-payment" element={<PaymentCancellation />}/>

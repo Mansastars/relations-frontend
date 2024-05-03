@@ -22,20 +22,24 @@ export function SidebarItem({icon, text, activeItem, setActiveItem, id}) {
 // Search bar
 export function SearchBar() {
     return (
-        <label className="relative inline-flex items-center">
-        <span className="sr-only">Search</span>
-        <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-          <img src={search} alt="search-icon" className="h-5 w-5 fill-slate-300" viewBox="0 0 20 20" />
-        </span>
-        <input className="placeholder:italic placeholder:text-slate-400 block bg-light-grey w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" placeholder="Search for anything..." type="text" name="search"/>
+        <label className="relative inline-flex items-center w-full">
+            <span className="sr-only">Search</span>
+            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                <img src={search} alt="search-icon" className="h-5 w-5 fill-slate-300" viewBox="0 0 20 20" />
+            </span>
+            <input
+            className=" placeholder:text-dark-blue block bg-light-grey w-full border border-light-grey rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-dark-blue sm:text-sm"
+            placeholder="Search Contacts"
+            type="text"
+            name="search"/>
       </label>
     )
 }
 
 // Buttons
-export function Button({text, onClick}) {
+export function Button({text, onClick, className}) {
     return (
-        <button onClick={onClick} className=" bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue">
+        <button onClick={onClick} className={` bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue ${className}`}>
             <p className=" font-bold">{text}</p>
         </button>
     )
@@ -213,10 +217,10 @@ export function FormNotes({value, onChange,}) {
             <textarea
                 id="notes"
                 name="notes"
-                rows={1}
+                rows={3}
                 className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                 placeholder="Example text."
-                maxLength={35}
+                // maxLength={35}
                 value={value}
                 onChange={onChange}
                 onFocus={handleFocus}

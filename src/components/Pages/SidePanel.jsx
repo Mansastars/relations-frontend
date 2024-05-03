@@ -8,6 +8,7 @@ import logout from "../../assets/logout.svg";
 import link from "../../assets/link.svg";
 import Star from "../../assets/Star.svg";
 import Billing from "../../assets/Billing.svg";
+import contacts from "../../assets/contacts.svg";
 import { SidebarItem } from "../Reusables";
 import { ArrowLeftCircle, LogOutIcon, MenuIcon, X } from "lucide-react";
 import { useAuth } from "../../hooks/AuthContext";
@@ -94,6 +95,13 @@ function SidePanel() {
                         <Link to="/alldashboards" className={`flex items-center w-full px-4 py-2 ${isOpen ? ' space-x-6' : 'gap-0 space-x-0'} `}>
                             <img src={dashboard} alt="" className={`w-8 h-6 block`} />
                             {isOpen && <span className=' font-bold text-base'>Dashboards</span>}
+                        </Link>
+                    </li>
+
+                    <li className={`${location.pathname === '/contacts' ? 'bg-mansa-blue' : 'hover:bg-mansa-blue'} transition-all duration-200 cursor-pointer`}>
+                        <Link to="/contacts" className={`flex items-center w-full px-4 py-2 ${isOpen ? ' space-x-6' : 'gap-0 space-x-0'} `}>
+                            <img src={contacts} alt="" className={`w-8 h-6 block`} />
+                            {isOpen && <span className=' font-bold text-base'>Contacts</span>}
                         </Link>
                     </li>
 

@@ -28,8 +28,12 @@
     justify-content: center;
     margin: 0;
 }
+
+input{
+    display: none;
+}
   
-.checkbox {
+#checkbox {
     display: none;
 }
   
