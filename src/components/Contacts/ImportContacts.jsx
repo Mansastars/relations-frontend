@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { acceptStyle, baseStyle, focusedStyle, rejectStyle } from './ImportContactStyle';
 import Papa from 'papaparse';
 import ExtractedData from './ExtractedData';
+import sampleCsv from '../../assets/sampleCsv.png'
 
 const requiredFields = ['first name', 'last name', 'email', 'phone number', 'organization'];
 
@@ -49,6 +50,8 @@ function ImportContacts() {
       });
     }
   }
+
+  // console.log('Accepted file', acceptedFiles);
   
   // Handles the accepted .csv file
   const handleFileParsing = async () => {
@@ -65,6 +68,8 @@ function ImportContacts() {
             dynamicTyping: true, // Convert numeric values to numbers
           });
 
+          // console.log('Parsed Data', parsedData);
+
           // Check if the first index of parsed data is null, indicating no header row
           if (parsedData.data[0] === null) {
             Swal.fire({
@@ -77,22 +82,21 @@ function ImportContacts() {
 
           // Extract header names from the first row
           const headerRow = parsedData.data[0]; // Use the first row as header row
-          const fieldNames = headerRow.map(value => (value ? value.trim() : ''));
+          const fieldNames = headerRow.map(value => (value ? value.trim().toLowerCase() : '')); // Convert to lowercase
 
           // Check if any required field is present in the header row
           const hasRequiredField = fieldNames.some(fieldName => requiredFields.includes(fieldName));
 
-          if (hasRequiredField) {
-            // Extract data based on required fields
-            extractedData = parsedData.data.slice(1).map(row => {
-              const extractedEntry = {};
-              fieldNames.forEach((fieldName, index) => {
-                const normalizedKey = fieldName.toLowerCase();
-                if (requiredFields.includes(fieldName)) {
-                  extractedEntry[normalizedKey] = row[index];
-                }
-              });
-              return extractedEntry;
+            if (hasRequiredField) {
+              // Extract data based on required fields
+              extractedData = parsedData.data.slice(1).map(row => {
+                const extractedEntry = {};
+                fieldNames.forEach((fieldName, index) => {
+                  if (requiredFields.includes(fieldName)) {
+                    extractedEntry[fieldName] = row[index];
+                  }
+                });
+                return extractedEntry;
             });
             // console.log('Extracted Data:', extractedData);
             Swal.fire({
@@ -112,7 +116,7 @@ function ImportContacts() {
           Swal.fire({
             icon: 'error',
             title: 'Error!',
-            text: 'An error occurred while parsing the CSV file.',
+            text: 'An error occurred while parsing the CSV file. Please try again.',
           });
         }
       };
@@ -143,13 +147,18 @@ function ImportContacts() {
         </div>
       </section>
 
+      { extractedData.length === 0 ?
+      <div className='w-[80%] max-md:w-full'>
+        <h2 className="text-2xl font-bold mb-4 text-left self-start">Sample CSV File</h2>
+        <img src={sampleCsv} />
+      </div> :
       <ExtractedData
       extractedData={extractedData}
       clearData={() => {
         extractedData = []
         acceptedFiles.pop()
       }}
-      />
+      /> }
     </div>
   );
 }

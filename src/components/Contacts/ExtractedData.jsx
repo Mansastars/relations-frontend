@@ -154,7 +154,7 @@ function ExtractedData({ extractedData, clearData }) {
 
             <FullInput
                 title='Phone Number'
-                type="number"
+                type="text"
                 value={editedData['phone number'] || ''}
                 onChange={(e) => setEditedData({ ...editedData, 'phone number': e.target.value })}
             />
