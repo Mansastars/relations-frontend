@@ -6,13 +6,13 @@ import { acceptStyle, baseStyle, focusedStyle, rejectStyle } from './ImportConta
 import Papa from 'papaparse';
 import ExtractedData from './ExtractedData';
 import sampleCsv from '../../assets/sampleCsv.png'
+import { TemplateDownload } from './TemplateDownload';
 
 const requiredFields = ['first name', 'last name', 'email', 'phone number', 'organization'];
 
-export let extractedData = [];
-
 function ImportContacts() {
   const [jsonData, setJsonData] = useState(null);
+  const [extractedData, setExtractedData] = useState([]);
 
   // File Validation
   const {
@@ -89,7 +89,7 @@ function ImportContacts() {
 
             if (hasRequiredField) {
               // Extract data based on required fields
-              extractedData = parsedData.data.slice(1).map(row => {
+              const newData = parsedData.data.slice(1).map(row => {
                 const extractedEntry = {};
                 fieldNames.forEach((fieldName, index) => {
                   if (requiredFields.includes(fieldName)) {
@@ -98,7 +98,8 @@ function ImportContacts() {
                 });
                 return extractedEntry;
             });
-            // console.log('Extracted Data:', extractedData);
+            setExtractedData(newData);
+            // console.log('Extracted Data:', newData);
             Swal.fire({
               icon: 'success',
               title: 'Success!',
@@ -136,26 +137,31 @@ function ImportContacts() {
 
   return (
     <div className='px-3 flex flex-col my-5 w-full justify-center items-center overflow-x-auto'>
-      <section className="container w-[80%] max-md:w-full mb-20 max-md:mb-10">
+      <section className="container w-[80%] max-md:w-full mb-10">
         <div
           {...getRootProps({style})}
         >
           <input {...getInputProps()} />
           <UploadCloudIcon size={40} />
-          <p className='text-lg text-center'>Drag and drop file to upload, or <span className='text-mansa-blue underline cursor-pointer'>browse</span></p>
-          <em>(Only *.csv file will be accepted)</em>
+          <div className=' flex flex-col gap-2'>
+            <p className='text-lg text-center'>Drag and drop file to upload, or <span className='text-mansa-blue underline cursor-pointer'>browse</span></p>
+            <em className='text-base text-center'>(Only *.csv file will be accepted)</em>
+            <em className='text-sm text-center'>(Required fields: First Name, Last Name, Email, Phone Number, Organization)</em>
+          </div>
         </div>
       </section>
 
+      { extractedData.length === 0 && <TemplateDownload /> }
+
       { extractedData.length === 0 ?
-      <div className='w-[80%] max-md:w-full'>
-        <h2 className="text-2xl font-bold mb-4 text-left self-start">Sample CSV File</h2>
-        <img src={sampleCsv} />
-      </div> :
+        <div className='w-full my-10'>
+          <h2 className="text-2xl font-bold mb-4 text-left self-start">Sample CSV File</h2>
+          <img src={sampleCsv} />
+        </div> :
       <ExtractedData
       extractedData={extractedData}
       clearData={() => {
-        extractedData = []
+        setExtractedData([])
         acceptedFiles.pop()
       }}
       /> }

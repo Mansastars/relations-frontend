@@ -76,7 +76,8 @@ function ExtractedData({ extractedData, clearData }) {
   return (
     <div className=" m-auto">
       <div className='overflow-x-auto flex flex-col justify-center items-center'>
-        <h2 className="text-2xl font-bold mb-4 text-left self-start">CSV File Fields</h2>
+        <h2 className="text-2xl font-bold text-left self-start">CSV File Fields</h2>
+        <span className="text-base self-start mb-4">(Verify the contents of the file before final submission)</span>
         <Table striped>
             <Table.Head title='Verify the content of the .csv file then scroll to the buttom to confirm submission.'>
               <Table.HeadCell>first name</Table.HeadCell>

@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import api from "../api";
 import { useState } from "react";
 import { X } from 'lucide-react'; 
-import { Button, DateForm, DropDown, FormInput, FormInputRequired, FormNotes, SmallPhoneInput } from "../Reusables";
+import { Button, DateForm, DropDown, FormInput, FormNotes } from "../Reusables";
 
 function EditContactDetails({ onClose, contactDetails }) {
     const [successMessage, setSuccessMessage] = useState('');
@@ -46,13 +46,6 @@ function EditContactDetails({ onClose, contactDetails }) {
         notes: contactDetails.notes
     })
 
-    const [phone, setPhone] = useState(formValue.phone_number);
-    const handlePhoneChange = (value) => {
-        setPhone(value);
-    };
-
-    console.log(formValue);
-
     let meetingDate;
 
     if (formValue.datetime) {
@@ -77,7 +70,7 @@ function EditContactDetails({ onClose, contactDetails }) {
             organization_name: formValue.organization_name,
             deal_size: formValue.deal_size,
             email: formValue.email,
-            phone_number: phone,
+            phone_number: formValue.phone_number,
             stage: formValue.stage,
             meeting_date: meetingDate,
             notes: formValue.notes
@@ -117,8 +110,7 @@ function EditContactDetails({ onClose, contactDetails }) {
                             <FormInput type="text" title="Company" placeholder="Mansa, LLC" id="organization_name" value={formValue.organization_name} onChange={handleInput} />
                             <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" id="deal_size" min={0} value={formValue.deal_size} onChange={handleInput} />
                             <FormInput type="email" title="Contact Email" placeholder="sundi@sankore.com" id="email" value={formValue.email} onChange={handleInput} />
-                            {/* <FormInput type="number" title="Phone Number" placeholder="+123456789" id="phone_number" value={formValue.phone_number} onChange={handleInput} /> */}
-                            <SmallPhoneInput title="Phone Number" placeholder="+123456789" id="phoneNumber" value={formValue.phone_number} onChange={handlePhoneChange} />
+                            <FormInput type="tel" title="Phone Number" placeholder="+123456789" id="phone_number" value={formValue.phone_number} onChange={handleInput} maxLength={15} />
                             <DropDown label="Current Stage" id="stage" value={formValue.stage} onChange={handleInput} />
                             <DateForm title="Meeting Date" value={formValue.datetime} onChange={handleInput} />
                         </div>

@@ -1,6 +1,7 @@
   // Pop-up NewDealModal
 import { X } from 'lucide-react';
-import { Button, DropDown, FormInput, FormInputRequired, FormNotes, FullInput, SignUpRequired } from "../Reusables"
+import Swal from 'sweetalert2';
+import { Button, FullInput, SignUpRequired } from "../Reusables"
 import { useRef } from 'react';
 import api from "../api";
 import { useState } from "react";
@@ -53,8 +54,26 @@ function NewDealModal({onClose}) {
         };
     
         try {
-            await api.post('/deals/create-deal', userData);
-            window.location.reload();
+            const response = await api.post('/deals/create-deal', userData);
+            console.log('Response: ', response);
+            if (response.data.message === "You have to upgrade your subscription to create a neww dashboard") {
+                onClose()
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Subscription Upgrade Required',
+                    text: 'You have reached your limit. Please upgrade your subscription to create a new dashboard.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Upgrade',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect to pricing page
+                        navigate('/pricing');
+                    }
+                });
+            } else {
+                window.location.reload();
+            }
         } catch (error) {
             console.log(error);
             setErrorMessage("Something went wrong. Please try again."); // set error message
