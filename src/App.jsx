@@ -41,7 +41,7 @@ function App() {
                 <Route index element={<Dashboard />} />
               </Route>
 
-              <Route path="/contacts" element={<ProtectedRoute />}>
+              <Route path="/contact" element={<ProtectedRoute />}>
                 <Route index element={<Contacts />} />
               </Route>
 
