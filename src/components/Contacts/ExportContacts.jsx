@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import exportFromJSON from 'export-from-json'
 import { Button } from '../Reusables'
 import Swal from 'sweetalert2';
@@ -14,17 +14,17 @@ function ExportContacts() {
             showCancelButton: true,
             confirmButtonText: 'Yes, export it!',
             cancelButtonText: 'Cancel'
-        }).then(async(result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 // API call to get contacts
                 try {
-                    const response = await api.get('contacts/allcontacts')
+                    const response = await api.get('contacts/export-contacts')
                     const data = response.data.data;
 
                     const userData = JSON.parse(localStorage.getItem('user'))
 
                     const fileName = `${userData.first_name}_Contacts`
-                    const exportType =  exportFromJSON.types.csv
+                    const exportType = exportFromJSON.types.csv
 
                     exportFromJSON({
                         data,
@@ -56,12 +56,17 @@ function ExportContacts() {
         });
     }
 
-  return (
-    <Button
-    text='Export Contacts'
-    onClick={handleExport}
-    /> 
-  )
+
+
+    return (
+        <>
+            <Button
+                text='Export Contacts'
+                onClick={handleExport}
+            />
+        </>
+
+    )
 }
 
 export default ExportContacts
