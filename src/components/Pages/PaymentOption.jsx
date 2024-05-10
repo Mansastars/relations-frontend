@@ -81,7 +81,7 @@ function PaymentOption() {
 
             <div className=' text-dark-blue flex flex-col items-center w-full gap-10 pb-20 overflow-y-auto'>
                 <div className=' text-center pt-7'>
-                    <p className=' font-semibold'>{!userData.on_trial && 'Your trial has ended...'}</p>
+                    <p className=' font-semibold'>{!userData.on_trial && userData.subscription_name === null && 'Your trial has ended...'}</p>
                     <p className=' font-semibold'>Save up to <span className=' text-2xl font-extrabold'>15%</span> of all our plans with our annual subcription</p>
                 </div>
 

@@ -1,6 +1,6 @@
 // This file contains content of the Proile page
 
-import { FullInput, FullPhoneInput } from "../Reusables";
+import { FullInput } from "../Reusables";
 import { Button } from "../Reusables";
 import FreeTrialBanner from "./FreeTrialBanner";
 import { EyeIcon, EyeOff, Linkedin } from 'lucide-react';
@@ -25,7 +25,6 @@ export default function Profile() {
     const [emailIsSubmitting, setEmailIsSubmitting] = useState(false);
     const [passwordIsSubmitting, setPasswordIsSubmitting] = useState(false);
     const [formValue, setFormValue] = useState({first_name: '', last_name: '', phone_number: '', bio: '', email: '', old_password: '', new_password: '', confirm_password: ''});
-    const [phone, setPhone] = useState('');
     const [passwordStrength, setPasswordStrength] = useState(0);
     const [canSubmit, setCanSubmit] = useState(false);
 
@@ -39,11 +38,6 @@ export default function Profile() {
           navigate('/auth/login');
         }
     }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
-
-    // Phone
-    const handlePhoneChange = (value) => {
-        setPhone(value);
-    };
 
     // Get user's details
     useEffect(() => {
@@ -82,7 +76,7 @@ export default function Profile() {
         const userData = {
             first_name: formValue.first_name,
             last_name: formValue.last_name,
-            phone_number: phone,
+            phone_number: formValue.phone_number,
             bio: formValue.bio,
         };
 
@@ -224,7 +218,7 @@ export default function Profile() {
                                     <FullInput type="text" title="Last Name" placeholder="" id="last_name" value={formValue.last_name} onChange={handleGeneralInfoInput} />
                                 </div>
                                 <div className=" flex flex-col gap-1 w-1/2 max-[768px]:w-full">
-                                    <FullPhoneInput title="Phone Number" placeholder="" id="phone_number" value={formValue.phone_number} onChange={handlePhoneChange} />
+                                    <FullInput type='tel' title="Phone Number" placeholder="+123456789" id="phone_number" maxLength={15} value={formValue.phone_number} onChange={handleGeneralInfoInput} />
                                     <p className=" text-dark-blue text-base">We collect this incase of emergencies.</p>
                                 </div>
                             </div>

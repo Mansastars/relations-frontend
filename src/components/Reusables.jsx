@@ -1,9 +1,8 @@
 // This file contains all the resuables components
-import { useState } from "react"
+import { Children, useState } from "react"
 import "../App.css"
 import search from "../assets/search.svg"
 import 'react-phone-number-input/style.css'
-import PhoneInput, { formatPhoneNumber, formatPhoneNumberIntl, isValidPhoneNumber } from 'react-phone-number-input'
 
 // Sidebar items content
 export function SidebarItem({icon, text, activeItem, setActiveItem, id}) {
@@ -45,8 +44,16 @@ export function Button({text, onClick, className}) {
     )
 }
 
+export function ButtonWithIcon({onClick, className, children}) {
+    return (
+        <button onClick={onClick} className={` bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue ${className}`}>
+            {children}
+        </button>
+    )
+}
+
 // Form template for not required inputs (NOT FULL)
-export function FormInput({ type, title, placeholder, id, value, onChange, min }) {
+export function FormInput({ type, title, placeholder, id, value, onChange, min, maxLength, pattern }) {
     const [isFocused, setIsFocused] = useState(false);
 
     const handleFocus = () => {
@@ -70,8 +77,10 @@ export function FormInput({ type, title, placeholder, id, value, onChange, min }
                     autoComplete={id}
                     placeholder={placeholder}
                     min={min}
+                    maxLength={maxLength}
                     className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                     value={value}
+                    pattern={pattern}
                     onChange={onChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
@@ -82,7 +91,7 @@ export function FormInput({ type, title, placeholder, id, value, onChange, min }
 }
 
 // Form template for not required login FULL (FULL)
-export function FullInput({ type, title, placeholder, id, value, onChange, icon, min }) {
+export function FullInput({ type, title, placeholder, id, value, onChange, icon, min, maxLength, pattern }) {
     const [isFocused, setIsFocused] = useState(false);
 
     const handleFocus = () => {
@@ -107,6 +116,8 @@ export function FullInput({ type, title, placeholder, id, value, onChange, icon,
                     className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? 'border-mansa-blue' : 'border-dark-blue'} hover:border-mansa-blue`}
                     value={value}
                     min={min}
+                    maxLength={maxLength}
+                    pattern={pattern}
                     onChange={onChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
@@ -308,72 +319,6 @@ export const DateForm = ({title, value, onChange}) => {
             />
         </div>
     </div>
-    )
-}
-
-export function FullPhoneInput({ title, id, placeholder, value, onChange }) {
-    const [isFocused, setIsFocused] = useState(false);
-
-    const handleFocus = () => {
-        setIsFocused(true);
-    };
-
-    const handleBlur = () => {
-        setIsFocused(false);
-    };
-
-    return (
-        <div className={`relative col-span-full w-full ${isFocused ? 'focus' : ''}`}>
-            <label htmlFor="phone" className={`absolute -top-3 left-14 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
-                { title }
-            </label>
-            <div className={`mt-1 ${isFocused ? 'focus' : ''}`}>
-                <PhoneInput
-                    id={id}
-                    international
-                    // defaultCountry="US"
-                    //className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-                    value={value}
-                    onChange={onChange}
-                    placeholder={placeholder}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                />
-            </div>
-        </div>
-    )
-}
-
-export function SmallPhoneInput({ title, id, placeholder, value, onChange }) {
-    const [isFocused, setIsFocused] = useState(false);
-
-    const handleFocus = () => {
-        setIsFocused(true);
-    };
-
-    const handleBlur = () => {
-        setIsFocused(false);
-    };
-
-    return (
-        <div className={` relative col-span-full w-60 max-lg:w-full ${isFocused ? 'focus' : ''}`}>
-            <label htmlFor="phone" className={`absolute -top-3 left-14 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? 'text-mansa-blue' : 'text-dark-blue'}`}>
-                { title }
-            </label>
-            <div className={`mt-1 ${isFocused ? 'focus' : ''}`}>
-                <PhoneInput
-                    id={id}
-                    international
-                    // defaultCountry="US"
-                    // className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
-                    value={value}
-                    onChange={onChange}
-                    placeholder={placeholder}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                />
-            </div>
-        </div>
     )
 }
 

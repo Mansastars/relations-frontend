@@ -1,6 +1,6 @@
 // Pop-up Modal
 import { X } from 'lucide-react';
-import { Button, DateForm, DropDown, FormInput, FormInputRequired, FormNotes, SmallPhoneInput } from "../Reusables"
+import { Button, DateForm, DropDown, FormInput, FormInputRequired, FormNotes } from "../Reusables"
 import { useRef } from 'react';
 import api from "../api";
 import { useState } from "react";
@@ -21,11 +21,6 @@ function Modal({onClose}) {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [phone, setPhone] = useState('');
-
-    const handlePhoneChange = (value) => {
-        setPhone(value);
-    };
 
     const handleInput = (e) => {
         if (e && e.target) {
@@ -57,7 +52,7 @@ function Modal({onClose}) {
             organization_name: formValue.company,
             deal_size: formValue.dealSize,
             email: formValue.email,
-            phone_number: phone,
+            phone_number: formValue.phoneNumber,
             stage: formValue.currentStage,
             meeting_date: meetingDate,
             notes: formValue.notes,
@@ -108,7 +103,7 @@ function Modal({onClose}) {
                             <FormInput type="text" title="Company" placeholder="Mansa, LLC" id="company" value={formValue.company} onChange={handleInput} />
                             <FormInput type="number" title="Deal Size ($)" placeholder="1,000,000" id="dealSize" min={0} value={formValue.dealSize} onChange={handleInput} />
                             <FormInput type="email" title="Contact Email" placeholder="sundi@sankore.com" id="email" value={formValue.email} onChange={handleInput} />
-                            <SmallPhoneInput title="Phone Number" placeholder="+123456789" id="phoneNumber" value={formValue.phoneNumber} onChange={handlePhoneChange} />
+                            <FormInput type='tel' title="Phone Number" placeholder="+123456789" id="phoneNumber" maxLength={15} value={formValue.phoneNumber} onChange={handleInput} />
                             <DropDown label="Current Stage" id="currentStage" value={formValue.currentStage} onChange={handleInput} />
                             <DateForm title="Meeting Date" value={formValue.datetime} onChange={handleInput} />
                             {/* <FormInput type="url" title="Profile Image URL" placeholder="https://" id="profile_url" value={formValue.profile_url} onChange={handleInput} />

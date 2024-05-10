@@ -6,11 +6,14 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { XCircleIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import EditDealModal from "./EditDealModal";
 
 export default function CreatedDeals() {
     const [deals, setDeals] = useState([]);
     const navigate = useNavigate()
     const isSmallScreen = window.innerWidth < 765;
+    const [showEditDealModal, setShowEditDealModal] = useState(false)
+    const [selectedDeal, setSelectedDeal] = useState(null);
 
     useEffect(() => {
         const fetchDeals = async () => {
@@ -64,51 +67,8 @@ export default function CreatedDeals() {
         try {
             const response = await api.get(`/deals/single-deal/${dealId}`);
             const dealDetails = response.data.deal;
-    
-            const formatDateTime = (isoDate) => {
-                if (!isoDate) return '';
-                const date = new Date(isoDate);
-                const formattedDate = date.toISOString().slice(0, 16); // Format "yyyy-MM-ddThh:mm"
-                return formattedDate;
-            };
-    
-            const { value: updatedDealDetails } = await Swal.fire({
-                title: 'Update Deal Details',
-                html:
-                    `<div>` +
-                    `<label class="swal2-title">Deal Name</label>` +
-                    `<input id="dealName" class="swal2-input" value="${dealDetails.deal_name}" placeholder="Deal Name">` +
-                    `</div>` +
-                    `<div>` +
-                    `<label class="swal2-label">Deadline</label>` +
-                    `<input type="datetime-local" id="deadline" value="${formatDateTime(dealDetails.dead_line)}" class="swal2-input">` +
-                    `</div>` +
-                    `<div>` +
-                    `<label class="swal2-label">Dead Size</label>` +
-                    `<input type="number" id="dealSize" min=0 value="${dealDetails.deal_size}" class="swal2-input" placeholder="Deal Size">` +
-                    `</div>`,
-                focusConfirm: false,
-                preConfirm: () => {
-                    const deal_name = document.getElementById('dealName').value;
-                    const deadlineInputValue = document.getElementById('deadline').value;
-                    const deal_size = document.getElementById('dealSize').value;
-                    // Convert deadline input value to ISO format
-                    const dead_line = new Date(deadlineInputValue).toISOString();
-                    return {
-                        deal_name,
-                        dead_line,
-                        deal_size,
-                    };
-                }
-            });
-    
-            if (updatedDealDetails) {
-                // Make the patch request with updated deal details
-                await api.patch(`/deals/edit-deal/${dealId}`, updatedDealDetails);
-                Swal.fire('Success', 'Deal details updated successfully', 'success');
-                // Refresh the deals list or update the specific deal in the list
-                window.location.reload();
-            }
+            setSelectedDeal(dealDetails);
+            setShowEditDealModal(true);
         } catch (error) {
             console.error('Error updating deal details:', error);
             Swal.fire('Error', 'Failed to update deal details', 'error');
@@ -134,15 +94,15 @@ export default function CreatedDeals() {
                 {sortedDeals.map(deal => (
                     <div
                         key={deal.id}
-                        className="flex flex-col justify-start items-start w-72 max-lg:w-64 max-sm:w-56 gap-2 rounded-xl border border-mansa-blue hover:border-dark-blue"
+                        className="flex justify-start items-start w-64 max-sm:w-56 rounded-xl border-2 border-mansa-blue hover:border-2 hover:border-dark-blue cursor-pointer"
                     >     
                         <div
-                            className="flex flex-col justify-start items-start w-full gap-2 cursor-pointer"
+                            className="flex flex-col justify-start items-start w-full gap-2"
                             onClick={() => handleClickDeal(deal.id)}
                         >
-                            <div className=" flex flex-col w-full gap-2 bg-mansa-blue rounded-t-xl px-4 py-3">
+                            <div className=" flex flex-col w-full gap-2 bg-mansa-blue rounded-tl-xl pl-4 py-3">
                                 <div>
-                                    <button onClick={() => handleDelete(deal.id)} className="text-white hover:text-[#FF0000] cursor-pointer">
+                                    <button onClick={() => handleDelete(deal.id)} className="text-white hover:text-[#FF0000]">
                                         <XCircleIcon className="h-4 w-4" />
                                     </button>
                                 </div>
@@ -150,22 +110,22 @@ export default function CreatedDeals() {
                                     <h2 className="font-bold text-2xl max-sm:text-xl text-white text-nowrap w-full ">
                                         {deal.deal_name.length > 14 ? `${deal.deal_name.substring(0, 11)}...` : deal.deal_name}
                                     </h2>
-                                    <button onClick={() => handleDealUpdate(deal.id)} className=" text-white hover:text-dark-blue cursor-pointer">
-                                        <Edit2Icon size={24} />
-                                    </button>
                                 </div>
-                                
                             </div>
-                            <p className="text-dark-blue text-base px-4">
+                            <p className="text-dark-blue text-base px-4 rounded-bl-xl bg-light-grey">
                                 <span className="font-semibold">Deadline: </span>
                                 {deal.dead_line ? new Date(deal.dead_line).toLocaleString() : 'No deadline set'}
                             </p>
                         </div>
-                        <div className=" pl-5 self-start">
-                            
+                        <div className=" pr-4 py-3 bg-mansa-blue rounded-tr-xl flex flex-col gap-10 max-sm:gap-9">
+                            <button onClick={() =>  handleDealUpdate(deal.id)} className=" text-white hover:text-dark-blue cursor-pointer">
+                                <Edit2Icon size={24} />
+                            </button>
+                            <p className=" text-mansa-blue"> </p>
                         </div>
                     </div>
                 ))}
+                {showEditDealModal && <EditDealModal onClose={() => setShowEditDealModal(false)} dealDetails={selectedDeal} />}
             </div>
         </div>
     )
