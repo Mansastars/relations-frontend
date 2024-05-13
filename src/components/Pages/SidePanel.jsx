@@ -84,7 +84,7 @@ function SidePanel() {
                     {isOpen ? (
                         <X size={32} className=' text-white hover:text-red-700 absolute top-2 right-2' />
                     ) : (
-                        <ArrowLeftCircle size={30} className=' text-white hover:text-mansa-blue mt-8 max-[768px]:hidden' />
+                        <ArrowLeftCircle size={30} className=' text-white hover:text-mansa-blue mt-8 max-[800px]:hidden' />
                     )}
                 </button>
             </div>

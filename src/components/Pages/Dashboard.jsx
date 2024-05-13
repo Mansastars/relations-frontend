@@ -12,6 +12,7 @@ import Loader from "../ReusableComponents/Loader";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthContext"
 import SidePanel from "./SidePanel";
+import ShareButton from "../ShareFeature/ShareButton";
 
 function Dasboard() {
     const navigate = useNavigate(); // Use useNavigate hook to navigate programmatically
@@ -20,7 +21,9 @@ function Dasboard() {
     const [showModal, setShowModal] = useState(false)
     const [showMoveContactModal, setShowMoveContactModal] = useState(false)
     const [singleDeals, setSingleDeals] = useState([]);
-    const currentDealId = localStorage.getItem('currentDealId');
+    const pathName = window.location.pathname.split('/').at(-1)
+    const currentDealId = localStorage.getItem('currentDealId') || pathName;
+    const userDetails = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
       const fetchSingleDeals = async () => {
@@ -43,12 +46,12 @@ function Dasboard() {
     }, [currentDealId]); // Include currentDealId in the dependency array
 
     // Check if user is authenticated
-    useEffect(() => {
-        // Redirect to login page if not authenticated
-        if (!isAuthenticated) {
-          navigate('/auth/login');
-        }
-      }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
+    // useEffect(() => {
+    //     // Redirect to login page if not authenticated
+    //     if (!isAuthenticated) {
+    //       navigate('/auth/login');
+    //     }
+    //   }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
 
     return (
      <div>
@@ -59,17 +62,24 @@ function Dasboard() {
           <div className="">
             <SidePanel />
           </div>
-          <div className=" flex flex-col gap-2 w-full mr-2 overflow-auto">
-            <div className=" flex pt-2 items-center gap-4">
-              {/* <SearchBar /> */}
-              <div onClick={() => setShowModal(true)} className="flex">
-                <Button text="Add a New Contact" />
+
+          <div className=" flex flex-col gap-2 w-full mr-2 overflow-auto pt-2">
+            {userDetails && <div className="flex w-full items-center justify-between">
+              <div className=" flex items-center gap-4">
+                <div onClick={() => setShowModal(true)} className="flex">
+                  <Button text="Add a New Contact" />
+                </div>
+                <div onClick={() => setShowMoveContactModal(true)} className="flex">
+                  <Button text="Move a Contact" />
+                </div>
               </div>
-              <div onClick={() => setShowMoveContactModal(true)} className="flex">
-                <Button text="Move a Contact" />
+
+              <div className="">
+                  <ShareButton dealDetail={singleDeals} />
               </div>
-            </div>
-            <div className=" flex flex-row w-full items-center">
+            </div>}
+
+            <div className={`flex flex-row w-full items-center`}>
               <div className=" bg-dark-blue text-white font-bold text-2xl py-6 rounded-l-xl w-[40%] text-center">
                 {singleDeals && singleDeals.deal_name && singleDeals.deal_name.length > 15 ? `${singleDeals.deal_name.substring(0, 15)}...` : singleDeals && singleDeals.deal_name}
               </div>

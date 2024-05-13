@@ -24,19 +24,23 @@ function FreeTrialBanner() {
         }
     }, []);
 
-    useEffect(() => {
-        const trialStartDate = new Date(userData.createdAt);
-        const trialEndDate = new Date(trialStartDate);
-        trialEndDate.setDate(trialStartDate.getDate() + 7); // Trial period is 7 days
-        const currentDate = new Date();
-        const remainingTime = trialEndDate - currentDate;
-        const remainingDays = Math.ceil(remainingTime / (1000 * 60 * 60 * 24));
-        setDaysLeft(remainingDays);
-    }, [showBanner]);
+    if (userData) {
+        useEffect(() => {
+            const trialStartDate = new Date(userData.createdAt);
+            const trialEndDate = new Date(trialStartDate);
+            trialEndDate.setDate(trialStartDate.getDate() + 7); // Trial period is 7 days
+            const currentDate = new Date();
+            const remainingTime = trialEndDate - currentDate;
+            const remainingDays = Math.ceil(remainingTime / (1000 * 60 * 60 * 24));
+            setDaysLeft(remainingDays);
+        }, [showBanner]);   
+    }
 
-    useEffect(() => {
-        setShowTrialBanner(showBanner === 'true' && daysLeft > 0);
-    }, [showBanner, daysLeft]);
+    if (userData) {
+        useEffect(() => {
+            setShowTrialBanner(showBanner === 'true' && daysLeft > 0);
+        }, [showBanner, daysLeft]);
+    }
 
     const checkout = async (plan, userId) => {
         const data = {

@@ -201,7 +201,7 @@ export default function Profile() {
                     <SidePanel />
                 </div>
                 <div className=" flex flex-col w-full items-center overflow-y-auto">
-                    <div className=" bg-white py-10 px-6 max-sm:px-3 flex flex-col justify-center mt-10 mb-10 rounded-2xl items-start gap-10 w-[75%] max-sm:w-full">
+                    <div className=" bg-white py-10 px-6 max-sm:px-3 flex flex-col justify-center mt-10 mb-10 rounded-2xl items-start gap-10 w-[75%] max-md:w-full">
                         <form onSubmit={handleGeneralInfoSubmit} className=" w-full">
                             <div className=" flex flex-row max-sm:flex-col justify-between pb-8">
                                 <div>
