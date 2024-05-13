@@ -11,7 +11,7 @@ import EditDealModal from "./EditDealModal";
 export default function CreatedDeals() {
     const [deals, setDeals] = useState([]);
     const navigate = useNavigate()
-    const isSmallScreen = window.innerWidth < 765;
+    const isSmallScreen = window.innerWidth < 680;
     const [showEditDealModal, setShowEditDealModal] = useState(false)
     const [selectedDeal, setSelectedDeal] = useState(null);
 

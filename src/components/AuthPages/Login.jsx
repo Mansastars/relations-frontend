@@ -100,7 +100,7 @@ function Login() {
                             <Link to='/verify_email' className=' text-sm text-mansa-blue hover:text-dark-blue'><u>Forgot password?</u></Link>
                         </div>
                     </div>
-                    <Button type='submit' text={loading ? "Logging In..." : "Log In"} disabled={loading} />
+                    <Button type='submit' text={loading ? "Logging In..." : "Log In"} disabled={loading} className=' max-md:w-full' />
                 </form>
             </div>
         </div>

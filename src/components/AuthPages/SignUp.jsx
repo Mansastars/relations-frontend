@@ -155,7 +155,7 @@ function SignUp() {
                             </div>
                         </div>
                     </div>
-                    <Button type='submit' text={loading ? "Signing Up..." : "Sign Up"} disabled={loading} />
+                    <Button type='submit' text={loading ? "Signing Up..." : "Sign Up"} disabled={loading} className=' max-md:w-full' />
                 </form>
             </div>
         </div>

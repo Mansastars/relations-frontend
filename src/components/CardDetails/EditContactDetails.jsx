@@ -3,11 +3,13 @@ import api from "../api";
 import { useState } from "react";
 import { X } from 'lucide-react'; 
 import { Button, DateForm, DropDown, FormInput, FormNotes } from "../Reusables";
+import Swal from 'sweetalert2';
 
 function EditContactDetails({ onClose, contactDetails }) {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const pathName = window.location.pathname.split('/').at(-1);
 
     const modalRef = useRef();
 
@@ -55,13 +57,19 @@ function EditContactDetails({ onClose, contactDetails }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const currentDealId = localStorage.getItem('currentDealId');
+        const currentDealId = localStorage.getItem('currentDealId') || pathName;
         if (!currentDealId) {
             console.error('Deal ID not found in localStorage');
             return;
         }
 
         const user = localStorage.getItem('user');
+
+        if (!user) {
+            onClose();
+            Swal.fire('Error', 'You are not allowed to edit this dashboard.', 'error');
+        }
+        
         const userData = {
             userId: user.id,
             title: formValue.title,

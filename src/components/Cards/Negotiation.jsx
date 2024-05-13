@@ -8,11 +8,12 @@ import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
 
 //Contact
 export default function Negotiation({ borderColour }) {
-    const currentDealId = localStorage.getItem('currentDealId');
+    const pathNameDealId = window.location.pathname.split('/').at(-1);
+    const currentDealId = localStorage.getItem('currentDealId') || pathNameDealId;
 
     const BorderStyle = {
         border: `2px solid  ${borderColour}`,
-      };
+    };
 
     const [negotiations, setNegotiations] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -22,7 +23,7 @@ export default function Negotiation({ borderColour }) {
 
     useEffect(() => {
         const fetchNegotiation = async () => {
-            const currentDealId = localStorage.getItem('currentDealId');
+            const currentDealId = localStorage.getItem('currentDealId') || pathNameDealId;
 
             if (!currentDealId) {
                 console.error('Deal ID not found in localStorage');
