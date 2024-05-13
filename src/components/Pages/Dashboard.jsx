@@ -21,8 +21,15 @@ function Dasboard() {
     const [showModal, setShowModal] = useState(false)
     const [showMoveContactModal, setShowMoveContactModal] = useState(false)
     const [singleDeals, setSingleDeals] = useState([]);
-    const pathName = window.location.pathname.split('/').at(-1)
-    const currentDealId = localStorage.getItem('currentDealId') || pathName;
+    const pathNameDealId = window.location.pathname.split('/').at(-1);
+    const [userId, setUserId] = useState("")
+
+
+    useEffect(() => {
+      localStorage.setItem('currentDealId', pathNameDealId);
+    }, [])
+
+    const currentDealId = localStorage.getItem('currentDealId');
     const userDetails = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
@@ -31,6 +38,7 @@ function Dasboard() {
           if (currentDealId) {
               try {
                   const response = await api.get(`deals/single-deal/${currentDealId}`);
+                  setUserId(response.data.deal.owner_id);
                   // Assuming response.data contains the single deal object
                   const fetchedSingleDeal = response.data.deal;
                   setSingleDeals(fetchedSingleDeal);
@@ -64,7 +72,7 @@ function Dasboard() {
           </div>
 
           <div className=" flex flex-col gap-2 w-full mr-2 overflow-auto pt-2">
-            {userDetails && <div className="flex w-full items-center justify-between">
+            {(userDetails && userDetails.id === userId) && <div className="flex w-full items-center justify-between">
               <div className=" flex items-center gap-4">
                 <div onClick={() => setShowModal(true)} className="flex">
                   <Button text="Add a New Contact" />
