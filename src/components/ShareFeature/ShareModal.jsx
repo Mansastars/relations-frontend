@@ -27,7 +27,7 @@ function ShareModal({ onClose, dealDetail }) {
         }
     }
 
-    const currentPath = window.location.pathname;
+    const currentPath = `https://crm.mansastars.com${window.location.pathname}`;
 
     const customMessage = `
     Hi, ${userDetails.first_name} ${userDetails.last_name} has invited you to collaborate on the Mansa CRM Project titled "${dealDetail.deal_name}". Mansa’s CRM helps you manage your leads, target prospects, dealflow and manage follow-ups efficiently and affordably. Click the link below to accept the invitation and get started!
