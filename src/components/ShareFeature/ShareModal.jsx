@@ -29,9 +29,7 @@ function ShareModal({ onClose, dealDetail }) {
 
     const currentPath = `https://crm.mansastars.com${window.location.pathname}`;
 
-    const customMessage = `
-    Hi, ${userDetails.first_name} ${userDetails.last_name} has invited you to collaborate on the Mansa CRM Project titled "${dealDetail.deal_name}". Mansa’s CRM helps you manage your leads, target prospects, dealflow and manage follow-ups efficiently and affordably. Click the link below to accept the invitation and get started!
-    `;
+    const customMessage = `Hi, ${userDetails.first_name} ${userDetails.last_name} has invited you to collaborate on the Mansa CRM Project titled "${dealDetail.deal_name}". Mansa’s CRM helps you manage your leads, target prospects, dealflow and manage follow-ups efficiently and affordably. Click the link below to accept the invitation and get started!`;
 
     const customTitle = `Check out this dashboard`;
 
@@ -58,12 +56,12 @@ function ShareModal({ onClose, dealDetail }) {
                         <p>Email</p>
                     </div>
 
-                    <div className=' flex flex-col gap-5 items-center justify-center'>
+                    {/* <div className=' flex flex-col gap-5 items-center justify-center'>
                         <LinkedinShareButton url={currentPath} title={customTitle} summary={customMessage}>
                             <LinkedinIcon size={40} round />
                         </LinkedinShareButton>
                         <p>LinkedIn</p>
-                    </div>
+                    </div> */}
 
                     <div className=' flex flex-col gap-5 items-center justify-center'>
                         <WhatsappShareButton url={currentPath} title={customMessage} separator=' '>

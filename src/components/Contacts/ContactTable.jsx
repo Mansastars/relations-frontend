@@ -34,7 +34,7 @@ function ContactTable({ data }) {
               firstName={contact.first_name}
               lastName={contact.last_name}
               email={contact.email}
-              org={contact.organization}
+              org={contact.organization_name}
               phoneNumber={contact.phone_number}
             />
           ))}

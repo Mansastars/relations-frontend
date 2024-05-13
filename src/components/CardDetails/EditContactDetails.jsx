@@ -95,6 +95,10 @@ function EditContactDetails({ onClose, contactDetails }) {
                 window.location.reload();
             }, 2000);
         } catch (error) {
+            if (error.response.data.message === "unable to edit contact at this time") {
+                onClose();
+                Swal.fire('Error', 'You are not allowed to edit this dashboard.', 'error');
+            }
             console.log(error);
             setErrorMessage("Something went wrong. Please try again.");
             setSuccessMessage('');

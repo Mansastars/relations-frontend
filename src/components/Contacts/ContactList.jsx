@@ -26,7 +26,7 @@ function ContactList() {
           <ExportContacts />
         </div>
       </div>
-      <div className='py-8 px-16 max-lg:px-0'>
+      <div className='py-8'>
         <ContactTable data={allcontacts} />
       </div>
     </div>
