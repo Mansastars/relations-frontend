@@ -22,12 +22,8 @@ function Dasboard() {
     const [showMoveContactModal, setShowMoveContactModal] = useState(false)
     const [singleDeals, setSingleDeals] = useState([]);
     const pathNameDealId = window.location.pathname.split('/').at(-1);
-    const [userId, setUserId] = useState("")
-
-
-    useEffect(() => {
-      localStorage.setItem('currentDealId', pathNameDealId);
-    }, [])
+    const [userId, setUserId] = useState("");
+    localStorage.setItem('currentDealId', pathNameDealId);
 
     const currentDealId = localStorage.getItem('currentDealId');
     const userDetails = JSON.parse(localStorage.getItem('user'));
