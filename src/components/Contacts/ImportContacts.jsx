@@ -89,7 +89,7 @@ function ImportContacts() {
 
             if (hasRequiredField) {
               // Extract data based on required fields
-              const newData = parsedData.data.slice(1).map(row => {
+              const newData = parsedData.data.slice(1).filter(row => row.some(cell => cell !== null && cell !== '' )).map(row => {
                 const extractedEntry = {};
                 fieldNames.forEach((fieldName, index) => {
                   if (requiredFields.includes(fieldName)) {
