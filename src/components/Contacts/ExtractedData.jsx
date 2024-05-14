@@ -31,7 +31,7 @@ function ExtractedData({ extractedData, clearData }) {
     };
 
     const handleSubmit = async () => {
-      // Show confirmation dialog before submission
+      // Show confirmation dialog before submission 
       Swal.fire({
           title: 'Are you sure?',
           text: 'Please verify that you have properly reviewed the contents before submitting.',

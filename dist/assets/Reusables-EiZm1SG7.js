@@ -1,4 +1,4 @@
-import{j as e,r as b}from"./index-B-Qq2xuA.js";/* empty css              */function g({text:o,onClick:l,className:t}){return e.jsx("button",{onClick:l,className:`
+import{j as e,r as b}from"./index-DO6F1rRA.js";/* empty css              */function g({text:o,onClick:l,className:t}){return e.jsx("button",{onClick:l,className:`
         bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue
          max-md:py-3 max-md:px-2
          ${t}
