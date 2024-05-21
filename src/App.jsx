@@ -1,8 +1,14 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Loader from './components/ReusableComponents/Loader';
-import { AuthProvider } from './hooks/AuthContext';
-import ProtectedRoute from './hooks/ProtectedRoute';
+import { lazy, Suspense, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
+import Loader from "./components/ReusableComponents/Loader";
+import { AuthProvider } from "./hooks/AuthContext";
+import ProtectedRoute from "./hooks/ProtectedRoute";
 
 // Lazy loading implementation
 const SignUp = lazy(() => import("./components/AuthPages/SignUp"));
@@ -10,26 +16,66 @@ const Login = lazy(() => import("./components/AuthPages/Login"));
 const Dashboard = lazy(() => import("../src/components/Pages/Dashboard"));
 const Profile = lazy(() => import("./components/Pages/Profile"));
 const NewDealPage = lazy(() => import("../src/components/Pages/NewDeal"));
-const MoveToLargeScreen = lazy(() => import("./components/Pages/MoveToLargeScreen"));
+const MoveToLargeScreen = lazy(() =>
+  import("./components/Pages/MoveToLargeScreen")
+);
 const PaymentOption = lazy(() => import("./components/Pages/PaymentOption"));
-const PaymentSuccessPage = lazy(() => import("./components/Stripe/PaymentSuccessPage"));
-const PaymentCancellation = lazy(() => import("./components/Stripe/PaymentCancellation"));
+const PaymentSuccessPage = lazy(() =>
+  import("./components/Stripe/PaymentSuccessPage")
+);
+const PaymentCancellation = lazy(() =>
+  import("./components/Stripe/PaymentCancellation")
+);
 const VerifyEmail = lazy(() => import("./components/AuthPages/VerifyEmail"));
-const ForgotPassword = lazy(() => import("./components/AuthPages/ForgotPassword"));
+const ForgotPassword = lazy(() =>
+  import("./components/AuthPages/ForgotPassword")
+);
 const Verify = lazy(() => import("./components/AuthPages/Verify"));
 const Contacts = lazy(() => import("./components/Pages/Contacts"));
+const SidePanel = lazy(() => import("./components/Pages/SidePanel"));
+const ContactUs = lazy(() => import("./components/ContactUs/ContactUs"));
+const NotFound = lazy(() => import("./components/Pages/NotFound"));
 
 function App() {
+  const [showContactUs, setShowContactUs] = useState(false);
+  const location = useLocation();
+
+  // List of routes where the SidePanel should not be shown
+  const hideSidePanelRoutes = [
+    "/",
+    "/auth/sign_up",
+    "/auth/login",
+    "/verify_email",
+    "/cancel-payment",
+    "/successful-payment",
+    "/not-found",
+  ];
+
+  const hideSidePanelPatterns = [/^\/reset-password\/.*$/, /^\/verify\/.*$/];
+
+  // Check if the current path matches any of the exact paths in hideSidePanelRoutes
+  const shouldHideSidePanel =
+    hideSidePanelRoutes.includes(location.pathname) ||
+    hideSidePanelPatterns.some((pattern) => pattern.test(location.pathname));
+
   return (
-    <>
-      <Router>
-        <Suspense fallback={<Loader />}>
-          <AuthProvider>
+    <Suspense fallback={<Loader />}>
+      <AuthProvider>
+        <div className="flex h-screen w-full">
+          {!shouldHideSidePanel && (
+            <div className="w-fit h-screen">
+              <SidePanel setShowContactUs={setShowContactUs} />
+            </div>
+          )}
+          <div className=" w-full overflow-y-auto h-screen">
             <Routes>
               <Route path="/auth/sign_up" element={<SignUp />} />
               <Route path="/auth/login" element={<Login />} />
               <Route path="/verify_email" element={<VerifyEmail />} />
-              <Route path="/reset-password/:verificationToken" element={<ForgotPassword />} />
+              <Route
+                path="/reset-password/:verificationToken"
+                element={<ForgotPassword />}
+              />
               <Route path="/verify/:verificationToken" element={<Verify />} />
 
               {/* Use ProtectedRoute as a Route component */}
@@ -48,17 +94,37 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/pricing" element={<PaymentOption />} />
 
-              <Route path="/successful-payment" element={<PaymentSuccessPage />} />
-              <Route path="/cancel-payment" element={<PaymentCancellation />}/>
-                
+              <Route
+                path="/successful-payment"
+                element={<PaymentSuccessPage />}
+              />
+              <Route path="/cancel-payment" element={<PaymentCancellation />} />
+
               {/* Route for larger screen redirection */}
-              <Route path="/move-to-larger-screen" element={<MoveToLargeScreen />} />
+              <Route
+                path="/move-to-larger-screen"
+                element={<MoveToLargeScreen />}
+              />
+
+              <Route path="*" element={<Navigate to="/not-found" />} />
+              <Route path="/not-found" element={<NotFound />} />
             </Routes>
-          </AuthProvider>
-        </Suspense>
-      </Router>
-    </>
+          </div>
+          {showContactUs && (
+            <ContactUs onClose={() => setShowContactUs(false)} />
+          )}
+        </div>
+      </AuthProvider>
+    </Suspense>
   );
 }
 
-export default App;
+function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
+
+export default AppWrapper;
