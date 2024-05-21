@@ -1,5 +1,5 @@
-import React from 'react';
-import SingleContactRow from './SingleContactRow';
+import React from "react";
+import SingleContactRow from "./SingleContactRow";
 
 function ContactTable({ data }) {
   return (
@@ -28,16 +28,18 @@ function ContactTable({ data }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((contact) => (
-            <SingleContactRow
-              key={contact.id} // Don't forget to include a unique key prop
-              firstName={contact.first_name}
-              lastName={contact.last_name}
-              email={contact.email}
-              org={contact.organization_name}
-              phoneNumber={contact.phone_number}
-            />
-          ))}
+          {data
+            ? data.map((contact) => (
+                <SingleContactRow
+                  key={contact.id} // Don't forget to include a unique key prop
+                  firstName={contact.first_name}
+                  lastName={contact.last_name}
+                  email={contact.email}
+                  org={contact.organization_name}
+                  phoneNumber={contact.phone_number}
+                />
+              ))
+            : null}
         </tbody>
       </table>
     </div>

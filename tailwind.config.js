@@ -7,7 +7,8 @@ export default {
   ],
   theme: {
     colors: {
-      'dark-blue': '#32384b',
+      // 'dark-blue': '#32384b',
+      'dark-blue': '#1A1D32',
       'white': 'white',
       'light-grey': '#f2f3ff',
       'mansa-blue': '#08a5aa',
