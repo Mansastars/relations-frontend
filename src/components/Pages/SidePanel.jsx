@@ -89,7 +89,7 @@ function SidePanel({ setShowContactUs }) {
     >
       {/* Company Logo */}
       <div className={` ${isOpen ? "" : "mt-4"} pt-4 text-center`}>
-        <Link to="">
+        <Link to="/alldashboards">
           <img
             src={MansaLogo}
             alt="Company Logo"
