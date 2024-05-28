@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.active {
+    /* @apply border-box-borders; */
+    @apply opacity-100;
+    @apply bg-white;
+    @apply bg-opacity-50
+}
+
 ::-webkit-scrollbar {
     /* Customize the scrollbar width */
     width: 12px;

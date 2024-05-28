@@ -10,7 +10,7 @@ import {
   SignUpRequired,
 } from "../Reusables";
 import { useRef } from "react";
-import api from "../api";
+import api from "../../api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DateForm } from "../Reusables";

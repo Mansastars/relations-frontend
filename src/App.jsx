@@ -11,30 +11,26 @@ import { AuthProvider } from "./hooks/AuthContext";
 import ProtectedRoute from "./hooks/ProtectedRoute";
 
 // Lazy loading implementation
-const SignUp = lazy(() => import("./components/AuthPages/SignUp"));
-const Login = lazy(() => import("./components/AuthPages/Login"));
-const Dashboard = lazy(() => import("../src/components/Pages/Dashboard"));
-const Profile = lazy(() => import("./components/Pages/Profile"));
-const NewDealPage = lazy(() => import("../src/components/Pages/NewDeal"));
-const MoveToLargeScreen = lazy(() =>
-  import("./components/Pages/MoveToLargeScreen")
-);
-const PaymentOption = lazy(() => import("./components/Pages/PaymentOption"));
+const SignUp = lazy(() => import("./AuthPages/SignUp"));
+const Login = lazy(() => import("./AuthPages/Login"));
+const Dashboard = lazy(() => import("./Pages/Dashboard"));
+const Profile = lazy(() => import("./Pages/Profile"));
+const NewDealPage = lazy(() => import("./Pages/NewDeal"));
+const MoveToLargeScreen = lazy(() => import("./Pages/MoveToLargeScreen"));
+const PaymentOption = lazy(() => import("./Pages/PaymentOption"));
 const PaymentSuccessPage = lazy(() =>
   import("./components/Stripe/PaymentSuccessPage")
 );
 const PaymentCancellation = lazy(() =>
   import("./components/Stripe/PaymentCancellation")
 );
-const VerifyEmail = lazy(() => import("./components/AuthPages/VerifyEmail"));
-const ForgotPassword = lazy(() =>
-  import("./components/AuthPages/ForgotPassword")
-);
-const Verify = lazy(() => import("./components/AuthPages/Verify"));
-const Contacts = lazy(() => import("./components/Pages/Contacts"));
-const SidePanel = lazy(() => import("./components/Pages/SidePanel"));
+const VerifyEmail = lazy(() => import("./AuthPages/VerifyEmail"));
+const ForgotPassword = lazy(() => import("./AuthPages/ForgotPassword"));
+const Verify = lazy(() => import("./AuthPages/Verify"));
+const Contacts = lazy(() => import("./Pages/Contacts"));
+const SidePanel = lazy(() => import("./Pages/SidePanel"));
 const ContactUs = lazy(() => import("./components/ContactUs/ContactUs"));
-const NotFound = lazy(() => import("./components/Pages/NotFound"));
+const NotFound = lazy(() => import("./Pages/NotFound"));
 
 function App() {
   const [showContactUs, setShowContactUs] = useState(false);
