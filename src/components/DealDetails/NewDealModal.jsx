@@ -137,7 +137,7 @@ function NewDealModal({ onClose }) {
               />
             </div>
             <div className=" mt-8 w-full flex items-center justify-center">
-              <Button type="submit" text="Create a Deal" />
+              <Button type="submit" text="Create a Dashboard" />
             </div>
           </form>
         </div>
