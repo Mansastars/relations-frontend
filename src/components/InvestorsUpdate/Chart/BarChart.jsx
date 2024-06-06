@@ -81,7 +81,7 @@ const BarChart = () => {
     responsive: true,
   };
 
-  return <Bar options={options} data={barChartData} />;
+  return <Bar className=" w-full" options={options} data={barChartData} />;
 };
 
 export default BarChart;

@@ -91,9 +91,6 @@ const Step8 = ({
     try {
       // Generate base64 chart image
       const chartNode = chartRef.current;
-      chartNode.style.visibility = "visible"; // Make chart visible for rendering
-      chartNode.style.position = "absolute"; // Position off-screen
-      chartNode.style.left = "-9999px"; // Position off-screen
 
       const dataUrl = await htmlToImage.toPng(chartNode);
 
@@ -130,10 +127,6 @@ const Step8 = ({
         text:
           error.message || "An error occurred during the submission process.",
       });
-    } finally {
-      chartNode.style.visibility = "hidden"; // Hide the chart again
-      chartNode.style.position = ""; // Reset position
-      chartNode.style.left = ""; // Reset position
     }
   };
 
@@ -163,6 +156,7 @@ const Step8 = ({
       }
 
       const data = await response.json();
+      console.log(data.secure_url);
       return data.secure_url; // Return the secure URL of the uploaded image
     } catch (error) {
       console.error("Failed to upload image to Cloudinary:", error);
@@ -229,6 +223,26 @@ const Step8 = ({
         />
       </InputContainer>
 
+      <>
+        <div
+          className={`bg-white flex flex-col rounded-xl items-start w-full p-5  gap-3`}
+        >
+          <h1 className=" text-dark-blue font-semibold text-lg">
+            Net Monthly Recurring Revenue (YTD) in USD
+          </h1>
+          <p>
+            Note: The graph below will be included in the email sent to the
+            recipients.
+          </p>
+        </div>
+        <div
+          ref={chartRef}
+          className={`bg-white flex flex-col rounded-xl items-start w-full p-5  gap-3`}
+        >
+          <BarChart />
+        </div>
+      </>
+
       <div className=" self-center my-5">
         <span className=" font-bold text-center">
           A copy of your responses will be emailed to the address that you
@@ -250,13 +264,6 @@ const Step8 = ({
           text={isLastStep ? "Finish" : "Next"}
           className=" bg-mansa-blue text-white hover:bg-white hover:text-teal-400"
         />
-      </div>
-
-      <div
-        ref={chartRef}
-        style={{ visibility: "hidden", position: "absolute", left: "-9999px" }}
-      >
-        <BarChart />
       </div>
     </form>
   );
