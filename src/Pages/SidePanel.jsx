@@ -198,10 +198,14 @@ function SidePanel({ setShowContactUs }) {
           </li>
 
           <li
-            className={` hover:bg-mansa-blue transition-all duration-200 cursor-pointer`}
+            className={`${
+              location.pathname === "/investors-update"
+                ? "bg-mansa-blue"
+                : "hover:bg-mansa-blue"
+            } transition-all duration-200 cursor-pointer`}
           >
-            <a
-              href="https://www.mansastars.com/monthly-investor-update"
+            <Link
+              to="/investors-update"
               className={`flex items-center w-full px-4 py-2 ${
                 isOpen ? " space-x-6" : "gap-0 space-x-0"
               } `}
@@ -212,7 +216,7 @@ function SidePanel({ setShowContactUs }) {
                   Send Investors Update
                 </span>
               )}
-            </a>
+            </Link>
           </li>
 
           <li

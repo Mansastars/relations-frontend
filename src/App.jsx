@@ -31,6 +31,7 @@ const Contacts = lazy(() => import("./Pages/Contacts"));
 const SidePanel = lazy(() => import("./Pages/SidePanel"));
 const ContactUs = lazy(() => import("./components/ContactUs/ContactUs"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
+const InvestorsUpdate = lazy(() => import("./Pages/InvestorsUpdate"));
 
 function App() {
   const [showContactUs, setShowContactUs] = useState(false);
@@ -55,14 +56,14 @@ function App() {
     hideSidePanelPatterns.some((pattern) => pattern.test(location.pathname));
 
   return (
-    <Suspense fallback={<Loader />}>
-      <AuthProvider>
-        <div className="flex h-screen w-full">
-          {!shouldHideSidePanel && (
-            <div className="w-fit h-screen">
-              <SidePanel setShowContactUs={setShowContactUs} />
-            </div>
-          )}
+    <AuthProvider>
+      <div className="flex h-screen w-full">
+        {!shouldHideSidePanel && (
+          <div className="w-fit h-screen">
+            <SidePanel setShowContactUs={setShowContactUs} />
+          </div>
+        )}
+        <Suspense fallback={<Loader />}>
           <div className=" w-full overflow-y-auto h-screen">
             <Routes>
               <Route path="/auth/sign_up" element={<SignUp />} />
@@ -87,6 +88,10 @@ function App() {
                 <Route index element={<Contacts />} />
               </Route>
 
+              <Route path="/investors-update" element={<ProtectedRoute />}>
+                <Route index element={<InvestorsUpdate />} />
+              </Route>
+
               <Route path="/profile" element={<Profile />} />
               <Route path="/pricing" element={<PaymentOption />} />
 
@@ -109,9 +114,9 @@ function App() {
           {showContactUs && (
             <ContactUs onClose={() => setShowContactUs(false)} />
           )}
-        </div>
-      </AuthProvider>
-    </Suspense>
+        </Suspense>
+      </div>
+    </AuthProvider>
   );
 }
 
