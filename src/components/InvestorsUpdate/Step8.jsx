@@ -7,7 +7,6 @@ import * as yup from "yup";
 import Button from "./Button";
 import Swal from "sweetalert2";
 import BarChart from "./Chart/BarChart";
-import cloudinary from "../../../cloudinaryConfig";
 import * as htmlToImage from "html-to-image";
 import api from "../../api";
 import UploadLogo from "./UploadLogo";
@@ -50,8 +49,22 @@ const Step8 = ({
     }
   }, [formData, setValue]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    // Check if the logo URL exists in formData
+    const logoUrl = formData.logoUrl || "";
+
+    if (!logoUrl) {
+      Swal.fire({
+        icon: "error",
+        title: "Logo Required",
+        text: "Please upload your company logo before submitting the form.",
+      });
+      return;
+    }
+
+    // Update data in state
     updateData(data);
+
     Swal.fire({
       title: "Confirm Submission",
       text: "Are you sure you want to submit the form?",
@@ -65,58 +78,107 @@ const Step8 = ({
     });
   };
 
-  // const handleConfirm = async () => {
-  //   // Generate base64 chart image
-  //   const chartNode = chartRef.current;
-  //   const dataUrl = await htmlToImage.toPng(chartNode);
+  const handleConfirm = async () => {
+    Swal.fire({
+      title: "Processing...",
+      text: "Please wait while we process your request.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
 
-  //   // Upload the image to Cloudinary
-  //   const cloudinaryUrl = await uploadToCloudinary(dataUrl);
+    try {
+      // Generate base64 chart image
+      const chartNode = chartRef.current;
+      chartNode.style.visibility = "visible"; // Make chart visible for rendering
+      chartNode.style.position = "absolute"; // Position off-screen
+      chartNode.style.left = "-9999px"; // Position off-screen
 
-  //   // Get the existing InvestorUpdate data from local storage
-  //   const savedData = localStorage.getItem("InvestorsUpdate");
-  //   const parsedData = savedData ? JSON.parse(savedData) : {};
+      const dataUrl = await htmlToImage.toPng(chartNode);
 
-  //   // Add the Cloudinary URL to the InvestorUpdate data
-  //   parsedData.chartImageUrl = cloudinaryUrl;
+      // Upload the image to Cloudinary
+      const cloudinaryUrl = await uploadToCloudinary(dataUrl);
 
-  //   // Save updated data back to local storage
-  //   localStorage.setItem("InvestorsUpdate", JSON.stringify(parsedData));
+      // Get the existing InvestorUpdate data from local storage
+      const savedData = localStorage.getItem("InvestorsUpdate");
+      const parsedData = savedData ? JSON.parse(savedData) : {};
 
-  //   // Send data to backend
-  //   await sendToBackend(parsedData);
+      // Add the Cloudinary URL to the InvestorUpdate data
+      parsedData.chartImageUrl = cloudinaryUrl;
 
-  //   next();
-  // };
+      // Update the state and local storage
+      updateData({ chartImageUrl: cloudinaryUrl });
+      localStorage.setItem("InvestorsUpdate", JSON.stringify(parsedData));
 
-  // const uploadToCloudinary = async (base64Image) => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("file", base64Image);
-  //     formData.append("upload_preset", "your_upload_preset");
+      // Send data to backend
+      await sendToBackend(parsedData);
 
-  //     const response = await fetch(`https://api.cloudinary.com/v1_1/your_cloud_name/image/upload`, {
-  //       method: "POST",
-  //       body: formData,
-  //     });
+      Swal.fire({
+        icon: "success",
+        title: "Submission Successful",
+        text: "Your form has been successfully submitted.",
+      }).then(() => {
+        // Reset form or navigate to the first step
+        updateData({});
+        next();
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Submission Failed",
+        text:
+          error.message || "An error occurred during the submission process.",
+      });
+    } finally {
+      chartNode.style.visibility = "hidden"; // Hide the chart again
+      chartNode.style.position = ""; // Reset position
+      chartNode.style.left = ""; // Reset position
+    }
+  };
 
-  //     const data = await response.json();
-  //     return data.secure_url; // Return the secure URL of the uploaded image
-  //   } catch (error) {
-  //     console.error("Failed to upload image to Cloudinary:", error);
-  //     throw error;
-  //   }
-  // };
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET;
 
-  // const sendToBackend = async (data) => {
-  //   // Replace this with your actual backend API call
-  //   try {
-  //     const response = await api.post(``, JSON.stringify(data))
-  //     console.log("Successfully submitted data:", response);
-  //   } catch (error) {
-  //     console.error("Failed to submit data:", error);
-  //   }
-  // };
+  const uploadToCloudinary = async (base64Image) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", base64Image);
+      formData.append("upload_preset", uploadPreset);
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("Cloudinary Upload Error:", error);
+        throw new Error(
+          `Failed to upload image to Cloudinary: ${error.error.message}`
+        );
+      }
+
+      const data = await response.json();
+      return data.secure_url; // Return the secure URL of the uploaded image
+    } catch (error) {
+      console.error("Failed to upload image to Cloudinary:", error);
+      throw error;
+    }
+  };
+
+  const sendToBackend = async (data) => {
+    try {
+      const response = await api.post(`users/send-update`, data);
+      console.log("Successfully submitted data:", response);
+    } catch (error) {
+      console.error("Failed to submit data:", error);
+      throw new Error("Failed to submit data, please try again.");
+    }
+  };
 
   return (
     <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
@@ -151,7 +213,7 @@ const Step8 = ({
         isadditionalText
         additionalText="If you want your logo to appear at the top of the E-mail to your investors, upload your logo below."
       >
-        <UploadLogo />
+        <UploadLogo updateData={updateData} />
       </InputContainer>
 
       <InputContainer
@@ -163,6 +225,7 @@ const Step8 = ({
           name="deck_line"
           control={control}
           error={errors.deck_line}
+          multiline
         />
       </InputContainer>
 
@@ -189,7 +252,10 @@ const Step8 = ({
         />
       </div>
 
-      <div ref={chartRef} style={{ display: "none" }}>
+      <div
+        ref={chartRef}
+        style={{ visibility: "hidden", position: "absolute", left: "-9999px" }}
+      >
         <BarChart />
       </div>
     </form>

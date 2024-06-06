@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 
 // Create a styled TextField component
 const CustomStyledTextField = styled(TextField)({
-  width: "70%",
+  width: "90%",
   "& .MuiInput-underline:after": {
     borderBottomColor: "#08A5AA", // Active color
   },

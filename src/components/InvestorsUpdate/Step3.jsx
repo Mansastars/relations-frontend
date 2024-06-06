@@ -93,6 +93,8 @@ const schema = yup.object().shape({
       "Select a valid option"
     )
     .required("Gross Margin is required"),
+  cash_burn: yup.string().notRequired(),
+  cash_in_hand: yup.string().notRequired(),
   user_MoM_growth_rate: yup.string().notRequired(),
 });
 
@@ -125,6 +127,8 @@ const Step3 = ({
       novemberMRR: formData.novemberMRR || "",
       decemberMRR: formData.decemberMRR || "",
       gross_margin: formData.gross_margin || "",
+      cash_burn: formData.cash_burn || "",
+      cash_in_hand: formData.cash_in_hand || "",
       user_MoM_growth_rate: formData.user_MoM_growth_rate || "",
     },
   });
@@ -326,6 +330,24 @@ const Step3 = ({
           />
           <FormHelperText>{errors.gross_margin?.message}</FormHelperText>
         </FormControl>
+      </InputContainer>
+
+      <InputContainer title="Cash Burn">
+        <CustomInput
+          name="cash_burn"
+          control={control}
+          error={errors.cash_burn}
+          multiline
+        />
+      </InputContainer>
+
+      <InputContainer title="Cash in Hand">
+        <CustomInput
+          name="cash_in_hand"
+          control={control}
+          error={errors.cash_in_hand}
+          multiline
+        />
       </InputContainer>
 
       <InputContainer title="Avg. User MoM Growth Rate (Avg. of MoM Growth rate over year to date period)">

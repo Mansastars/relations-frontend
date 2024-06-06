@@ -7,12 +7,31 @@ export const useMultistepForm = (steps) => {
     return savedData ? JSON.parse(savedData) : {};
   });
 
+  // useEffect(() => {
+  //   if (Object.keys(formData).length === 0) {
+  //     fetchDataFromBackend();
+  //   }
+  // }, []);
+
   useEffect(() => {
     localStorage.setItem("InvestorsUpdate", JSON.stringify(formData));
   }, [formData]);
 
+  // const fetchDataFromBackend = async () => {
+  //   try {
+  //     const response = await api.get("/path/to/your/endpoint"); // Adjust the endpoint
+  //     const data = response.data;
+
+  //     // Save the fetched data to local storage and state
+  //     localStorage.setItem("InvestorsUpdate", JSON.stringify(data));
+  //     setFormData(data);
+  //   } catch (error) {
+  //     console.error("Failed to fetch data from backend:", error);
+  //   }
+  // };
+
   const next = () => {
-    setCurrentStepIndex((i) => (i >= steps.length - 1 ? i : i + 1));
+    setCurrentStepIndex((i) => (i >= steps.length - 1 ? 0 : i + 1));
   };
 
   const back = () => {

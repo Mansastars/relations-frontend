@@ -79,7 +79,7 @@ const FormContainer = () => {
           />
         </div>
 
-        <div className=" flex justify-between items-center">
+        <div className=" flex max-sm:flex-col max-sm:gap-3 justify-between items-center">
           <div className="">
             <Button
               text="Clear Form"
