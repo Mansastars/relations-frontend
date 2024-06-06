@@ -157,7 +157,7 @@ const Step8 = ({
 
       const data = await response.json();
       console.log(data.secure_url);
-      return data.secure_url; // Return the secure URL of the uploaded image
+      return data.secure_url;
     } catch (error) {
       console.error("Failed to upload image to Cloudinary:", error);
       throw error;
