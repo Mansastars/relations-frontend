@@ -161,6 +161,7 @@ const Step3 = ({
           control={control}
           error={errors.januaryMRR}
           autoFocus={true}
+          type="number"
         />
       </InputContainer>
 
@@ -174,6 +175,7 @@ const Step3 = ({
           name="februaryMRR"
           control={control}
           error={errors.februaryMRR}
+          type="number"
         />
       </InputContainer>
 
@@ -187,6 +189,7 @@ const Step3 = ({
           name="marchMRR"
           control={control}
           error={errors.marchMRR}
+          type="number"
         />
       </InputContainer>
 
@@ -200,6 +203,7 @@ const Step3 = ({
           name="aprilMRR"
           control={control}
           error={errors.aprilMRR}
+          type="number"
         />
       </InputContainer>
 
@@ -209,7 +213,12 @@ const Step3 = ({
         isadditionalText
         additionalText="Add your MRR for the month. If you are pre-Revenue or the month is yet to start, add 0"
       >
-        <CustomInput name="mayMRR" control={control} error={errors.mayMRR} />
+        <CustomInput
+          name="mayMRR"
+          control={control}
+          error={errors.mayMRR}
+          type="number"
+        />
       </InputContainer>
 
       <InputContainer
@@ -218,7 +227,12 @@ const Step3 = ({
         isadditionalText
         additionalText="Add your MRR for the month. If you are pre-Revenue or the month is yet to start, add 0"
       >
-        <CustomInput name="juneMRR" control={control} error={errors.juneMRR} />
+        <CustomInput
+          name="juneMRR"
+          control={control}
+          error={errors.juneMRR}
+          type="number"
+        />
       </InputContainer>
 
       <InputContainer
@@ -227,7 +241,12 @@ const Step3 = ({
         isadditionalText
         additionalText="Add your MRR for the month. If you are pre-Revenue or the month is yet to start, add 0"
       >
-        <CustomInput name="julyMRR" control={control} error={errors.julyMRR} />
+        <CustomInput
+          name="julyMRR"
+          control={control}
+          error={errors.julyMRR}
+          type="number"
+        />
       </InputContainer>
 
       <InputContainer
@@ -240,6 +259,7 @@ const Step3 = ({
           name="augustMRR"
           control={control}
           error={errors.augustMRR}
+          type="number"
         />
       </InputContainer>
 
@@ -253,6 +273,7 @@ const Step3 = ({
           name="septemberMRR"
           control={control}
           error={errors.septemberMRR}
+          type="number"
         />
       </InputContainer>
 
@@ -266,6 +287,7 @@ const Step3 = ({
           name="octoberMRR"
           control={control}
           error={errors.octoberMRR}
+          type="number"
         />
       </InputContainer>
 
@@ -279,6 +301,7 @@ const Step3 = ({
           name="novemberMRR"
           control={control}
           error={errors.novemberMRR}
+          type="number"
         />
       </InputContainer>
 
@@ -292,6 +315,7 @@ const Step3 = ({
           name="decemberMRR"
           control={control}
           error={errors.decemberMRR}
+          type="number"
         />
       </InputContainer>
 
@@ -332,7 +356,7 @@ const Step3 = ({
         </FormControl>
       </InputContainer>
 
-      <InputContainer title="Cash Burn">
+      <InputContainer title="Cash Burn in USD">
         <CustomInput
           name="cash_burn"
           control={control}
@@ -341,7 +365,7 @@ const Step3 = ({
         />
       </InputContainer>
 
-      <InputContainer title="Cash in Hand">
+      <InputContainer title="Cash in Hand (USD)">
         <CustomInput
           name="cash_in_hand"
           control={control}
