@@ -13,7 +13,7 @@ const schema = yup.object().shape({
   date: yup.date().required("Date is required").typeError("Invalid date"),
   company_name: yup.string().required("Company name is required"),
   company_description: yup.string().required("Company description is required"),
-  website: yup.string().url("Invalid URL").required("Website is required"),
+  website: yup.string().required("Website is required"),
   founders_profile: yup.string(), // Not required
 });
 
