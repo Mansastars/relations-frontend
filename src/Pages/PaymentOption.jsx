@@ -93,7 +93,8 @@ function PaymentOption() {
       <div className=" text-dark-blue flex flex-col items-center w-full gap-10 pb-20 overflow-y-auto px-3">
         <div className=" text-center pt-7">
           <p className=" font-semibold">
-            {!userData.on_trial &&
+            {userData &&
+              !userData.on_trial &&
               userData.subscription_name === null &&
               "Your trial has ended..."}
           </p>

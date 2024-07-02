@@ -87,12 +87,20 @@ export default function ForgotPasswordModal({ userEmail, onClose, show }) {
             </p>
           )}
           {isSuccess && (
-            <p className="text-center text-dark-blue max-sm:text-base">
-              We have sent an email to{" "}
-              <span className="text-mansa-blue">{userEmail}</span> to confirm
-              the validity of your email address. After receiving the email,
-              please follow the link provided to complete your registration.
-            </p>
+            <div>
+              <p className="text-center text-dark-blue max-sm:text-base">
+                We have sent an email to{" "}
+                <span className="text-mansa-blue">{userEmail}</span> to confirm
+                the validity of your email address. After receiving the email,
+                please follow the link provided to complete your registration.
+              </p>
+              <strong>
+                <p className="text-center text-dark-blue max-sm:text-base mt-5">
+                  If you do not see the email, please check your{" "}
+                  <span className=" font-bold">spam or junk folder</span>.
+                </p>
+              </strong>
+            </div>
           )}
           {isError && (
             <p className="text-center text-red-500 max-sm:text-base">

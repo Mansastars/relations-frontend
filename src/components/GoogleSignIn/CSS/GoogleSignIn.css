@@ -1,0 +1,42 @@
+.google-sign-in-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+}
+
+.separator {
+display: flex;
+align-items: center;
+width: 100%;
+margin: 0 0 20px 0;
+}
+
+.line {
+flex-grow: 1;
+height: 1px;
+background-color: #ccc;
+border: none;
+}
+
+.or-text {
+margin: 0 10px;
+color: #08A5AA;
+font-weight: bold;
+}
+
+.google-button {
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+border: 1px solid  #08A5AA;
+padding: 5px;
+border-radius: 5px;
+gap: 10px;
+}
+
+/* .google-button:hover {
+    background-color: rgba(8, 165, 170, 20%);
+    border: 1px solid rgba(8, 165, 170, 20%);
+} */

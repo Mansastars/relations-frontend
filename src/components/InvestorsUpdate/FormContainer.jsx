@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 import Title from "./Title";
 import Button from "./Button";
 import { useMultistepForm } from "./useMultistepForm";
-import Box from "@mui/material/Box";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
@@ -16,6 +15,7 @@ import Step6 from "./Step6";
 import Step7 from "./Step7";
 import Step8 from "./Step8";
 import Swal from "sweetalert2";
+import Box from "@mui/material/Box";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,

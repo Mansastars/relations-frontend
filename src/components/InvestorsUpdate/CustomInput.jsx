@@ -37,7 +37,7 @@ const CustomInput = React.forwardRef(
         render={({ field, fieldState: { error } }) => (
           <CustomStyledTextField
             {...field}
-            inputRef={ref} // forward the ref here
+            inputRef={ref}
             label={label}
             variant="standard"
             autoFocus={autoFocus}

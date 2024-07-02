@@ -1,0 +1,1 @@
+import{j as a}from"./index-CF6aRru1.js";import{c as s}from"./createSvgIcon-B0imZhwj.js";const r=s(a.jsx("path",{d:"M3 13h8V3H3zm0 8h8v-6H3zm10 0h8V11h-8zm0-18v6h8V3z"}),"Dashboard"),h=s(a.jsx("path",{d:"M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"}),"Star");export{r as D,h as S};
