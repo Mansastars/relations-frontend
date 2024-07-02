@@ -2,11 +2,12 @@
 
 import axios from "axios";
 
-// const baseURL =
-//   process.env.NODE_ENV === "production"
-//     ? `http://localhost:3050`
-//     : `http://localhost:3050`;
-const baseURL = `https://crm.mansastars.com`;
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? `http://localhost:3050`
+    : `http://localhost:3050`;
+
+// const baseURL = `https://crm.mansastars.com`;
 const api = axios.create({
   baseURL,
 });

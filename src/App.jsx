@@ -33,6 +33,9 @@ const ContactUs = lazy(() => import("./components/ContactUs/ContactUs"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
 const InvestorsUpdate = lazy(() => import("./Pages/InvestorsUpdate"));
 
+const NewSignUpPage = lazy(() => import("./AuthPages/NewSignUpPage"));
+const NewLogin = lazy(() => import("./AuthPages/NewLogin"));
+
 function App() {
   const [showContactUs, setShowContactUs] = useState(false);
   const location = useLocation();
@@ -46,6 +49,8 @@ function App() {
     "/cancel-payment",
     "/successful-payment",
     "/not-found",
+    "/auth/new_sign_up",
+    "/auth/new_login",
   ];
 
   const hideSidePanelPatterns = [/^\/reset-password\/.*$/, /^\/verify\/.*$/];
@@ -68,6 +73,10 @@ function App() {
             <Routes>
               <Route path="/auth/sign_up" element={<SignUp />} />
               <Route path="/auth/login" element={<Login />} />
+
+              <Route path="/auth/new_login" element={<NewLogin />} />
+              <Route path="/auth/new_sign_up" element={<NewSignUpPage />} />
+
               <Route path="/verify_email" element={<VerifyEmail />} />
               <Route
                 path="/reset-password/:verificationToken"
