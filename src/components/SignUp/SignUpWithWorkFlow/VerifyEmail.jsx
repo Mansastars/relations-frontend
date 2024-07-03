@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import MansaLogo from "../../assets/MansaLogos/MansaLogo.png";
-import StepsTitle from "./StepsUI/StepsTitle";
-import StepsSubtitle from "./StepsUI/StepsSubtitle";
+import MansaLogo from "../../../assets/MansaLogos/MansaLogo.png";
+import StepsTitle from "../StepsUI/StepsTitle";
+import StepsSubtitle from "../StepsUI/StepsSubtitle";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Swal from "sweetalert2";
-import api from "../../api";
+import api from "../../../api";
 import { useNavigate } from "react-router-dom";
 
 const { palette } = createTheme();

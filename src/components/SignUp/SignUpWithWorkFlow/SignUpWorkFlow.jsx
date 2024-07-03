@@ -1,11 +1,8 @@
 import React from "react";
-import MansaLogo from "../../assets/MansaLogos/MansaLogo.png";
-import SignUpBlob from "../../assets/SignUpImages/SignUpBlob.svg";
 import CustomStepper from "./Stepper";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import "./CSS/hover-underline-animation.css";
+import "../CSS/hover-underline-animation.css";
 import { useNavigate } from "react-router-dom";
-import "./CSS/blob.css";
 
 const SignUpWorkFlow = ({ currentStepIndex, className }) => {
   const navigate = useNavigate();
