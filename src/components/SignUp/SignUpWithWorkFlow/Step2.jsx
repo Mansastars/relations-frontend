@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import MansaLogo from "../../assets/MansaLogos/MansaLogo.png";
-import StepsTitle from "./StepsUI/StepsTitle";
-import StepsSubtitle from "./StepsUI/StepsSubtitle";
-import CustomInput from "./StepsUI/CustomInput";
+import MansaLogo from "../../../assets/MansaLogos/MansaLogo.png";
+import StepsTitle from "../StepsUI/StepsTitle";
+import StepsSubtitle from "../StepsUI/StepsSubtitle";
+import CustomInput from "../StepsUI/CustomInput";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
 import { ArrowBack, ArrowForward, Password } from "@mui/icons-material";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import PrivacyPolicyModal from "../../AuthPages/PrivacyPolicModal";
-import TermOfUsageModal from "../../AuthPages/TermOfUsageModal";
+import PrivacyPolicyModal from "../../../AuthPages/PrivacyPolicModal";
+import TermOfUsageModal from "../../../AuthPages/TermOfUsageModal";
 import Checkbox from "@mui/material/Checkbox";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
