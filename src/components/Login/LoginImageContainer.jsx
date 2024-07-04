@@ -2,7 +2,7 @@ import React from "react";
 import "./CSS/glassmorphism.css";
 import ImageContainerDesign from "./ImageContainerDesign";
 import { Dashboard, Lightbulb, Star } from "@mui/icons-material";
-import DashboardImage from "../../assets/LoginImage/DashboardImage.png";
+import WebsiteShareImage from "../../assets/LoginImage/WebsiteShareImage.jpeg";
 
 const LoginImageContainer = () => {
   return (
@@ -11,10 +11,10 @@ const LoginImageContainer = () => {
     >
       <div className=" glassmorphism w-full overflow-auto p-5">
         <img
-          src={DashboardImage}
+          src={WebsiteShareImage}
           alt="Dashboard"
           //   className="w-full h-full object-cover rounded-lg"
-          className="max-w-none h-screen rounded-lg"
+          className="rounded-lg w-full h-full "
         />
       </div>
       <div className=" absolute top-16 left-5">

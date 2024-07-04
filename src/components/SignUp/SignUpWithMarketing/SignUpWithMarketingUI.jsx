@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import SignUpNavbar from "./SignNavbar/SignUpNavbar";
 import HeroSection from "./HeroSection/HeroSection";
+import TrustedCompies from "./TrustedCompanies/TrustedCompies";
+import AppInterations from "./AppIntegrations/AppIntegrations";
 
 const SignUpWithMarketingUI = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,6 +32,8 @@ const SignUpWithMarketingUI = () => {
       <div ref={topRef} />
       <SignUpNavbar isScrolled={isScrolled} />
       <HeroSection />
+      <TrustedCompies />
+      <AppInterations />
     </div>
   );
 };
