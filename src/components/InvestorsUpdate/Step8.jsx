@@ -12,9 +12,15 @@ import api from "../../api";
 import UploadLogo from "./UploadLogo";
 
 const schema = yup.object().shape({
-  recipients_emails: yup.string().required("Recipients E-mails is required"),
-  email_subject: yup.string().required("E-mail subject is required"),
-  deck_line: yup.string(),
+  recipients_emails: yup
+    .string()
+    .required("Recipients E-mails is required")
+    .max(2000, "Character limit exceeded (2000)"),
+  email_subject: yup
+    .string()
+    .required("E-mail subject is required")
+    .max(2000, "Character limit exceeded (2000)"),
+  deck_line: yup.string().max(2000, "Character limit exceeded (2000)"),
 });
 
 const Step8 = ({
@@ -124,8 +130,7 @@ const Step8 = ({
       Swal.fire({
         icon: "error",
         title: "Submission Failed",
-        text:
-          error.message || "An error occurred during the submission process.",
+        text: "An error occurred during the submission process.",
       });
     }
   };
@@ -149,6 +154,11 @@ const Step8 = ({
 
       if (!response.ok) {
         const error = await response.json();
+        Swal.fire({
+          icon: "error",
+          title: "Failed to Upload Image",
+          text: "An error occurred while uploading image. Please try again or contact support",
+        });
         console.error("Cloudinary Upload Error:", error);
         throw new Error(
           `Failed to upload image to Cloudinary: ${error.error.message}`
@@ -156,9 +166,13 @@ const Step8 = ({
       }
 
       const data = await response.json();
-      console.log(data.secure_url);
       return data.secure_url;
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed to Upload Image",
+        text: "An error occurred while uploading image. Please try again or contact support",
+      });
       console.error("Failed to upload image to Cloudinary:", error);
       throw error;
     }
@@ -167,8 +181,15 @@ const Step8 = ({
   const sendToBackend = async (data) => {
     try {
       const response = await api.post(`users/send-update`, data);
-      console.log("Successfully submitted data:", response);
+      // console.log("Successfully submitted data:", response);
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Submission Failed",
+        text:
+          error.data.message ||
+          "An error occurred during the submission process.",
+      });
       console.error("Failed to submit data:", error);
       throw new Error("Failed to submit data, please try again.");
     }

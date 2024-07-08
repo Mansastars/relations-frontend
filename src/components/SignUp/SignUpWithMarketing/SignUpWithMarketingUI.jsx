@@ -3,6 +3,8 @@ import SignUpNavbar from "./SignNavbar/SignUpNavbar";
 import HeroSection from "./HeroSection/HeroSection";
 import TrustedCompies from "./TrustedCompanies/TrustedCompies";
 import AppInterations from "./AppIntegrations/AppIntegrations";
+import InvestorsUpdate from "./InvestorsUpdate/InvestorsUpdate";
+import Footer from "./Footer/Footer";
 
 const SignUpWithMarketingUI = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,6 +36,8 @@ const SignUpWithMarketingUI = () => {
       <HeroSection />
       <TrustedCompies />
       <AppInterations />
+      <InvestorsUpdate />
+      <Footer />
     </div>
   );
 };

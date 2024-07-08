@@ -6,10 +6,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import PrivacyPolicyModal from "../../../../AuthPages/PrivacyPolicModal";
 import TermOfUsageModal from "../../../../AuthPages/TermOfUsageModal";
+import ConfirmEmail from "../../../../AuthPages/ConfirmEmail";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GoogleSignIn from "../../../GoogleSignIn/GoogleSignIn";
+import Swal from "sweetalert2";
+import api from "../../../../api";
+import { useNavigate } from "react-router-dom";
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -23,12 +27,13 @@ const theme = createTheme({
 const FormContainer = () => {
   const [privacyPolicyModal, setPrivacyPolicyModal] = useState(false);
   const [openTermOfUsageModal, setOpenTermOfUsageModal] = useState(false);
+  const [openConfirmEmailModal, setOpenConfirmEmailModal] = useState(false);
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
     control,
     formState: { errors },
-    setValue,
     reset,
   } = useForm({
     resolver: yupResolver(schema),
@@ -43,8 +48,50 @@ const FormContainer = () => {
     },
   });
 
-  const onSubmit = async (formData) => {
-    console.log(formData);
+  const onSubmit = async (data) => {
+    Swal.fire({
+      title: "Creating Account...",
+      text: "Please wait while we create your account.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    try {
+      const { acceptTerms, ...dataToSubmit } = data;
+      localStorage.setItem("user_email", dataToSubmit.email);
+
+      // Send data to backend
+      await api.post(`/users/register`, dataToSubmit);
+      Swal.close();
+      setOpenConfirmEmailModal(true);
+    } catch (error) {
+      Swal.close();
+
+      let errorMessage = "An error occurred during the submission process.";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Submission Failed",
+        text: errorMessage,
+        confirmButtonText: "Retry",
+      });
+      console.error("Failed to submit sign up data:", error);
+    }
+  };
+
+  const closeModal = () => {
+    reset();
+    setOpenConfirmEmailModal(false);
+    navigate("/auth/login");
   };
 
   return (
@@ -162,6 +209,13 @@ const FormContainer = () => {
         open={openTermOfUsageModal}
         onClose={() => setOpenTermOfUsageModal(false)}
       />
+      {setOpenConfirmEmailModal && (
+        <ConfirmEmail
+          userEmail={localStorage.getItem("user_email")}
+          onClose={closeModal}
+          show={openConfirmEmailModal}
+        />
+      )}
     </div>
   );
 };

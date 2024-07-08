@@ -7,7 +7,10 @@ import * as yup from "yup";
 import Button from "./Button";
 
 const schema = yup.object().shape({
-  requests: yup.string().required("Requests is required"),
+  requests: yup
+    .string()
+    .required("Requests is required")
+    .max(2000, "Character limit exceeded (2000)"),
 });
 
 const Step2 = ({

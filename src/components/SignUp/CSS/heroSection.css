@@ -1,0 +1,5 @@
+.backgroundImage {
+    background-image: url('../../../assets/LoginImage/WebsiteShareImage.jpeg');
+    object-fit: contain;
+    background-repeat: no-repeat;
+}

@@ -7,7 +7,10 @@ import * as yup from "yup";
 import Button from "./Button";
 
 const schema = yup.object().shape({
-  news: yup.string().required("News is required"),
+  news: yup
+    .string()
+    .required("News is required")
+    .max(2000, "Character limit exceeded (2000)"),
 });
 
 const Step4 = ({

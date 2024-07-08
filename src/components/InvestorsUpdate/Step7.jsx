@@ -7,8 +7,8 @@ import * as yup from "yup";
 import Button from "./Button";
 
 const schema = yup.object().shape({
-  targets: yup.string(),
-  founders_message: yup.string(),
+  targets: yup.string().max(2000, "Character limit exceeded (2000)"),
+  founders_message: yup.string().max(2000, "Character limit exceeded (2000)"),
 });
 
 const Step7 = ({

@@ -1,5 +1,5 @@
 import { Modal } from "flowbite-react";
-import email from "../assets/email.png";
+import SuccessIcon from "../assets/PaymentIcon/Sucess.png";
 import api from "../api";
 import { useState, useEffect } from "react";
 import x_button from "../assets/PaymentIcon/x-button.png";
@@ -34,7 +34,7 @@ export default function ConfirmEmail({ userEmail, onClose, show }) {
       await api.post("users/resend-verification", userData);
       setIsSuccess(true);
       setSuccessMessage(
-        "Success! Your confirmation email has been resent. Please check your inbox."
+        "Success! Your verification email has been resent. Please check your inbox."
       );
     } catch (error) {
       console.log(error);
@@ -60,8 +60,8 @@ export default function ConfirmEmail({ userEmail, onClose, show }) {
           <div className="flex flex-col gap-5 items-center">
             {!isError ? (
               <img
-                src={email}
-                alt="Email icon"
+                src={SuccessIcon}
+                alt="Sucsess icon"
                 width={100}
                 className=" max-sm:w-14"
               />
@@ -74,7 +74,7 @@ export default function ConfirmEmail({ userEmail, onClose, show }) {
               />
             )}
             <h1 className=" font-bold text-3xl text-dark-blue max-sm:text-xl">
-              Email Confirmation
+              Registration Sucessful
             </h1>
             {isLoading && (
               <p className="text-center text-dark-blue max-sm:text-base">
@@ -84,11 +84,11 @@ export default function ConfirmEmail({ userEmail, onClose, show }) {
             {!isError && !isLoading && (
               <div>
                 <p className="text-center text-dark-blue max-sm:text-base">
-                  We have sent an email to{" "}
-                  <span className="text-mansa-blue">{userEmail}</span> to
-                  confirm the validity of your email address. After receicing
-                  the email, please follow the link provided to complete your
-                  registration.
+                  Your registration was successful! The next step is to verify
+                  your email address (
+                  <span className="text-mansa-blue">{userEmail}</span>). Please
+                  check your email inbox for a verification message. Follow the
+                  link provided to verify your email address.
                 </p>
                 <strong>
                   <p className="text-center text-dark-blue max-sm:text-base mt-5">

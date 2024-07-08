@@ -12,7 +12,7 @@ import SubTitle from "../../StepsUI/SubTitle";
 
 const AppInterations = () => {
   return (
-    <div className="px-14 max-md:px-10 max-sm:px-5 py-10 bg-light-grey w-full">
+    <div className="px-14 max-md:px-10 max-sm:px-5 py-20 bg-light-grey w-full">
       <div className=" flex flex-col justify-center gap-12 max-md:gap-8 w-full">
         <div className=" flex flex-col gap-3">
           <Title title="Integrate with apps you use daily" />

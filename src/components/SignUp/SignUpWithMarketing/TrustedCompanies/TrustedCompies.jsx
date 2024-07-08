@@ -8,11 +8,14 @@ import SubTitle from "../../StepsUI/SubTitle";
 
 const TrustedCompies = () => {
   return (
-    <div className="px-14 max-md:px-10 max-sm:px-5 pb-10 pt-28 max-md:pt-20 bg-white w-full">
+    <div className="px-14 max-md:px-10 max-sm:px-5 pb-10 pt-28 lg:pt-36 max-md:pt-20 lg:pb-20 bg-white w-full">
       <div className=" flex flex-col justify-center gap-12 max-md:gap-8 w-full">
         <div className="flex flex-col gap-3">
-          <Title title="Over 100 organizations close deals with Mansa Stars" />
-          <SubTitle subTitle="Trusted by Leading Companies Worldwide to Drive Success and Growth" />
+          <Title
+            title="Trusted by over 800 fund managers and start-ups across the globe"
+            className="text-4xl"
+          />
+          {/* <SubTitle subTitle="Trusted by Leading Companies Worldwide to Drive Success and Growth" /> */}
         </div>
         <div className=" flex flex-wrap items-center justify-center w-full gap-10">
           <div className=" w-36 h-20 flex items-center justify-center">

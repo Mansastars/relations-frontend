@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import MansaLogo from "../assets/MansaLogos/MansaLogo.png";
 import {
   Logout,
-  Menu,
   DashboardOutlined,
   Dashboard,
   ContactSupportOutlined,
@@ -22,7 +21,7 @@ import {
 import { useAuth } from "../hooks/AuthContext";
 import api from "../api";
 import Swal from "sweetalert2";
-import { ArrowLeftCircle, X } from "lucide-react";
+import { ArrowLeftCircle, MenuIcon } from "lucide-react";
 
 function SidePanel({ setShowContactUs }) {
   const [isOpen, setIsOpen] = useState(() => window.innerWidth > 768);
@@ -142,14 +141,14 @@ function SidePanel({ setShowContactUs }) {
           />
         </Link>
 
-        <button onClick={togglePanel} className="focus:outline-none px-4">
+        <button onClick={togglePanel} className=" px-4">
           {isOpen ? (
             <ArrowLeftCircle
               size={30}
               className="text-white hover:text-red-700 absolute top-2 right-2"
             />
           ) : (
-            <Menu className="text-white hover:text-mansa-blue mt-8 max-[800px]:hidden" />
+            <MenuIcon className="text-white hover:text-mansa-blue mt-8 max-[768px]:hidden" />
           )}
         </button>
       </div>
