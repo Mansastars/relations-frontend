@@ -114,91 +114,93 @@ const LoginFormContainer = () => {
   };
 
   return (
-    <div className=" bg-white w-full h-full p-5 flex flex-col gap-3">
-      <a href="https://relations.mansastars.com/" className=" self-center">
-        <img src={MansaLogo} alt="Mansa Logo" className=" h-20" />
-      </a>
+    <div className="bg-white w-full h-full flex justify-center">
+      <div className=" w-full max-md:w-[80%] max-sm:w-full max-lg:w-[50%] h-full p-5 flex flex-col gap-3">
+        <a href="https://relations.mansastars.com/" className=" self-center">
+          <img src={MansaLogo} alt="Mansa Logo" className=" h-20" />
+        </a>
 
-      <div className=" flex flex-col gap-2">
-        <Title title="Welcome back!" />
-        <Subtitle subtitle="You talk, We organise." />
-      </div>
-
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className=" flex flex-col gap-5 px-2 mt-5 max-md:px-0 max-md:mt-2"
-      >
-        <CustomInput
-          name="email"
-          control={control}
-          error={errors.email}
-          label="Email"
-          autoFocus={true}
-        />
-
-        <div className=" flex flex-col gap-1">
-          <CustomInput
-            name="password"
-            control={control}
-            error={errors.first_name}
-            label="Password"
-            type="password"
-          />
-          <Link
-            to="/verify_email"
-            className=" text-sm text-mansa-blue hover:text-dark-blue self-end"
-          >
-            <u>Forgot your password?</u>
-          </Link>
+        <div className=" flex flex-col gap-2">
+          <Title title="Welcome back!" />
+          <Subtitle subtitle="You talk, We organise." />
         </div>
 
-        <ThemeProvider theme={theme}>
-          <Button
-            variant="contained"
-            className=" w-full"
-            color="mainColor"
-            type="submit"
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading..." : "Log In"}
-          </Button>
-        </ThemeProvider>
-      </form>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className=" flex flex-col gap-5 px-2 mt-5 max-md:px-0 max-md:mt-2"
+        >
+          <CustomInput
+            name="email"
+            control={control}
+            error={errors.email}
+            label="Email"
+            autoFocus={true}
+          />
 
-      <div className=" w-full px-2">
-        <GoogleSignIn />
+          <div className=" flex flex-col gap-1">
+            <CustomInput
+              name="password"
+              control={control}
+              error={errors.first_name}
+              label="Password"
+              type="password"
+            />
+            <Link
+              to="/verify_email"
+              className=" text-sm text-mansa-blue hover:text-dark-blue self-end"
+            >
+              <u>Forgot your password?</u>
+            </Link>
+          </div>
+
+          <ThemeProvider theme={theme}>
+            <Button
+              variant="contained"
+              className=" w-full"
+              color="mainColor"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Log In"}
+            </Button>
+          </ThemeProvider>
+        </form>
+
+        <div className=" w-full px-2">
+          <GoogleSignIn />
+        </div>
+
+        <div className=" self-center mt-3">
+          <span>
+            Don't have an account?{" "}
+            <Link
+              to="/auth/sign_up"
+              className=" text-mansa-blue hover:text-dark-blue"
+            >
+              <u>Register</u>
+            </Link>
+          </span>
+        </div>
+
+        {setEmailNotVerifiedModal && (
+          <EmailNotVerified
+            onClose={closeEmailNotVerifiedModal}
+            show={emailNotVerifiedModal}
+            onClick={() => {
+              closeEmailNotVerifiedModal();
+              setOpenConfirmEmailModal(true);
+            }}
+          />
+        )}
+
+        {setOpenConfirmEmailModal && (
+          <ResendVerificationEmail
+            onClose={closeConfirmEmailModal}
+            show={openConfirmEmailModal}
+            userEmail={userEmail}
+          />
+        )}
       </div>
-
-      <div className=" self-center mt-3">
-        <span>
-          Don't have an account?{" "}
-          <Link
-            to="/auth/sign_up"
-            className=" text-mansa-blue hover:text-dark-blue"
-          >
-            <u>Register</u>
-          </Link>
-        </span>
-      </div>
-
-      {setEmailNotVerifiedModal && (
-        <EmailNotVerified
-          onClose={closeEmailNotVerifiedModal}
-          show={emailNotVerifiedModal}
-          onClick={() => {
-            closeEmailNotVerifiedModal();
-            setOpenConfirmEmailModal(true);
-          }}
-        />
-      )}
-
-      {setOpenConfirmEmailModal && (
-        <ResendVerificationEmail
-          onClose={closeConfirmEmailModal}
-          show={openConfirmEmailModal}
-          userEmail={userEmail}
-        />
-      )}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import LoginContainer from "../components/Login/LoginContainer";
 
 const NewLogin = () => {
   return (
-    <div className=" w-full h-fit">
+    <div className=" w-full h-full">
       <LoginContainer />
     </div>
   );

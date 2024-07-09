@@ -93,8 +93,11 @@ const schema = yup.object().shape({
       "Select a valid option"
     )
     .required("Gross Margin is required"),
-  cash_burn: yup.string().notRequired(),
-  cash_in_hand: yup.string().notRequired(),
+  cash_burn: yup.number().notRequired().typeError("Only numbers are allowed"),
+  cash_in_hand: yup
+    .number()
+    .notRequired()
+    .typeError("Only numbers are allowed"),
   user_MoM_growth_rate: yup.string().notRequired(),
 });
 
@@ -361,7 +364,7 @@ const Step3 = ({
           name="cash_burn"
           control={control}
           error={errors.cash_burn}
-          multiline
+          type="number"
         />
       </InputContainer>
 
@@ -370,7 +373,7 @@ const Step3 = ({
           name="cash_in_hand"
           control={control}
           error={errors.cash_in_hand}
-          multiline
+          type="number"
         />
       </InputContainer>
 

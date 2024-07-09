@@ -9,12 +9,20 @@ import TextField from "@mui/material/TextField";
 import { formatDate } from "./FormatDate";
 
 const schema = yup.object().shape({
-  // email: yup.string().email("Invalid email").required("Email is required"),
   date: yup.date().required("Date is required").typeError("Invalid date"),
-  company_name: yup.string().required("Company name is required"),
-  company_description: yup.string().required("Company description is required"),
-  website: yup.string().required("Website is required"),
-  founders_profile: yup.string(), // Not required
+  company_name: yup
+    .string()
+    .required("Company name is required")
+    .max(245, "Character limit exceeded (245)"),
+  company_description: yup
+    .string()
+    .required("Company description is required")
+    .max(2000, "Character limit exceeded (2000)"),
+  website: yup
+    .string()
+    .required("Website is required")
+    .max(245, "Character limit exceeded (245)"),
+  founders_profile: yup.string().max(2000, "Character limit exceeded (2000)"),
 });
 
 const Step1 = ({
@@ -34,7 +42,6 @@ const Step1 = ({
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      // email: formData.email || "",
       date: formData.date ? formatDate(formData.date) : "",
       company_name: formData.company_name || "",
       company_description: formData.company_description || "",
@@ -58,7 +65,6 @@ const Step1 = ({
   useEffect(() => {
     if (Object.keys(formData).length === 0) {
       reset({
-        // email: "",
         date: "",
         company_name: "",
         company_description: "",
@@ -75,15 +81,6 @@ const Step1 = ({
 
   return (
     <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-      {/* <InputContainer isRequired title="Email">
-        <CustomInput
-          name="email"
-          control={control}
-          error={errors.email}
-          autoFocus={true}
-        />
-      </InputContainer> */}
-
       <InputContainer isRequired title="Date">
         <Controller
           name="date"
@@ -108,6 +105,7 @@ const Step1 = ({
           name="company_name"
           control={control}
           error={errors.company_name}
+          characterLimit={245}
         />
       </InputContainer>
 
@@ -121,7 +119,12 @@ const Step1 = ({
       </InputContainer>
 
       <InputContainer isRequired title="Website">
-        <CustomInput name="website" control={control} error={errors.website} />
+        <CustomInput
+          name="website"
+          control={control}
+          error={errors.website}
+          characterLimit={245}
+        />
       </InputContainer>
 
       <InputContainer title="Founder(s) Profile(s)">

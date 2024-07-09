@@ -2,6 +2,7 @@ import React from "react";
 import HeroContent from "./HeroContent";
 import FormContainer from "./FormContainer";
 import Testimonal from "./Testimonal";
+import "../../CSS/heroSection.css";
 
 const HeroSection = () => {
   return (

@@ -11,8 +11,6 @@ import { AuthProvider } from "./hooks/AuthContext";
 import ProtectedRoute from "./hooks/ProtectedRoute";
 
 // Lazy loading implementation
-const SignUp = lazy(() => import("./AuthPages/SignUp"));
-const Login = lazy(() => import("./AuthPages/Login"));
 const Dashboard = lazy(() => import("./Pages/Dashboard"));
 const Profile = lazy(() => import("./Pages/Profile"));
 const NewDealPage = lazy(() => import("./Pages/NewDeal"));
@@ -49,8 +47,6 @@ function App() {
     "/cancel-payment",
     "/successful-payment",
     "/not-found",
-    "/auth/new_sign_up",
-    "/auth/new_login",
   ];
 
   const hideSidePanelPatterns = [/^\/reset-password\/.*$/, /^\/verify\/.*$/];
@@ -71,11 +67,8 @@ function App() {
         <Suspense fallback={<Loader />}>
           <div className=" w-full overflow-y-auto h-screen">
             <Routes>
-              <Route path="/auth/sign_up" element={<SignUp />} />
-              <Route path="/auth/login" element={<Login />} />
-
-              <Route path="/auth/new_login" element={<NewLogin />} />
-              <Route path="/auth/new_sign_up" element={<NewSignUpPage />} />
+              <Route path="/auth/login" element={<NewLogin />} />
+              <Route path="/auth/sign_up" element={<NewSignUpPage />} />
 
               <Route path="/verify_email" element={<VerifyEmail />} />
               <Route

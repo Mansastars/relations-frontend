@@ -7,7 +7,7 @@ import * as yup from "yup";
 import Button from "./Button";
 
 const schema = yup.object().shape({
-  wins: yup.string(),
+  wins: yup.string().max(2000, "Character limit exceeded (2000)"),
 });
 
 const Step6 = ({
