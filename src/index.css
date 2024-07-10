@@ -29,52 +29,45 @@
     background: #555;
 }
 
-.toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
+/* Remove flowbit blue outline */
+input:focus, textarea:focus, select:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
-input{
-    display: none;
+/* Webkit browsers (Chrome, Safari, Edge)
+Remove change of bg color when brower suggest an input */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: inherit; /* Ensures text color remains unchanged */
 }
-  
-#checkbox {
-    display: none;
+
+/* Ensure the styles apply immediately when autofill is used */
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
-  
-.label {
-    position: relative;
-    background: #32384b;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 50px;
-    padding: 5px;
-    margin: 0 20px;
-    width: 50px;
-    height: 26px;
-    cursor: pointer;
+
+/* Firefox */
+input:-moz-autofill {
+  box-shadow: 0 0 0px 1000px white inset;
+  -moz-box-shadow: 0 0 0px 1000px white inset;
 }
-  
-.name {
-    font-size: 14px;
-    color: #32384b;
+
+/* Hide the spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
-  
-.ball {
-    background: #fff;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    transition: transform 0.15s linear;
+
+/* Ensure the input field doesn't change appearance */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield;
 }
-  
-.checkbox:checked + .label .ball {
-    transform: translateX(24px);
-}
+
   
