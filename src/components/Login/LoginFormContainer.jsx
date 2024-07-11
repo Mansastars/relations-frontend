@@ -13,7 +13,7 @@ import ResendVerificationEmail from "../../AuthPages/ResendVerificationEmail";
 import Swal from "sweetalert2";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
+import GoogleSignIn from "../GoogleAuth/GoogleSignIn";
 
 const schema = yup.object().shape({
   email: yup
