@@ -10,7 +10,7 @@ import ConfirmEmail from "../../../../AuthPages/ConfirmEmail";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import GoogleSignIn from "../../../GoogleSignIn/GoogleSignIn";
+import GoogleSignUp from "../../../GoogleAuth/GoogleSignUp";
 import Swal from "sweetalert2";
 import api from "../../../../api";
 import { useNavigate } from "react-router-dom";
@@ -199,7 +199,7 @@ const FormContainer = () => {
         </ThemeProvider>
       </form>
       <div className="w-full">
-        <GoogleSignIn />
+        <GoogleSignUp />
       </div>
       <PrivacyPolicyModal
         open={privacyPolicyModal}

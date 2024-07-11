@@ -13,7 +13,7 @@ import ResendVerificationEmail from "../../AuthPages/ResendVerificationEmail";
 import Swal from "sweetalert2";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
+import GoogleSignIn from "../GoogleAuth/GoogleSignIn";
 
 const schema = yup.object().shape({
   email: yup
@@ -21,10 +21,7 @@ const schema = yup.object().shape({
     .email("Invalid email")
     .required("Please enter your email.")
     .max(255, "Email must be less than 255 characters"),
-  password: yup
-    .string()
-    .required("Please enter your password.")
-    .min(8, "Password must be at least 8 characters long."),
+  password: yup.string().required("Please enter your password."),
 });
 
 const { palette } = createTheme();
@@ -114,7 +111,7 @@ const LoginFormContainer = () => {
   };
 
   return (
-    <div className="bg-white w-full h-full flex justify-center">
+    <div className="bg-white w-full flex justify-center pb-8">
       <div className=" w-full max-md:w-[80%] max-sm:w-full max-lg:w-[50%] h-full p-5 flex flex-col gap-3">
         <a href="https://relations.mansastars.com/" className=" self-center">
           <img src={MansaLogo} alt="Mansa Logo" className=" h-20" />

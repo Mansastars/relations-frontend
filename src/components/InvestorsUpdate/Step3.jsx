@@ -76,22 +76,9 @@ const schema = yup.object().shape({
     .min(0, "Only Add a Number here starting at 0")
     .required("December MRR is required"),
   gross_margin: yup
-    .string()
-    .oneOf(
-      [
-        ">10%",
-        ">20%",
-        ">30%",
-        ">40%",
-        ">50%",
-        ">60%",
-        ">70%",
-        ">80%",
-        ">90%",
-        ">100%",
-      ],
-      "Select a valid option"
-    )
+    .number()
+    .typeError("Only numbers are allowed")
+    .min(0, "Only Add a Number here starting at 0")
     .required("Gross Margin is required"),
   cash_burn: yup.number().notRequired().typeError("Only numbers are allowed"),
   cash_in_hand: yup
@@ -165,6 +152,7 @@ const Step3 = ({
           error={errors.januaryMRR}
           autoFocus={true}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -179,6 +167,7 @@ const Step3 = ({
           control={control}
           error={errors.februaryMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -193,6 +182,7 @@ const Step3 = ({
           control={control}
           error={errors.marchMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -207,6 +197,7 @@ const Step3 = ({
           control={control}
           error={errors.aprilMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -221,6 +212,7 @@ const Step3 = ({
           control={control}
           error={errors.mayMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -235,6 +227,7 @@ const Step3 = ({
           control={control}
           error={errors.juneMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -249,6 +242,7 @@ const Step3 = ({
           control={control}
           error={errors.julyMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -263,6 +257,7 @@ const Step3 = ({
           control={control}
           error={errors.augustMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -277,6 +272,7 @@ const Step3 = ({
           control={control}
           error={errors.septemberMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -291,6 +287,7 @@ const Step3 = ({
           control={control}
           error={errors.octoberMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -305,6 +302,7 @@ const Step3 = ({
           control={control}
           error={errors.novemberMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -319,6 +317,7 @@ const Step3 = ({
           control={control}
           error={errors.decemberMRR}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -326,37 +325,13 @@ const Step3 = ({
         isRequired
         title="Share of Revenue Net Attributable to Company / Gross Profit Share or Gross Margin in %"
       >
-        <FormControl component="fieldset" error={Boolean(errors.gross_margin)}>
-          <FormLabel component="legend">Gross Margin in %</FormLabel>
-          <Controller
-            name="gross_margin"
-            control={control}
-            render={({ field }) => (
-              <RadioGroup {...field}>
-                {[
-                  ">10%",
-                  ">20%",
-                  ">30%",
-                  ">40%",
-                  ">50%",
-                  ">60%",
-                  ">70%",
-                  ">80%",
-                  ">90%",
-                  ">100%",
-                ].map((option) => (
-                  <FormControlLabel
-                    key={option}
-                    value={option}
-                    control={<Radio />}
-                    label={option}
-                  />
-                ))}
-              </RadioGroup>
-            )}
-          />
-          <FormHelperText>{errors.gross_margin?.message}</FormHelperText>
-        </FormControl>
+        <CustomInput
+          name="gross_margin"
+          control={control}
+          error={errors.gross_margin}
+          type="number"
+          endAdornment="%"
+        />
       </InputContainer>
 
       <InputContainer title="Cash Burn in USD">
@@ -365,6 +340,7 @@ const Step3 = ({
           control={control}
           error={errors.cash_burn}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
@@ -374,38 +350,18 @@ const Step3 = ({
           control={control}
           error={errors.cash_in_hand}
           type="number"
+          endAdornment="$"
         />
       </InputContainer>
 
       <InputContainer title="Avg. User MoM Growth Rate (Avg. of MoM Growth rate over year to date period)">
-        <Controller
+        <CustomInput
           name="user_MoM_growth_rate"
           control={control}
-          render={({ field }) => (
-            <Select {...field} displayEmpty>
-              <MenuItem value="" disabled>
-                Select Growth Rate
-              </MenuItem>
-              {[
-                ">40%",
-                ">50%",
-                ">60%",
-                ">70%",
-                ">80%",
-                ">90%",
-                ">100%",
-                ">150%",
-                ">200%",
-                ">300%",
-              ].map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
+          error={errors.user_MoM_growth_rate}
+          type="number"
+          endAdornment="%"
         />
-        <FormHelperText>{errors.user_MoM_growth_rate?.message}</FormHelperText>
       </InputContainer>
 
       <div className="flex items-center justify-between w-full">

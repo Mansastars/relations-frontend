@@ -9,7 +9,7 @@ import * as yup from "yup";
 import Button from "@mui/material/Button";
 import { ArrowForward } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import GoogleSignIn from "../../GoogleSignIn/GoogleSignIn";
+import GoogleSignIn from "../../GoogleAuth/GoogleSignIn";
 
 const schema = yup.object().shape({
   email: yup

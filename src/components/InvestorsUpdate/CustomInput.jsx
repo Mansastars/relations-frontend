@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField } from "@mui/material";
+import { TextField, InputAdornment } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { styled } from "@mui/material/styles";
 import CharacterCounter from "./CharacterCounter";
@@ -27,10 +27,38 @@ const CustomInput = React.forwardRef(
       autoFocus,
       multiline,
       characterLimit = 2000,
+      endAdornment,
     },
     ref
   ) => {
     const [charCount, setCharCount] = useState(defaultValue.length);
+
+    useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+          event.preventDefault();
+        }
+      };
+
+      const handleWheel = (event) => {
+        if (event.target.type === "number") {
+          event.preventDefault();
+        }
+      };
+
+      const numberInputs = document.querySelectorAll('input[type="number"]');
+      numberInputs.forEach((input) => {
+        input.addEventListener("keydown", handleKeyDown);
+        input.addEventListener("wheel", handleWheel);
+      });
+
+      return () => {
+        numberInputs.forEach((input) => {
+          input.removeEventListener("keydown", handleKeyDown);
+          input.removeEventListener("wheel", handleWheel);
+        });
+      };
+    }, []);
 
     useEffect(() => {
       setCharCount(defaultValue.length);
@@ -69,6 +97,11 @@ const CustomInput = React.forwardRef(
                 field.onChange(e);
               }}
               value={field.value}
+              InputProps={{
+                endAdornment: endAdornment ? (
+                  <InputAdornment position="end">{endAdornment}</InputAdornment>
+                ) : null,
+              }}
             />
             {isTextType && (
               <CharacterCounter count={charCount} limit={characterLimit} />
