@@ -111,7 +111,7 @@ const LoginFormContainer = () => {
   };
 
   return (
-    <div className="bg-white w-full flex justify-center pb-8">
+    <div className="bg-white w-full h-full min-h-screen max-lg:min-h-fit flex justify-center pb-8">
       <div className=" w-full max-md:w-[80%] max-sm:w-full max-lg:w-[50%] h-full p-5 flex flex-col gap-3">
         <a href="https://relations.mansastars.com/" className=" self-center">
           <img src={MansaLogo} alt="Mansa Logo" className=" h-20" />

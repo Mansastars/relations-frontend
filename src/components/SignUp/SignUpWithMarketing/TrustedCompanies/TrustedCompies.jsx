@@ -4,7 +4,7 @@ import Title from "../../StepsUI/Title";
 
 const TrustedCompies = () => {
   return (
-    <div className="px-14 max-md:px-10 max-sm:px-5 pb-10 pt-28 lg:pt-36 max-md:pt-20 lg:pb-20 bg-white w-full">
+    <div className="px-14 max-md:px-10 max-sm:px-5 pb-10 pt-28 lg:pt-40 max-md:pt-20 lg:pb-24 bg-white w-full">
       <div className=" flex flex-col justify-center gap-12 max-md:gap-8 w-full">
         <div className="flex flex-col gap-3">
           <Title
