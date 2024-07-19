@@ -7,9 +7,11 @@ import {
   FormInputRequired,
   FormNotes,
 } from "../Reusables";
-import { useRef } from "react";
 import api from "../../api";
-import { useState, useEffect } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useRef } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MoveContactModal({ onClose }) {
   const moveContactModalRef = useRef();
@@ -19,15 +21,46 @@ function MoveContactModal({ onClose }) {
       onClose();
     }
   };
-
+  const [ErrorMessage, setErrorMessage] = useState("");
   const [formValue, setFormValue] = useState({
     firstName: "",
     lastName: "",
     moveContact: "",
   });
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      const currentDealId = localStorage.getItem("currentDealId");
+      if (!currentDealId) {
+        throw new Error("Deal ID not found in localStorage");
+      }
+
+      return await api.patch(`/deals/change-stage/${currentDealId}`, userData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        "contacts",
+        "deals",
+        "followUps",
+        "negotiations",
+        "notAFits",
+        "OnGoingReviews",
+        "partners",
+        "pitches",
+        "prospects",
+        "researches",
+        "termSheets",
+      ]); // or any relevant query keys
+      setFormValue({ firstName: "", lastName: "", moveContact: "" });
+      onClose();
+      toast.success("Contact moved successfully.");
+    },
+    onError: () => {
+      setErrorMessage("Something went wrong. Please try again.");
+    },
+  });
 
   // Interaction with API post request
   const handleInput = (e) => {
@@ -37,14 +70,8 @@ function MoveContactModal({ onClose }) {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    const currentDealId = localStorage.getItem("currentDealId");
-    if (!currentDealId) {
-      console.error("Deal ID not found in localStorage");
-      return;
-    }
 
     const userData = {
       first_name: formValue.firstName,
@@ -52,30 +79,7 @@ function MoveContactModal({ onClose }) {
       stage: formValue.moveContact,
     };
 
-    try {
-      const response = await api.patch(
-        `/deals/change-stage/${currentDealId}`,
-        userData
-      );
-      console.log(response);
-      setSuccessMessage("Contact moved successfully.");
-      window.location.reload();
-      setErrorMessage("");
-      setFormValue({ firstName: "", lastName: "", moveContact: "" });
-      // Close the modal after a delay (e.g., 2 seconds)
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSuccessMessage("");
-        onClose();
-        // Close the modal (you need to implement modal closing logic here)
-      }, 2000);
-    } catch (error) {
-      console.log(error);
-      setErrorMessage("Something went wrong. Please try again."); // set error message
-      // window.scrollTo(0, 0); //scroll to the top of the page
-      setSuccessMessage("");
-      setIsSubmitting(false);
-    }
+    mutation.mutate(userData);
   };
 
   return (
@@ -100,11 +104,8 @@ function MoveContactModal({ onClose }) {
             onSubmit={handleSubmit}
             className=" flex flex-col gap-5"
           >
-            {successMessage && (
-              <p className=" text-mansa-blue font-semibold">{successMessage}</p>
-            )}
-            {errorMessage && (
-              <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>
+            {mutation.isError && (
+              <p className=" text-[#ff0000] font-semibold">{ErrorMessage}</p>
             )}
             <div className="flex flex-row items-center justify-center flex-wrap gap-5">
               <FormInputRequired
@@ -135,7 +136,7 @@ function MoveContactModal({ onClose }) {
             <div className=" mt-8 w-full flex items-center justify-center">
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={mutation.isLoading}
                 text="Move Contact"
               />
             </div>

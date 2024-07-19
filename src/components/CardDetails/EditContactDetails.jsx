@@ -4,12 +4,17 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { Button, DateForm, DropDown, FormInput, FormNotes } from "../Reusables";
 import Swal from "sweetalert2";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import EditContactImage from "./ContactImage/EditContactImage";
 
 function EditContactDetails({ onClose, contactDetails }) {
-  const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const pathName = window.location.pathname.split("/").at(-1);
+  const queryClient = useQueryClient();
+  let contactID = contactDetails.id;
 
   const modalRef = useRef();
 
@@ -46,6 +51,7 @@ function EditContactDetails({ onClose, contactDetails }) {
     stage: contactDetails.stage,
     datetime: formatDateTime(contactDetails.meeting_date),
     notes: contactDetails.notes,
+    profile_pic: contactDetails.profile_pic,
   });
 
   let meetingDate;
@@ -53,6 +59,50 @@ function EditContactDetails({ onClose, contactDetails }) {
   if (formValue.datetime) {
     meetingDate = new Date(formValue.datetime).toISOString();
   }
+
+  const updateContactMutation = useMutation({
+    mutationFn: async (userData) => {
+      const currentDealId = localStorage.getItem("currentDealId") || pathName;
+      return await api.patch(
+        `deals/edit-contact/${currentDealId}/${contactDetails.id}`,
+        userData
+      );
+    },
+    onSuccess: () => {
+      setErrorMessage("");
+      setIsSubmitting(false);
+      onClose();
+      toast.success("Contact updated successfully.");
+      queryClient.invalidateQueries([
+        "contacts",
+        "deals",
+        pathName,
+        "followUps",
+        "negotiations",
+        "notAFits",
+        "OnGoingReviews",
+        "partners",
+        "pitches",
+        "prospects",
+        "researches",
+        "termSheets",
+      ]);
+    },
+    onError: (error) => {
+      if (
+        error.response.data.message === "unable to edit contact at this time"
+      ) {
+        onClose();
+        Swal.fire(
+          "Error",
+          "You are not allowed to edit this dashboard.",
+          "error"
+        );
+      }
+      setErrorMessage("Something went wrong. Please try again.");
+      setIsSubmitting(false);
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +113,7 @@ function EditContactDetails({ onClose, contactDetails }) {
       return;
     }
 
-    const user = localStorage.getItem("user");
+    const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user) {
       onClose();
@@ -88,35 +138,7 @@ function EditContactDetails({ onClose, contactDetails }) {
       notes: formValue.notes,
     };
 
-    try {
-      await api.patch(
-        `deals/edit-contact/${currentDealId}/${contactDetails.id}`,
-        userData
-      );
-      setSuccessMessage("Contact updated successfully.");
-      setErrorMessage("");
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSuccessMessage("");
-        onClose();
-        window.location.reload();
-      }, 2000);
-    } catch (error) {
-      if (
-        error.response.data.message === "unable to edit contact at this time"
-      ) {
-        onClose();
-        Swal.fire(
-          "Error",
-          "You are not allowed to edit this dashboard.",
-          "error"
-        );
-      }
-      console.log(error);
-      setErrorMessage("Something went wrong. Please try again.");
-      setSuccessMessage("");
-      setIsSubmitting(false);
-    }
+    updateContactMutation.mutate(userData);
   };
 
   return (
@@ -141,12 +163,13 @@ function EditContactDetails({ onClose, contactDetails }) {
             onSubmit={handleSubmit}
             className="flex flex-col gap-5"
           >
-            {successMessage && (
-              <p className="text-mansa-blue font-semibold">{successMessage}</p>
-            )}
             {errorMessage && (
               <p className="text-[#ff0000] font-semibold">{errorMessage}</p>
             )}
+            <EditContactImage
+              profile_url={formValue.profile_pic}
+              contactId={contactID}
+            />
             <div className="flex flex-row items-center justify-center flex-wrap gap-5 w-full">
               <FormInput
                 type="text"

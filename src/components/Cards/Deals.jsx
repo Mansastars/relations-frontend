@@ -1,83 +1,55 @@
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../api";
 import { useEffect, useState } from "react";
+import Loader from "./Loader/Loader";
 import Swal from "sweetalert2";
-import { X, XCircleIcon } from "lucide-react";
-import { Oval } from "react-loader-spinner";
 import EditContactDetails from "../CardDetails/EditContactDetails";
 import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
+import truncateEmail from "./Utilities/truncateEmail";
+import truncatePhoneNumber from "./Utilities/truncatePhoneNumber";
+import ContactImage from "./ContactImage/ContactImage";
+import ContactMenu from "./ContactMenu/ContactMenu";
 
 //Contact
 export default function Deals({ borderColour }) {
-  const pathNameDealId = window.location.pathname.split("/").at(-1);
-  const currentDealId = localStorage.getItem("currentDealId") || pathNameDealId;
+  const queryClient = useQueryClient();
+  const currentDealId =
+    localStorage.getItem("currentDealId") ||
+    window.location.pathname.split("/").at(-1);
 
   const BorderStyle = {
     border: `2px solid  ${borderColour}`,
   };
 
-  const [deals, setDeals] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [contactDetails, setContactDetails] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedContactId, setSelectedContactId] = useState(null);
 
-  useEffect(() => {
-    const fetchDeals = async () => {
-      const currentDealId =
-        localStorage.getItem("currentDealId") || pathNameDealId;
+  const {
+    data: deals,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["deals", currentDealId],
+    queryFn: async () => {
+      const response = await api.get(`deals/deal-contacts/${currentDealId}`);
+      return response.data.data;
+    },
+  });
 
-      if (!currentDealId) {
-        console.error("Deal ID not found in localStorage");
-        return;
-      }
+  const deleteMutation = useMutation({
+    mutationFn: (id) =>
+      api.delete(`contacts/delete-contact/${currentDealId}/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["deals", currentDealId]);
+      Swal.fire("Deleted!", "Your contact entry has been deleted.", "success");
+    },
+    onError: () => {
+      Swal.fire("Error", "Failed to delete contact", "error");
+    },
+  });
 
-      try {
-        const response = await api.get(`deals/deal-contacts/${currentDealId}`);
-        // Assuming response.data contains the array of deals
-        setDeals(response.data.data);
-        // Set loading to false to indicate that data loading is complete
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        // Set loading to false to indicate that data loading is complete
-        setLoading(false);
-      }
-    };
-
-    fetchDeals();
-  }, []);
-
-  // console.log('Type of deals:', typeof deals);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center">
-        <Oval
-          visible={true}
-          height={20}
-          width={20}
-          color="#32384b"
-          ariaLabel="oval-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-      </div>
-    );
-  }
-
-  // Render error state if an error occurred during data fetching
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  // Truncate email address
-  const truncateEmail = (email, maxLength) => {
-    if (email.length <= maxLength) return email;
-
-    return `${email.substring(0, maxLength - 3)}...`;
-  };
-
-  // Delete a card
   const handleDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -86,48 +58,19 @@ export default function Deals({ borderColour }) {
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "No, keep it",
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        try {
-          // YOUR_DELETE_ENDPOINT/${id}
-          await api.delete(`contacts/delete-contact/${currentDealId}/${id}`);
-          // Remove the deleted deal from the state
-          setDeals(deals.filter((deal) => deal.id !== id));
-          Swal.fire(
-            "Deleted!",
-            "Your contact entry has been deleted.",
-            "success"
-          );
-        } catch (error) {
-          console.error("Error:", error);
-          Swal.fire("Error", "Failed to delete contact", "error");
-        }
+        deleteMutation.mutate(id);
       }
     });
   };
 
-  // Function to truncate phone number while ensuring inclusion of country code and '+' sign
-  const truncatePhoneNumber = (phoneNumber, maxLength) => {
-    // Remove all non-digit characters from the phone number
-    const digitsOnly = phoneNumber.replace(/\D/g, "");
-
-    // If the phone number is shorter than or equal to the maximum length, return it as is
-    if (digitsOnly.length <= maxLength) return phoneNumber;
-
-    // Truncate the phone number, preserving the country code and '+' sign
-    const truncatedNumber = digitsOnly.substring(0, maxLength - 1) + "...";
-
-    return "+" + truncatedNumber;
-  };
-
-  // Edit a contact
   const handleEdit = async (id) => {
     try {
       const response = await api.get(
         `contacts/single-contact/${currentDealId}/${id}`
       );
-      const contactDetails = response.data.contact; // Assuming response.data contains the deal details
-      setContactDetails(contactDetails);
+      setContactDetails(response.data.contact);
       setShowEditModal(true);
     } catch (error) {
       console.error("Error fetching contact details:", error);
@@ -139,44 +82,85 @@ export default function Deals({ borderColour }) {
     setContactDetails(null);
   };
 
+  const handleMenuClick = (event, id) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedContactId(id);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedContactId(null);
+  };
+
+  const handleViewOrUpdate = () => {
+    if (selectedContactId) {
+      handleEdit(selectedContactId);
+      handleMenuClose();
+    }
+  };
+
+  const handleDeleteClick = () => {
+    if (selectedContactId) {
+      handleDelete(selectedContactId);
+      handleMenuClose();
+    }
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <>
-      {deals.length === 0 || undefined ? (
+      {deals.length === 0 ? (
         <div></div>
       ) : (
         deals.map((deal) => (
           <div
             key={deal.id}
-            onDoubleClick={() => handleEdit(deal.id)}
-            title="Double click to edit contact"
-            className="flex flex-col rounded-2xl max-w-34 mb-2 h-44 cursor-pointer"
-            style={{ ...BorderStyle, minWidth: "165px" }}
+            className="flex flex-col rounded-2xl mb-2 h-40"
+            style={{ ...BorderStyle, minWidth: "210px" }}
           >
             <div
-              className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start"
+              className="flex flex-row p-2 rounded-t-2xl border-b-dark-blue items-center gap-2"
               style={{ background: borderColour }}
             >
-              <div className="flex justify-between w-full">
-                <p className="font-extrabold text-sm text-white">
-                  {`${deal.first_name} ${deal.last_name}`.length > 13
-                    ? `${deal.first_name} ${deal.last_name}`.substring(0, 10) +
-                      "..."
-                    : `${deal.first_name} ${deal.last_name}`}
-                </p>
-                <button
-                  onClick={() => handleDelete(deal.id)}
-                  className="text-white hover:text-[#FF0000] cursor-pointer"
-                >
-                  <XCircleIcon className="h-4 w-4" />
-                </button>
+              <ContactImage
+                profile_url={deal.profile_pic}
+                firstName={deal.first_name}
+                lastName={deal.last_name}
+                color={borderColour}
+              />
+              <div className="flex flex-row w-full items-center">
+                <div className="flex flex-col w-full">
+                  <p className="font-extrabold text-sm text-white truncate">
+                    {`${deal.first_name} ${deal.last_name}`.length > 12
+                      ? `${deal.first_name} ${deal.last_name}`.substring(0, 9) +
+                        "..."
+                      : `${deal.first_name} ${deal.last_name}`}
+                  </p>
+                  <p className="text-sm text-white truncate">
+                    {deal.organization_name
+                      ? deal.organization_name.length > 15
+                        ? deal.organization_name.substring(0, 12) + "..."
+                        : deal.organization_name
+                      : "No company"}
+                  </p>
+                </div>
+                <div className=" self-end">
+                  <ContactMenu
+                    anchorEl={anchorEl}
+                    handleMenuClick={(event) => handleMenuClick(event, deal.id)}
+                    handleMenuClose={handleMenuClose}
+                    handleViewOrUpdate={handleViewOrUpdate}
+                    handleDeleteClick={handleDeleteClick}
+                  />
+                </div>
               </div>
-              <p className="text-sm text-white">
-                {deal.organization_name
-                  ? deal.organization_name.length > 15
-                    ? deal.organization_name.substring(0, 15) + "..."
-                    : deal.organization_name
-                  : "No company entered"}
-              </p>
             </div>
             <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
               <div>
@@ -194,23 +178,21 @@ export default function Deals({ borderColour }) {
                   Meeting:{" "}
                   {deal.meeting_date
                     ? new Date(deal.meeting_date).toLocaleString()
-                    : "No meeting date entered"}
+                    : "Nil"}
                 </p>
                 <p className="text-xs">
-                  {deal.email
-                    ? truncateEmail(deal.email, 20)
-                    : "No email entered"}
+                  {deal.email ? truncateEmail(deal.email, 27) : "No email"}
                 </p>
                 <p className="text-xs">
                   {deal.phone_number
                     ? truncatePhoneNumber(deal.phone_number, 15)
-                    : "No phone number entered"}
+                    : "No phone number"}
                 </p>
               </div>
               <div className="flex flex-col justify-center items-start">
                 <p className="text-xs text-wrap">
-                  {deal.notes.length > 20
-                    ? deal.notes.substring(0, 20) + "..."
+                  {deal.notes.length > 30
+                    ? deal.notes.substring(0, 27) + "..."
                     : deal.notes}
                 </p>
               </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import MansaLogo from "../assets/MansaLogos/MansaLogo.png";
 import {
@@ -22,6 +22,7 @@ import { useAuth } from "../hooks/AuthContext";
 import api from "../api";
 import Swal from "sweetalert2";
 import { ArrowLeftCircle, MenuIcon } from "lucide-react";
+import { Avatar } from "@mui/material";
 
 function SidePanel({ setShowContactUs }) {
   const [isOpen, setIsOpen] = useState(() => window.innerWidth > 768);
@@ -29,6 +30,16 @@ function SidePanel({ setShowContactUs }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const userData = localStorage.getItem("user");
+
+  useEffect(() => {
+    const storedUser = JSON.parse(userData);
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, [userData]);
 
   const togglePanel = () => {
     setIsOpen(!isOpen);
@@ -110,7 +121,7 @@ function SidePanel({ setShowContactUs }) {
     },
     {
       path: "/profile",
-      label: "Profile",
+      label: "Settings",
       icon: <SettingsOutlined />,
       activeIcon: <Settings />,
     },
@@ -123,6 +134,10 @@ function SidePanel({ setShowContactUs }) {
     },
   ];
 
+  const getUserInitials = (firstName, lastName) => {
+    return `${firstName[0]}${lastName[0]}`.toUpperCase();
+  };
+
   return (
     <div
       className={` h-screen flex flex-col ${
@@ -132,14 +147,42 @@ function SidePanel({ setShowContactUs }) {
                      isOpen ? "translate-x-0" : "-translate-x-0"
                    } overflow-y-auto max-h-full max-sm:h-full`}
     >
-      <div className={`${isOpen ? "" : "mt-4"} pt-4 text-center`}>
+      <div className={`${isOpen ? "" : "mt-10"}  text-center`}>
         <Link to="/alldashboards">
-          <img
-            src={MansaLogo}
-            alt="Company Logo"
-            className={`${isOpen ? "" : "mt-3 px-2"}`}
-          />
+          <img src={MansaLogo} alt="Company Logo" />
         </Link>
+
+        {user && (
+          <div
+            className={`flex items-center mt-5 px-4 cursor-pointer ${
+              isOpen ? "space-x-4" : "flex-col items-center"
+            }`}
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
+            <Avatar
+              src={user.profile_picture || ""}
+              alt="User's profile"
+              sx={{
+                width: 40,
+                height: 40,
+                backgroundColor: user.profile_picture
+                  ? "transparent"
+                  : "rgba(8,165,170,70%)",
+                fontSize: 20,
+              }}
+            >
+              {!user.profile_picture &&
+                getUserInitials(user.first_name, user.last_name)}
+            </Avatar>
+            {isOpen && (
+              <span className="font-bold text-base truncate max-w-full">
+                {user.first_name} {user.last_name}
+              </span>
+            )}
+          </div>
+        )}
 
         <button onClick={togglePanel} className=" px-4">
           {isOpen ? (
@@ -148,15 +191,14 @@ function SidePanel({ setShowContactUs }) {
               className="text-white hover:text-red-700 absolute top-2 right-2"
             />
           ) : (
-            <MenuIcon className="text-white hover:text-mansa-blue mt-8 max-[768px]:hidden" />
+            <MenuIcon className="text-white hover:text-mansa-blue mt-4 max-[768px]:hidden" />
           )}
         </button>
       </div>
+
       <div
         className={`flex w-full flex-col ${
-          isOpen
-            ? "justify-start mt-5 mb-5"
-            : "items-center justify-center mt-2 pb-5"
+          isOpen ? "justify-start mb-5" : "items-center justify-center pb-5"
         }`}
       >
         <ul className="space-y-4">
