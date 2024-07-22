@@ -21,7 +21,7 @@ export function Column({ titles, titleColors, contents }) {
   return (
     <div
       className=" flex flex-col gap-5 items-center w-full "
-      style={{ maxWidth: "calc(100% - 224px)" }}
+      // style={{ maxWidth: "calc(100% - 224px)" }}
     >
       <div className={ColumnClasses} style={ColumnStyle}>
         <div

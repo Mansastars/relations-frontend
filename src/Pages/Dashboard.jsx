@@ -56,7 +56,7 @@ function Dasboard() {
   //   }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
 
   return (
-    <div>
+    <div className="">
       <div className=" sticky top-0 z-50">
         <FreeTrialBanner />
       </div>
@@ -81,16 +81,16 @@ function Dasboard() {
           </div>
         )}
 
-        <div className={`flex flex-row w-full items-center`}>
-          <div className=" bg-dark-blue text-white font-bold text-2xl py-6 rounded-l-xl w-[40%] text-center">
+        <div className={`flex flex-row max-md:flex-col w-full items-center`}>
+          <div className=" bg-dark-blue text-white font-bold text-2xl max-md:text-base py-6 max-md:py-2 rounded-l-xl max-md:rounded-xl w-[40%] max-md:w-full text-center">
             {singleDeals &&
             singleDeals.deal_name &&
             singleDeals.deal_name.length > 15
               ? `${singleDeals.deal_name.substring(0, 15)}...`
               : singleDeals && singleDeals.deal_name}
           </div>
-          <div className=" flex flex-col w-[60%]">
-            <div className=" bg-mansa-blue text-white py-2 text-center rounded-tr-xl">
+          <div className=" flex flex-col w-[60%] max-md:w-full">
+            <div className=" bg-mansa-blue text-white py-2 text-center rounded-tr-xl max-md:rounded-t-xl">
               Deal Size Amount:{" "}
               <span className=" font-semibold">
                 $
@@ -100,7 +100,7 @@ function Dasboard() {
               </span>
             </div>
             <div className=" flex flex-row  ">
-              <div className=" bg-[orange] text-white w-1/2 max-md:w-full py-2 pl-5">
+              <div className=" bg-[orange] text-white w-1/2 max-md:w-full py-2 pl-5 max-md:rounded-bl-xl">
                 In-Negotiation Value:{" "}
                 <span className=" font-semibold">
                   $
@@ -109,7 +109,7 @@ function Dasboard() {
                     : "0"}
                 </span>
               </div>
-              <div className=" bg-[green] text-white w-1/2 max-md:w-full py-2 pl-5 rounded-br-xl">
+              <div className=" bg-[green] text-white w-1/2 max-md:w-full py-2 pl-5 rounded-br-xl ">
                 Deal Signed Value:{" "}
                 <span className=" font-semibold">
                   $
