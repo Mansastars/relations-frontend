@@ -11,10 +11,16 @@ import {
 import { useRef } from "react";
 import api from "../../api";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ContactImage from "./ContactImage/ContactImage";
 
 function Modal({ onClose }) {
   const modalRef = useRef();
+  const formRef = useRef();
+  const queryClient = useQueryClient();
+  const currentDealId = localStorage.getItem("currentDealId");
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
@@ -22,8 +28,6 @@ function Modal({ onClose }) {
     }
   };
 
-  // Interaction with API post request
-  // linkedin_url:'', profile_url:''
   const [formValue, setFormValue] = useState({
     title: "",
     firstName: "",
@@ -36,7 +40,6 @@ function Modal({ onClose }) {
     currentStage: "",
     datetime: "",
   });
-  const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -47,15 +50,54 @@ function Modal({ onClose }) {
     }
   };
 
+  const createContactMutation = useMutation({
+    mutationFn: async (userData) => {
+      if (!currentDealId) {
+        throw new Error("Deal ID not found in localStorage");
+      }
+      return api.post(`/deals/create-contact/${currentDealId}`, userData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        "contacts",
+        "deals",
+        "followUps",
+        "negotiations",
+        "notAFits",
+        "OnGoingReviews",
+        "partners",
+        "pitches",
+        "prospects",
+        "researches",
+        "termSheets",
+      ]);
+      localStorage.removeItem("profile_pic");
+      setFormValue({
+        title: "",
+        firstName: "",
+        lastName: "",
+        company: "",
+        dealSize: 0,
+        email: "",
+        phoneNumber: "",
+        notes: "",
+        currentStage: "",
+        datetime: "",
+      });
+      setIsSubmitting(false);
+      onClose(); // Close the modal on successful submission
+      toast.success("Contact created successfully.");
+    },
+    onError: (error) => {
+      setErrorMessage("An error occurred. Please try again.");
+      formRef.current.scrollIntoView({ behavior: "smooth" });
+      setIsSubmitting(false);
+    },
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const currentDealId = localStorage.getItem("currentDealId");
-    if (!currentDealId) {
-      console.error("Deal ID not found in localStorage");
-      return;
-    }
-
+    setIsSubmitting(true);
     let meetingDate;
 
     if (formValue.datetime) {
@@ -75,45 +117,9 @@ function Modal({ onClose }) {
       meeting_date: meetingDate,
       notes: formValue.notes,
       // linkedin_url: formValue.linkedin_url,
-      // profile_pic: formValue.profile_url,
+      profile_pic: localStorage.getItem("profile_pic") || "",
     };
-
-    try {
-      const response = await api.post(
-        `/deals/create-contact/${currentDealId}`,
-        userData
-      );
-      console.log(response);
-      setSuccessMessage("Contact created successfully.");
-      window.location.reload();
-      setErrorMessage("");
-      // linkedin_url:'', profile_url:''
-      setFormValue({
-        title: "",
-        firstName: "",
-        lastName: "",
-        company: "",
-        dealSize: 0,
-        email: "",
-        phoneNumber: "",
-        notes: "",
-        currentStage: "",
-        datetime: "",
-      });
-      // Close the modal after a delay (e.g., 2 seconds)
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSuccessMessage("");
-        onClose();
-        // Close the modal (you need to implement modal closing logic here)
-      }, 2000);
-    } catch (error) {
-      console.log(error);
-      setErrorMessage("Something went wrong. Please try again."); // set error message
-      // window.scrollTo(0, 0); //scroll to the top of the page
-      setSuccessMessage("");
-      setIsSubmitting(false);
-    }
+    createContactMutation.mutate(userData);
   };
 
   return (
@@ -130,7 +136,10 @@ function Modal({ onClose }) {
           >
             <X size={30} />
           </button>
-          <h1 className=" text-dark-blue text-3xl max-md:text-2xl max-sm:text-xl font-extrabold">
+          <h1
+            ref={formRef}
+            className=" text-dark-blue text-3xl max-md:text-2xl max-sm:text-xl font-extrabold"
+          >
             Add a new contact to your pipeline
           </h1>
           <form
@@ -138,13 +147,11 @@ function Modal({ onClose }) {
             onSubmit={handleSubmit}
             className=" flex flex-col gap-5 w-full"
           >
-            {successMessage && (
-              <p className=" text-mansa-blue font-semibold">{successMessage}</p>
-            )}
             {errorMessage && (
               <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>
             )}
             <div className="flex flex-col gap-8 w-full">
+              <ContactImage />
               <div className=" flex flex-row flex-wrap gap-5 justify-center max-md:justify-start">
                 <FormInput
                   type="text"
@@ -217,8 +224,6 @@ function Modal({ onClose }) {
                   value={formValue.datetime}
                   onChange={handleInput}
                 />
-                {/* <FormInput type="url" title="Profile Image URL" placeholder="https://" id="profile_url" value={formValue.profile_url} onChange={handleInput} />
-                            <FormInput type="url" title="LinkedIn URL" placeholder="https://www.linkedin.com/in/..." id="linkedin_url" value={formValue.linkedin_url} onChange={handleInput} /> */}
               </div>
               <div>
                 <FormNotes value={formValue.notes} onChange={handleInput} />

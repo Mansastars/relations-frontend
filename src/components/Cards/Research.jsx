@@ -1,80 +1,56 @@
-import { X, XCircleIcon } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../api";
-import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import Loader from "./Loader/Loader";
 import EditContactDetails from "../CardDetails/EditContactDetails";
-import { Oval } from "react-loader-spinner";
 import addCommasToNumber from "../ReusableComponents/AddCommastoNum";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import truncateEmail from "./Utilities/truncateEmail";
+import truncatePhoneNumber from "./Utilities/truncatePhoneNumber";
+import ContactImage from "./ContactImage/ContactImage";
+import ContactMenu from "./ContactMenu/ContactMenu";
 
-// Research
 export default function Research({ borderColour }) {
-  const pathNameDealId = window.location.pathname.split("/").at(-1);
-  const currentDealId = localStorage.getItem("currentDealId") || pathNameDealId;
+  const queryClient = useQueryClient();
+  const currentDealId =
+    localStorage.getItem("currentDealId") ||
+    window.location.pathname.split("/").at(-1);
 
   const BorderStyle = {
     border: `2px solid  ${borderColour}`,
   };
 
-  const [researches, setResearches] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [contactDetails, setContactDetails] = useState(null);
-  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedContactId, setSelectedContactId] = useState(null);
 
-  useEffect(() => {
-    const fetchResearches = async () => {
-      const currentDealId =
-        localStorage.getItem("currentDealId") || pathNameDealId;
+  const {
+    data: researches,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["researches", currentDealId],
+    queryFn: async () => {
+      const response = await api.get(
+        `deals/research-contacts/${currentDealId}`
+      );
+      return response.data.data;
+    },
+  });
 
-      if (!currentDealId) {
-        console.error("Deal ID not found in localStorage");
-        return;
-      }
+  const deleteMutation = useMutation({
+    mutationFn: (id) =>
+      api.delete(`contacts/delete-contact/${currentDealId}/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["researches", currentDealId]);
+      Swal.fire("Deleted!", "Your contact entry has been deleted.", "success");
+    },
+    onError: () => {
+      Swal.fire("Error", "Failed to delete contact", "error");
+    },
+  });
 
-      try {
-        const response = await api.get(
-          `deals/research-contacts/${currentDealId}`
-        );
-        // Assuming response.data contains the array of deals
-        setResearches(response.data.data);
-        // Set loading to false to indicate that data loading is complete
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        // Set loading to false to indicate that data loading is complete
-        setLoading(false);
-      }
-    };
-
-    fetchResearches();
-  }, []);
-
-  // console.log('Type of researches:', typeof researches);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center">
-        <Oval
-          visible={true}
-          height={20}
-          width={20}
-          color="#32384b"
-          ariaLabel="oval-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-      </div>
-    );
-  }
-
-  // Render error state if an error occurred during data fetching
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  // Delete a card
   const handleDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -83,34 +59,19 @@ export default function Research({ borderColour }) {
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "No, keep it",
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        try {
-          // YOUR_DELETE_ENDPOINT/${id}
-          await api.delete(`contacts/delete-contact/${currentDealId}/${id}`);
-          // Remove the deleted research from the state
-          setResearches(researches.filter((research) => research.id !== id));
-          Swal.fire(
-            "Deleted!",
-            "Your contact entry has been deleted.",
-            "success"
-          );
-        } catch (error) {
-          console.error("Error:", error);
-          Swal.fire("Error", "Failed to delete contact", "error");
-        }
+        deleteMutation.mutate(id);
       }
     });
   };
 
-  // Edit a contact
   const handleEdit = async (id) => {
     try {
       const response = await api.get(
         `contacts/single-contact/${currentDealId}/${id}`
       );
-      const contactDetails = response.data.contact; // Assuming response.data contains the deal details
-      setContactDetails(contactDetails);
+      setContactDetails(response.data.contact);
       setShowEditModal(true);
     } catch (error) {
       console.error("Error fetching contact details:", error);
@@ -122,68 +83,90 @@ export default function Research({ borderColour }) {
     setContactDetails(null);
   };
 
-  // Truncate email address
-  const truncateEmail = (email, maxLength) => {
-    if (email.length <= maxLength) return email;
-
-    return `${email.substring(0, maxLength - 3)}...`;
+  const handleMenuClick = (event, id) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedContactId(id);
   };
 
-  // Function to truncate phone number while ensuring inclusion of country code and '+' sign
-  const truncatePhoneNumber = (phoneNumber, maxLength) => {
-    // Remove all non-digit characters from the phone number
-    const digitsOnly = phoneNumber.replace(/\D/g, "");
-
-    // If the phone number is shorter than or equal to the maximum length, return it as is
-    if (digitsOnly.length <= maxLength) return phoneNumber;
-
-    // Truncate the phone number, preserving the country code and '+' sign
-    const truncatedNumber = digitsOnly.substring(0, maxLength - 1) + "...";
-
-    return "+" + truncatedNumber;
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedContactId(null);
   };
+
+  const handleViewOrUpdate = () => {
+    if (selectedContactId) {
+      handleEdit(selectedContactId);
+      handleMenuClose();
+    }
+  };
+
+  const handleDeleteClick = () => {
+    if (selectedContactId) {
+      handleDelete(selectedContactId);
+      handleMenuClose();
+    }
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <>
-      {researches.length === 0 || undefined ? (
+      {researches.length === 0 ? (
         <div></div>
       ) : (
         researches.map((research) => (
           // width: 'calc((100% - 224px) / 6 - 10px)', minWidth: '165px'
           <div
             key={research.id}
-            onDoubleClick={() => handleEdit(research.id)}
-            className="flex flex-col rounded-2xl mb-2 h-44 cursor-pointer"
-            style={{ ...BorderStyle, minWidth: "165px" }}
-            title="Double click to edit contact"
+            className="flex flex-col rounded-2xl mb-2 h-40"
+            style={{ ...BorderStyle, minWidth: "210px" }}
           >
             <div
-              className="flex flex-col p-2 rounded-t-2xl border-b-dark-blue items-start"
+              className="flex flex-row p-2 rounded-t-2xl border-b-dark-blue items-center gap-2"
               style={{ background: borderColour }}
             >
-              <div className="flex justify-between w-full">
-                <p className="font-extrabold text-sm text-white">
-                  {`${research.first_name} ${research.last_name}`.length > 13
-                    ? `${research.first_name} ${research.last_name}`.substring(
-                        0,
-                        10
-                      ) + "..."
-                    : `${research.first_name} ${research.last_name}`}
-                </p>
-                <button
-                  onClick={() => handleDelete(research.id)}
-                  className="text-white hover:text-[#FF0000] cursor-pointer"
-                >
-                  <XCircleIcon className="h-4 w-4" />
-                </button>
+              <ContactImage
+                profile_url={research.profile_pic}
+                firstName={research.first_name}
+                lastName={research.last_name}
+                color={borderColour}
+              />
+              <div className="flex flex-row w-full items-center">
+                <div className="flex flex-col w-full">
+                  <p className="font-extrabold text-sm text-white truncate">
+                    {`${research.first_name} ${research.last_name}`.length > 11
+                      ? `${research.first_name} ${research.last_name}`.substring(
+                          0,
+                          8
+                        ) + "..."
+                      : `${research.first_name} ${research.last_name}`}
+                  </p>
+                  <p className="text-sm text-white truncate">
+                    {research.organization_name
+                      ? research.organization_name.length > 15
+                        ? research.organization_name.substring(0, 12) + "..."
+                        : research.organization_name
+                      : "No company"}
+                  </p>
+                </div>
+                <div className=" self-end">
+                  <ContactMenu
+                    anchorEl={anchorEl}
+                    handleMenuClick={(event) =>
+                      handleMenuClick(event, research.id)
+                    }
+                    handleMenuClose={handleMenuClose}
+                    handleViewOrUpdate={handleViewOrUpdate}
+                    handleDeleteClick={handleDeleteClick}
+                  />
+                </div>
               </div>
-              <p className="text-sm text-white">
-                {research.organization_name
-                  ? research.organization_name.length > 15
-                    ? research.organization_name.substring(0, 15) + "..."
-                    : research.organization_name
-                  : "No company entered"}
-              </p>
             </div>
             <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
               <div>
@@ -192,7 +175,7 @@ export default function Research({ borderColour }) {
                   {research.deal_size
                     ? research.deal_size.length > 15
                       ? "$" +
-                        addCommasToNumber(research.deal_size.substring(0, 15)) +
+                        addCommasToNumber(research.deal_size.substring(0, 12)) +
                         "..."
                       : "$" + addCommasToNumber(research.deal_size)
                     : "$0"}
@@ -201,23 +184,23 @@ export default function Research({ borderColour }) {
                   Meeting:{" "}
                   {research.meeting_date
                     ? new Date(research.meeting_date).toLocaleString()
-                    : "No meeting date entered"}
+                    : "Nil"}
                 </p>
                 <p className="text-xs">
                   {research.email
-                    ? truncateEmail(research.email, 20)
-                    : "No email entered"}
+                    ? truncateEmail(research.email, 31)
+                    : "No email"}
                 </p>
                 <p className="text-xs">
                   {research.phone_number
                     ? truncatePhoneNumber(research.phone_number, 15)
-                    : "No phone number entered"}
+                    : "No phone number"}
                 </p>
               </div>
               <div className="flex flex-col justify-center items-start">
-                <p className="text-xs text-wrap">
-                  {research.notes.length > 20
-                    ? research.notes.substring(0, 20) + "..."
+                <p className="text-xs text-wrap truncate">
+                  {research.notes.length > 33
+                    ? research.notes.substring(0, 30) + "..."
                     : research.notes}
                 </p>
               </div>

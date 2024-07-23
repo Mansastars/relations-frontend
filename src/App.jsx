@@ -9,6 +9,8 @@ import {
 import Loader from "./components/ReusableComponents/Loader";
 import { AuthProvider } from "./hooks/AuthContext";
 import ProtectedRoute from "./hooks/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Lazy loading implementation
 const Dashboard = lazy(() => import("./Pages/Dashboard"));
@@ -30,7 +32,6 @@ const SidePanel = lazy(() => import("./Pages/SidePanel"));
 const ContactUs = lazy(() => import("./components/ContactUs/ContactUs"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
 const InvestorsUpdate = lazy(() => import("./Pages/InvestorsUpdate"));
-
 const NewSignUpPage = lazy(() => import("./AuthPages/NewSignUpPage"));
 const NewLogin = lazy(() => import("./AuthPages/NewLogin"));
 
@@ -117,6 +118,7 @@ function App() {
             <ContactUs onClose={() => setShowContactUs(false)} />
           )}
         </Suspense>
+        <ToastContainer />
       </div>
     </AuthProvider>
   );
