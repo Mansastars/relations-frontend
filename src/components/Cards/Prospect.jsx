@@ -165,10 +165,10 @@ export default function Prospect({ borderColour, titleColors }) {
                     <div className="flex flex-col w-full">
                       <p className="font-extrabold text-sm text-white truncate">
                         {`${prospect.first_name} ${prospect.last_name}`.length >
-                        12
+                        11
                           ? `${prospect.first_name} ${prospect.last_name}`.substring(
                               0,
-                              9
+                              8
                             ) + "..."
                           : `${prospect.first_name} ${prospect.last_name}`}
                       </p>
@@ -216,7 +216,7 @@ export default function Prospect({ borderColour, titleColors }) {
                     </p>
                     <p className="text-xs">
                       {prospect.email
-                        ? truncateEmail(prospect.email, 28)
+                        ? truncateEmail(prospect.email, 30)
                         : "No email"}
                     </p>
                     <p className="text-xs">
@@ -227,8 +227,8 @@ export default function Prospect({ borderColour, titleColors }) {
                   </div>
                   <div className="flex flex-col justify-center items-start">
                     <p className="text-xs text-wrap truncate">
-                      {prospect.notes.length > 32
-                        ? prospect.notes.substring(0, 29) + "..."
+                      {prospect.notes.length > 33
+                        ? prospect.notes.substring(0, 30) + "..."
                         : prospect.notes}
                     </p>
                   </div>

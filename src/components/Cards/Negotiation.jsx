@@ -141,10 +141,10 @@ export default function Negotiation({ borderColour }) {
                 <div className="flex flex-col w-full">
                   <p className="font-extrabold text-sm text-white truncate">
                     {`${negotiation.first_name} ${negotiation.last_name}`
-                      .length > 12
+                      .length > 11
                       ? `${negotiation.first_name} ${negotiation.last_name}`.substring(
                           0,
-                          9
+                          8
                         ) + "..."
                       : `${negotiation.first_name} ${negotiation.last_name}`}
                   </p>
@@ -191,7 +191,7 @@ export default function Negotiation({ borderColour }) {
                 </p>
                 <p className="text-xs">
                   {negotiation.email
-                    ? truncateEmail(negotiation.email, 27)
+                    ? truncateEmail(negotiation.email, 30)
                     : "No email"}
                 </p>
                 <p className="text-xs">
@@ -202,8 +202,8 @@ export default function Negotiation({ borderColour }) {
               </div>
               <div className="flex flex-col justify-center items-start">
                 <p className="text-xs text-wrap truncate">
-                  {negotiation.notes.length > 30
-                    ? negotiation.notes.substring(0, 27) + "..."
+                  {negotiation.notes.length > 33
+                    ? negotiation.notes.substring(0, 30) + "..."
                     : negotiation.notes}
                 </p>
               </div>

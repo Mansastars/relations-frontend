@@ -165,10 +165,10 @@ export default function FollowUp({ borderColour, titleColors }) {
                     <div className="flex flex-col w-full">
                       <p className="font-extrabold text-sm text-white truncate">
                         {`${followUp.first_name} ${followUp.last_name}`.length >
-                        12
+                        11
                           ? `${followUp.first_name} ${followUp.last_name}`.substring(
                               0,
-                              9
+                              8
                             ) + "..."
                           : `${followUp.first_name} ${followUp.last_name}`}
                       </p>
@@ -216,7 +216,7 @@ export default function FollowUp({ borderColour, titleColors }) {
                     </p>
                     <p className="text-xs">
                       {followUp.email
-                        ? truncateEmail(followUp.email, 28)
+                        ? truncateEmail(followUp.email, 30)
                         : "No email"}
                     </p>
                     <p className="text-xs">
@@ -227,8 +227,8 @@ export default function FollowUp({ borderColour, titleColors }) {
                   </div>
                   <div className="flex flex-col justify-center items-start">
                     <p className="text-xs text-wrap truncate">
-                      {followUp.notes.length > 32
-                        ? followUp.notes.substring(0, 29) + "..."
+                      {followUp.notes.length > 33
+                        ? followUp.notes.substring(0, 30) + "..."
                         : followUp.notes}
                     </p>
                   </div>

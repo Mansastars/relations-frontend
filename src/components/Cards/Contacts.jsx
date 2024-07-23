@@ -139,10 +139,10 @@ export default function Contact({ borderColour }) {
               <div className="flex flex-row w-full items-center">
                 <div className="flex flex-col w-full">
                   <p className="font-extrabold text-sm text-white truncate">
-                    {`${contact.first_name} ${contact.last_name}`.length > 12
+                    {`${contact.first_name} ${contact.last_name}`.length > 11
                       ? `${contact.first_name} ${contact.last_name}`.substring(
                           0,
-                          9
+                          8
                         ) + "..."
                       : `${contact.first_name} ${contact.last_name}`}
                   </p>
@@ -183,7 +183,7 @@ export default function Contact({ borderColour }) {
                 </p>
                 <p className="text-xs">
                   {contact.email
-                    ? truncateEmail(contact.email, 28)
+                    ? truncateEmail(contact.email, 30)
                     : "No email"}
                 </p>
                 <p className="text-xs">
@@ -194,8 +194,8 @@ export default function Contact({ borderColour }) {
               </div>
               <div className="flex flex-col justify-center items-start">
                 <p className="text-xs text-wrap truncate">
-                  {contact.notes.length > 30
-                    ? contact.notes.substring(0, 27) + "..."
+                  {contact.notes.length > 33
+                    ? contact.notes.substring(0, 30) + "..."
                     : contact.notes}
                 </p>
               </div>

@@ -29,7 +29,9 @@ const ContactImage = () => {
         uploadPreset: import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET,
         multiple: false,
         maxFiles: 1,
-        clientAllowedFormats: ["jpg", "jpeg", "png"], // Only allow image formats
+        clientAllowedFormats: ["jpg", "jpeg", "png"],
+        cropping: true, // Enable cropping
+        croppingAspectRatio: 1, // Optional: set aspect ratio for cropping
       },
       (error, result) => {
         if (error) {

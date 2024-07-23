@@ -164,10 +164,10 @@ export default function Partner({ borderColour, titleColors }) {
                     <div className="flex flex-col w-full">
                       <p className="font-extrabold text-sm text-white truncate">
                         {`${partner.first_name} ${partner.last_name}`.length >
-                        12
+                        11
                           ? `${partner.first_name} ${partner.last_name}`.substring(
                               0,
-                              9
+                              8
                             ) + "..."
                           : `${partner.first_name} ${partner.last_name}`}
                       </p>
@@ -214,7 +214,7 @@ export default function Partner({ borderColour, titleColors }) {
                     </p>
                     <p className="text-xs">
                       {partner.email
-                        ? truncateEmail(partner.email, 28)
+                        ? truncateEmail(partner.email, 30)
                         : "No email"}
                     </p>
                     <p className="text-xs">
@@ -225,8 +225,8 @@ export default function Partner({ borderColour, titleColors }) {
                   </div>
                   <div className="flex flex-col justify-center items-start">
                     <p className="text-xs text-wrap truncate">
-                      {partner.notes.length > 32
-                        ? partner.notes.substring(0, 29) + "..."
+                      {partner.notes.length > 33
+                        ? partner.notes.substring(0, 30) + "..."
                         : partner.notes}
                     </p>
                   </div>

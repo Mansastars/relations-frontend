@@ -138,10 +138,10 @@ export default function Pitch({ borderColour }) {
               <div className="flex flex-row w-full items-center">
                 <div className="flex flex-col w-full">
                   <p className="font-extrabold text-sm text-white truncate">
-                    {`${pitch.first_name} ${pitch.last_name}`.length > 12
+                    {`${pitch.first_name} ${pitch.last_name}`.length > 11
                       ? `${pitch.first_name} ${pitch.last_name}`.substring(
                           0,
-                          9
+                          8
                         ) + "..."
                       : `${pitch.first_name} ${pitch.last_name}`}
                   </p>
@@ -185,7 +185,7 @@ export default function Pitch({ borderColour }) {
                     : "Nil"}
                 </p>
                 <p className="text-xs">
-                  {pitch.email ? truncateEmail(pitch.email, 28) : "No email"}
+                  {pitch.email ? truncateEmail(pitch.email, 30) : "No email"}
                 </p>
                 <p className="text-xs">
                   {pitch.phone_number
@@ -195,8 +195,8 @@ export default function Pitch({ borderColour }) {
               </div>
               <div className="flex flex-col justify-center items-start">
                 <p className="text-xs text-wrap truncate">
-                  {pitch.notes.length > 30
-                    ? pitch.notes.substring(0, 27) + "..."
+                  {pitch.notes.length > 33
+                    ? pitch.notes.substring(0, 30) + "..."
                     : pitch.notes}
                 </p>
               </div>

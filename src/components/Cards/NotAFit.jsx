@@ -139,10 +139,10 @@ export default function NotAFit({ borderColour }) {
               <div className="flex flex-row w-full items-center">
                 <div className="flex flex-col w-full">
                   <p className="font-extrabold text-sm text-white truncate">
-                    {`${notAFit.first_name} ${notAFit.last_name}`.length > 12
+                    {`${notAFit.first_name} ${notAFit.last_name}`.length > 11
                       ? `${notAFit.first_name} ${notAFit.last_name}`.substring(
                           0,
-                          9
+                          8
                         ) + "..."
                       : `${notAFit.first_name} ${notAFit.last_name}`}
                   </p>
@@ -187,7 +187,7 @@ export default function NotAFit({ borderColour }) {
                 </p>
                 <p className="text-xs">
                   {notAFit.email
-                    ? truncateEmail(notAFit.email, 27)
+                    ? truncateEmail(notAFit.email, 30)
                     : "No email"}
                 </p>
                 <p className="text-xs">
@@ -198,8 +198,8 @@ export default function NotAFit({ borderColour }) {
               </div>
               <div className="flex flex-col justify-center items-start">
                 <p className="text-xs text-wrap truncate">
-                  {notAFit.notes.length > 30
-                    ? notAFit.notes.substring(0, 27) + "..."
+                  {notAFit.notes.length > 33
+                    ? notAFit.notes.substring(0, 30) + "..."
                     : notAFit.notes}
                 </p>
               </div>

@@ -138,8 +138,8 @@ export default function Deals({ borderColour }) {
               <div className="flex flex-row w-full items-center">
                 <div className="flex flex-col w-full">
                   <p className="font-extrabold text-sm text-white truncate">
-                    {`${deal.first_name} ${deal.last_name}`.length > 12
-                      ? `${deal.first_name} ${deal.last_name}`.substring(0, 9) +
+                    {`${deal.first_name} ${deal.last_name}`.length > 11
+                      ? `${deal.first_name} ${deal.last_name}`.substring(0, 8) +
                         "..."
                       : `${deal.first_name} ${deal.last_name}`}
                   </p>
@@ -181,7 +181,7 @@ export default function Deals({ borderColour }) {
                     : "Nil"}
                 </p>
                 <p className="text-xs">
-                  {deal.email ? truncateEmail(deal.email, 27) : "No email"}
+                  {deal.email ? truncateEmail(deal.email, 30) : "No email"}
                 </p>
                 <p className="text-xs">
                   {deal.phone_number
@@ -191,8 +191,8 @@ export default function Deals({ borderColour }) {
               </div>
               <div className="flex flex-col justify-center items-start">
                 <p className="text-xs text-wrap">
-                  {deal.notes.length > 30
-                    ? deal.notes.substring(0, 27) + "..."
+                  {deal.notes.length > 33
+                    ? deal.notes.substring(0, 30) + "..."
                     : deal.notes}
                 </p>
               </div>

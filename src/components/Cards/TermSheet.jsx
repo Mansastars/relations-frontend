@@ -163,10 +163,10 @@ export default function TermSheet({ borderColour, titleColors }) {
                     <div className="flex flex-col w-full">
                       <p className="font-extrabold text-sm text-white">
                         {`${termSheet.first_name} ${termSheet.last_name}`
-                          .length > 12
+                          .length > 11
                           ? `${termSheet.first_name} ${termSheet.last_name}`.substring(
                               0,
-                              9
+                              8
                             ) + "..."
                           : `${termSheet.first_name} ${termSheet.last_name}`}
                       </p>
@@ -214,7 +214,7 @@ export default function TermSheet({ borderColour, titleColors }) {
                     </p>
                     <p className="text-xs">
                       {termSheet.email
-                        ? truncateEmail(termSheet.email, 28)
+                        ? truncateEmail(termSheet.email, 30)
                         : "No email"}
                     </p>
                     <p className="text-xs">
@@ -225,8 +225,8 @@ export default function TermSheet({ borderColour, titleColors }) {
                   </div>
                   <div className="flex flex-col justify-center items-start">
                     <p className="text-xs text-wrap truncate">
-                      {termSheet.notes.length > 32
-                        ? termSheet.notes.substring(0, 29) + "..."
+                      {termSheet.notes.length > 33
+                        ? termSheet.notes.substring(0, 30) + "..."
                         : termSheet.notes}
                     </p>
                   </div>

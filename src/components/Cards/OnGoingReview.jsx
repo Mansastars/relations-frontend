@@ -164,10 +164,10 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                     <div className="flex flex-col w-full">
                       <p className="font-extrabold text-sm text-white truncate">
                         {`${OnGoingReview.first_name} ${OnGoingReview.last_name}`
-                          .length > 12
+                          .length > 11
                           ? `${OnGoingReview.first_name} ${OnGoingReview.last_name}`.substring(
                               0,
-                              9
+                              8
                             ) + "..."
                           : `${OnGoingReview.first_name} ${OnGoingReview.last_name}`}
                       </p>
@@ -215,7 +215,7 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                     </p>
                     <p className="text-xs">
                       {OnGoingReview.email
-                        ? truncateEmail(OnGoingReview.email, 28)
+                        ? truncateEmail(OnGoingReview.email, 30)
                         : "No email"}
                     </p>
                     <p className="text-xs">
@@ -226,8 +226,8 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                   </div>
                   <div className="flex flex-col justify-center items-start">
                     <p className="text-xs text-wrap truncate">
-                      {OnGoingReview.notes.length > 32
-                        ? OnGoingReview.notes.substring(0, 29) + "..."
+                      {OnGoingReview.notes.length > 33
+                        ? OnGoingReview.notes.substring(0, 30) + "..."
                         : OnGoingReview.notes}
                     </p>
                   </div>

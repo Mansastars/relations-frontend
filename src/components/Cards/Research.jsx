@@ -140,10 +140,10 @@ export default function Research({ borderColour }) {
               <div className="flex flex-row w-full items-center">
                 <div className="flex flex-col w-full">
                   <p className="font-extrabold text-sm text-white truncate">
-                    {`${research.first_name} ${research.last_name}`.length > 12
+                    {`${research.first_name} ${research.last_name}`.length > 11
                       ? `${research.first_name} ${research.last_name}`.substring(
                           0,
-                          9
+                          8
                         ) + "..."
                       : `${research.first_name} ${research.last_name}`}
                   </p>
@@ -188,7 +188,7 @@ export default function Research({ borderColour }) {
                 </p>
                 <p className="text-xs">
                   {research.email
-                    ? truncateEmail(research.email, 28)
+                    ? truncateEmail(research.email, 31)
                     : "No email"}
                 </p>
                 <p className="text-xs">
@@ -199,8 +199,8 @@ export default function Research({ borderColour }) {
               </div>
               <div className="flex flex-col justify-center items-start">
                 <p className="text-xs text-wrap truncate">
-                  {research.notes.length > 30
-                    ? research.notes.substring(0, 27) + "..."
+                  {research.notes.length > 33
+                    ? research.notes.substring(0, 30) + "..."
                     : research.notes}
                 </p>
               </div>

@@ -33,6 +33,8 @@ const ProfileImage = () => {
         multiple: false,
         maxFiles: 1,
         clientAllowedFormats: ["jpg", "jpeg", "png"], // Only allow image formats
+        cropping: true, // Enable cropping
+        croppingAspectRatio: 1, // Optional: set aspect ratio for cropping
       },
       (error, result) => {
         if (error) {
