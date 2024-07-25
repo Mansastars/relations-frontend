@@ -19,6 +19,9 @@ export default function Deals({ borderColour }) {
 
   const BorderStyle = {
     border: `2px solid  ${borderColour}`,
+    width: "210px",
+    minWidth: "210px",
+    overflow: "hidden",
   };
 
   const [showEditModal, setShowEditModal] = useState(false);
@@ -111,7 +114,7 @@ export default function Deals({ borderColour }) {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error occurred fetching contacts in deal stage.</div>;
   }
 
   return (
@@ -123,7 +126,7 @@ export default function Deals({ borderColour }) {
           <div
             key={deal.id}
             className="flex flex-col rounded-2xl mb-2 h-40"
-            style={{ ...BorderStyle, minWidth: "210px" }}
+            style={{ ...BorderStyle }}
           >
             <div
               className="flex flex-row p-2 rounded-t-2xl border-b-dark-blue items-center gap-2"
@@ -135,66 +138,43 @@ export default function Deals({ borderColour }) {
                 lastName={deal.last_name}
                 color={borderColour}
               />
-              <div className="flex flex-row w-full items-center">
-                <div className="flex flex-col w-full">
-                  <p className="font-extrabold text-sm text-white truncate">
-                    {`${deal.first_name} ${deal.last_name}`.length > 11
-                      ? `${deal.first_name} ${deal.last_name}`.substring(0, 8) +
-                        "..."
-                      : `${deal.first_name} ${deal.last_name}`}
-                  </p>
-                  <p className="text-sm text-white truncate">
-                    {deal.organization_name
-                      ? deal.organization_name.length > 15
-                        ? deal.organization_name.substring(0, 12) + "..."
-                        : deal.organization_name
-                      : "No company"}
-                  </p>
-                </div>
-                <div className=" self-end">
-                  <ContactMenu
-                    anchorEl={anchorEl}
-                    handleMenuClick={(event) => handleMenuClick(event, deal.id)}
-                    handleMenuClose={handleMenuClose}
-                    handleViewOrUpdate={handleViewOrUpdate}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-                </div>
+              <div className="flex-grow overflow-hidden">
+                <p className="font-extrabold text-sm text-white truncate">
+                  {`${deal.first_name} ${deal.last_name}`}
+                </p>
+                <p className="text-sm text-white truncate">
+                  {deal.organization_name || "No company"}
+                </p>
+              </div>
+              <div className="flex-shrink-0">
+                <ContactMenu
+                  anchorEl={anchorEl}
+                  handleMenuClick={(event) => handleMenuClick(event, deal.id)}
+                  handleMenuClose={handleMenuClose}
+                  handleViewOrUpdate={handleViewOrUpdate}
+                  handleDeleteClick={handleDeleteClick}
+                />
               </div>
             </div>
             <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
-              <div>
-                <p className="text-xs font-semibold">
-                  Deal Size:{" "}
-                  {deal.deal_size
-                    ? deal.deal_size.length > 15
-                      ? "$" +
-                        addCommasToNumber(deal.deal_size.substring(0, 15)) +
-                        "..."
-                      : "$" + addCommasToNumber(deal.deal_size)
-                    : "$0"}
+              <div className="overflow-hidden w-full">
+                <p className="text-xs font-semibold truncate">
+                  Deal Size: $
+                  {deal.deal_size ? addCommasToNumber(deal.deal_size) : "0"}
                 </p>
-                <p className="text-xs font-semibold">
+                <p className="text-xs font-semibold truncate">
                   Meeting:{" "}
                   {deal.meeting_date
                     ? new Date(deal.meeting_date).toLocaleString()
                     : "Nil"}
                 </p>
-                <p className="text-xs">
-                  {deal.email ? truncateEmail(deal.email, 30) : "No email"}
-                </p>
-                <p className="text-xs">
-                  {deal.phone_number
-                    ? truncatePhoneNumber(deal.phone_number, 15)
-                    : "No phone number"}
+                <p className="text-xs truncate">{deal.email || "No email"}</p>
+                <p className="text-xs truncate">
+                  {deal.phone_number || "No phone number"}
                 </p>
               </div>
-              <div className="flex flex-col justify-center items-start">
-                <p className="text-xs text-wrap">
-                  {deal.notes.length > 33
-                    ? deal.notes.substring(0, 30) + "..."
-                    : deal.notes}
-                </p>
+              <div className="w-full overflow-hidden">
+                <p className="text-xs truncate">{deal.notes}</p>
               </div>
             </div>
           </div>

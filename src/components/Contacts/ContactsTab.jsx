@@ -1,5 +1,5 @@
 import React from "react";
-import ContactList from "./ContactList";
+import ContactList from "./ContactList/ContactList";
 import { Tabs } from "flowbite-react";
 import { HiClipboardList } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";

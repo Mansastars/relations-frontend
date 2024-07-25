@@ -32,7 +32,7 @@ export function Column({ titles, titleColors, contents }) {
         </div>
       </div>
       <div
-        className=" w-full overflow-x-hidden"
+        // className=" w-full overflow-x-hidden"
         style={{ overflowY: "auto", maxHeight: "calc(100vh - 100px)" }}
       >
         {contents}
