@@ -10,7 +10,6 @@ import truncatePhoneNumber from "./Utilities/truncatePhoneNumber";
 import ContactImage from "./ContactImage/ContactImage";
 import ContactMenu from "./ContactMenu/ContactMenu";
 
-//Contact
 export default function Negotiation({ borderColour }) {
   const queryClient = useQueryClient();
   const currentDealId =
@@ -19,6 +18,9 @@ export default function Negotiation({ borderColour }) {
 
   const BorderStyle = {
     border: `2px solid  ${borderColour}`,
+    width: "210px",
+    minWidth: "210px",
+    overflow: "hidden",
   };
 
   const [showEditModal, setShowEditModal] = useState(false);
@@ -113,7 +115,7 @@ export default function Negotiation({ borderColour }) {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error occurred fetching contacts in negotiation stage.</div>;
   }
 
   return (
@@ -125,7 +127,7 @@ export default function Negotiation({ borderColour }) {
           <div
             key={negotiation.id}
             className="flex flex-col rounded-2xl mb-2 h-40"
-            style={{ ...BorderStyle, minWidth: "210px" }}
+            style={{ ...BorderStyle }}
           >
             <div
               className="flex flex-row p-2 rounded-t-2xl border-b-dark-blue items-center gap-2"
@@ -137,75 +139,49 @@ export default function Negotiation({ borderColour }) {
                 lastName={negotiation.last_name}
                 color={borderColour}
               />
-              <div className="flex flex-row w-full items-center">
-                <div className="flex flex-col w-full">
-                  <p className="font-extrabold text-sm text-white truncate">
-                    {`${negotiation.first_name} ${negotiation.last_name}`
-                      .length > 11
-                      ? `${negotiation.first_name} ${negotiation.last_name}`.substring(
-                          0,
-                          8
-                        ) + "..."
-                      : `${negotiation.first_name} ${negotiation.last_name}`}
-                  </p>
-                  <p className="text-sm text-white truncate">
-                    {negotiation.organization_name
-                      ? negotiation.organization_name.length > 15
-                        ? negotiation.organization_name.substring(0, 12) + "..."
-                        : negotiation.organization_name
-                      : "No company"}
-                  </p>
-                </div>
-                <div className=" self-end">
-                  <ContactMenu
-                    anchorEl={anchorEl}
-                    handleMenuClick={(event) =>
-                      handleMenuClick(event, negotiation.id)
-                    }
-                    handleMenuClose={handleMenuClose}
-                    handleViewOrUpdate={handleViewOrUpdate}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-                </div>
+              <div className="flex-grow overflow-hidden">
+                <p className="font-extrabold text-sm text-white truncate">
+                  {`${negotiation.first_name} ${negotiation.last_name}`}
+                </p>
+                <p className="text-sm text-white truncate">
+                  {negotiation.organization_name || "No company"}
+                </p>
+              </div>
+              <div className="flex-shrink-0">
+                <ContactMenu
+                  anchorEl={anchorEl}
+                  handleMenuClick={(event) =>
+                    handleMenuClick(event, negotiation.id)
+                  }
+                  handleMenuClose={handleMenuClose}
+                  handleViewOrUpdate={handleViewOrUpdate}
+                  handleDeleteClick={handleDeleteClick}
+                />
               </div>
             </div>
             <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
-              <div>
-                <p className="text-xs font-semibold">
-                  Deal Size:{" "}
+              <div className="overflow-hidden w-full">
+                <p className="text-xs font-semibold truncate">
+                  Deal Size: $
                   {negotiation.deal_size
-                    ? negotiation.deal_size.length > 15
-                      ? "$" +
-                        addCommasToNumber(
-                          negotiation.deal_size.substring(0, 15)
-                        ) +
-                        "..."
-                      : "$" + addCommasToNumber(negotiation.deal_size)
-                    : "$0"}
+                    ? addCommasToNumber(negotiation.deal_size)
+                    : "0"}
                 </p>
-                <p className="text-xs font-semibold">
+                <p className="text-xs font-semibold truncate">
                   Meeting:{" "}
                   {negotiation.meeting_date
                     ? new Date(negotiation.meeting_date).toLocaleString()
                     : "Nil"}
                 </p>
-                <p className="text-xs">
-                  {negotiation.email
-                    ? truncateEmail(negotiation.email, 30)
-                    : "No email"}
+                <p className="text-xs truncate">
+                  {negotiation.email || "No email"}
                 </p>
-                <p className="text-xs">
-                  {negotiation.phone_number
-                    ? truncatePhoneNumber(negotiation.phone_number, 15)
-                    : "No phone number"}
+                <p className="text-xs truncate">
+                  {negotiation.phone_number || "No phone number"}
                 </p>
               </div>
-              <div className="flex flex-col justify-center items-start">
-                <p className="text-xs text-wrap truncate">
-                  {negotiation.notes.length > 33
-                    ? negotiation.notes.substring(0, 30) + "..."
-                    : negotiation.notes}
-                </p>
+              <div className="w-full overflow-hidden">
+                <p className="text-xs truncate">{negotiation.notes}</p>
               </div>
             </div>
           </div>

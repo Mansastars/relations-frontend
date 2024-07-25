@@ -20,14 +20,12 @@ export default function OnGoingReview({ borderColour, titleColors }) {
 
   const BorderStyle = {
     border: `2px solid  ${borderColour}`,
+    width: "210px",
+    minWidth: "210px",
+    overflow: "hidden",
   };
 
-  const ColumnClasses = classNames(
-    "shadow-lg",
-    "rounded-2xl",
-    "w-full"
-    // 'relative',
-  );
+  const ColumnClasses = classNames("shadow-lg", "rounded-2xl", "w-full");
 
   const TitleStyle = {
     color: titleColors,
@@ -128,7 +126,7 @@ export default function OnGoingReview({ borderColour, titleColors }) {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error occurred fetching contacts in review stage.</div>;
   }
 
   return (
@@ -148,7 +146,7 @@ export default function OnGoingReview({ borderColour, titleColors }) {
               <div
                 key={OnGoingReview.id}
                 className="flex flex-col rounded-2xl mb-2 h-40"
-                style={{ ...BorderStyle, minWidth: "210px" }}
+                style={{ ...BorderStyle }}
               >
                 <div
                   className="flex flex-row p-2 rounded-t-2xl border-b-dark-blue items-center gap-2"
@@ -160,76 +158,49 @@ export default function OnGoingReview({ borderColour, titleColors }) {
                     lastName={OnGoingReview.last_name}
                     color={borderColour}
                   />
-                  <div className="flex flex-row w-full items-center">
-                    <div className="flex flex-col w-full">
-                      <p className="font-extrabold text-sm text-white truncate">
-                        {`${OnGoingReview.first_name} ${OnGoingReview.last_name}`
-                          .length > 11
-                          ? `${OnGoingReview.first_name} ${OnGoingReview.last_name}`.substring(
-                              0,
-                              8
-                            ) + "..."
-                          : `${OnGoingReview.first_name} ${OnGoingReview.last_name}`}
-                      </p>
-                      <p className="text-sm text-white">
-                        {OnGoingReview.organization_name
-                          ? OnGoingReview.organization_name.length > 15
-                            ? OnGoingReview.organization_name.substring(0, 12) +
-                              "..."
-                            : OnGoingReview.organization_name
-                          : "No company"}
-                      </p>
-                    </div>
-                    <div className=" self-end">
-                      <ContactMenu
-                        anchorEl={anchorEl}
-                        handleMenuClick={(event) =>
-                          handleMenuClick(event, OnGoingReview.id)
-                        }
-                        handleMenuClose={handleMenuClose}
-                        handleViewOrUpdate={handleViewOrUpdate}
-                        handleDeleteClick={handleDeleteClick}
-                      />
-                    </div>
+                  <div className="flex-grow overflow-hidden">
+                    <p className="font-extrabold text-sm text-white truncate">
+                      {`${OnGoingReview.first_name} ${OnGoingReview.last_name}`}
+                    </p>
+                    <p className="text-sm text-white truncate">
+                      {OnGoingReview.organization_name || "No company"}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <ContactMenu
+                      anchorEl={anchorEl}
+                      handleMenuClick={(event) =>
+                        handleMenuClick(event, OnGoingReview.id)
+                      }
+                      handleMenuClose={handleMenuClose}
+                      handleViewOrUpdate={handleViewOrUpdate}
+                      handleDeleteClick={handleDeleteClick}
+                    />
                   </div>
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
-                  <div>
-                    <p className="text-xs font-semibold">
-                      Deal Size:{" "}
+                  <div className="overflow-hidden w-full">
+                    <p className="text-xs font-semibold truncate">
+                      Deal Size: $
                       {OnGoingReview.deal_size
-                        ? OnGoingReview.deal_size.length > 15
-                          ? "$" +
-                            addCommasToNumber(
-                              OnGoingReview.deal_size.substring(0, 12)
-                            ) +
-                            "..."
-                          : "$" + addCommasToNumber(OnGoingReview.deal_size)
-                        : "$0"}
+                        ? addCommasToNumber(OnGoingReview.deal_size)
+                        : "0"}
                     </p>
-                    <p className="text-xs font-semibold">
+                    <p className="text-xs font-semibold truncate">
                       Meeting:{" "}
                       {OnGoingReview.meeting_date
                         ? new Date(OnGoingReview.meeting_date).toLocaleString()
                         : "Nil"}
                     </p>
-                    <p className="text-xs">
-                      {OnGoingReview.email
-                        ? truncateEmail(OnGoingReview.email, 30)
-                        : "No email"}
+                    <p className="text-xs truncate">
+                      {OnGoingReview.email || "No email"}
                     </p>
                     <p className="text-xs">
-                      {OnGoingReview.phone_number
-                        ? truncatePhoneNumber(OnGoingReview.phone_number, 15)
-                        : "No phone number"}
+                      {OnGoingReview.phone_number || "No phone number"}
                     </p>
                   </div>
-                  <div className="flex flex-col justify-center items-start">
-                    <p className="text-xs text-wrap truncate">
-                      {OnGoingReview.notes.length > 33
-                        ? OnGoingReview.notes.substring(0, 30) + "..."
-                        : OnGoingReview.notes}
-                    </p>
+                  <div className="w-full overflow-hidden">
+                    <p className="text-xs truncate">{OnGoingReview.notes}</p>
                   </div>
                 </div>
               </div>

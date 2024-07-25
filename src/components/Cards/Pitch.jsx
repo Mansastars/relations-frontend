@@ -19,6 +19,9 @@ export default function Pitch({ borderColour }) {
 
   const BorderStyle = {
     border: `2px solid  ${borderColour}`,
+    width: "210px",
+    minWidth: "210px",
+    overflow: "hidden",
   };
 
   const [showEditModal, setShowEditModal] = useState(false);
@@ -111,7 +114,7 @@ export default function Pitch({ borderColour }) {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error occurred fetching contacts in pitch stage.</div>;
   }
 
   return (
@@ -123,7 +126,7 @@ export default function Pitch({ borderColour }) {
           <div
             key={pitch.id}
             className="flex flex-col rounded-2xl mb-2 h-40"
-            style={{ ...BorderStyle, minWidth: "210px" }}
+            style={{ ...BorderStyle }}
           >
             <div
               className="flex flex-row p-2 rounded-t-2xl border-b-dark-blue items-center gap-2"
@@ -135,70 +138,43 @@ export default function Pitch({ borderColour }) {
                 lastName={pitch.last_name}
                 color={borderColour}
               />
-              <div className="flex flex-row w-full items-center">
-                <div className="flex flex-col w-full">
-                  <p className="font-extrabold text-sm text-white truncate">
-                    {`${pitch.first_name} ${pitch.last_name}`.length > 11
-                      ? `${pitch.first_name} ${pitch.last_name}`.substring(
-                          0,
-                          8
-                        ) + "..."
-                      : `${pitch.first_name} ${pitch.last_name}`}
-                  </p>
-                  <p className="text-sm text-white truncate">
-                    {pitch.organization_name
-                      ? pitch.organization_name.length > 15
-                        ? pitch.organization_name.substring(0, 12) + "..."
-                        : pitch.organization_name
-                      : "No company"}
-                  </p>
-                </div>
-                <div className=" self-end">
-                  <ContactMenu
-                    anchorEl={anchorEl}
-                    handleMenuClick={(event) =>
-                      handleMenuClick(event, pitch.id)
-                    }
-                    handleMenuClose={handleMenuClose}
-                    handleViewOrUpdate={handleViewOrUpdate}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-                </div>
+              <div className="flex-grow overflow-hidden">
+                <p className="font-extrabold text-sm text-white truncate">
+                  {`${pitch.first_name} ${pitch.last_name}`}
+                </p>
+                <p className="text-sm text-white truncate">
+                  {pitch.organization_name || "No company"}
+                </p>
+              </div>
+              <div className="flex-shrink-0">
+                <ContactMenu
+                  anchorEl={anchorEl}
+                  handleMenuClick={(event) => handleMenuClick(event, pitch.id)}
+                  handleMenuClose={handleMenuClose}
+                  handleViewOrUpdate={handleViewOrUpdate}
+                  handleDeleteClick={handleDeleteClick}
+                />
               </div>
             </div>
             <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
-              <div>
-                <p className="text-xs font-semibold">
-                  Deal Size:{" "}
-                  {pitch.deal_size
-                    ? pitch.deal_size.length > 15
-                      ? "$" +
-                        addCommasToNumber(pitch.deal_size.substring(0, 12)) +
-                        "..."
-                      : "$" + addCommasToNumber(pitch.deal_size)
-                    : "$0"}
+              <div className="overflow-hidden w-full">
+                <p className="text-xs font-semibold truncate">
+                  Deal Size: $
+                  {pitch.deal_size ? addCommasToNumber(pitch.deal_size) : "0"}
                 </p>
-                <p className="text-xs font-semibold">
+                <p className="text-xs font-semibold truncate">
                   Meeting:{" "}
                   {pitch.meeting_date
                     ? new Date(pitch.meeting_date).toLocaleString()
                     : "Nil"}
                 </p>
-                <p className="text-xs">
-                  {pitch.email ? truncateEmail(pitch.email, 30) : "No email"}
-                </p>
-                <p className="text-xs">
-                  {pitch.phone_number
-                    ? truncatePhoneNumber(pitch.phone_number, 15)
-                    : "No phone number"}
+                <p className="text-xs truncate">{pitch.email || "No email"}</p>
+                <p className="text-xs truncate">
+                  {pitch.phone_number || "No phone number"}
                 </p>
               </div>
-              <div className="flex flex-col justify-center items-start">
-                <p className="text-xs text-wrap truncate">
-                  {pitch.notes.length > 33
-                    ? pitch.notes.substring(0, 30) + "..."
-                    : pitch.notes}
-                </p>
+              <div className="w-full overflow-hidden">
+                <p className="text-xs truncate">{pitch.notes}</p>
               </div>
             </div>
           </div>

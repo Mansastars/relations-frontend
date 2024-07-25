@@ -20,14 +20,12 @@ export default function Partner({ borderColour, titleColors }) {
 
   const BorderStyle = {
     border: `2px solid  ${borderColour}`,
+    width: "210px",
+    minWidth: "210px",
+    overflow: "hidden",
   };
 
-  const ColumnClasses = classNames(
-    "shadow-lg",
-    "rounded-2xl",
-    "w-full"
-    // 'relative',
-  );
+  const ColumnClasses = classNames("shadow-lg", "rounded-2xl", "w-full");
 
   const TitleStyle = {
     color: titleColors,
@@ -128,7 +126,7 @@ export default function Partner({ borderColour, titleColors }) {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error occurred fetching contacts in partners stage.</div>;
   }
 
   return (
@@ -148,7 +146,7 @@ export default function Partner({ borderColour, titleColors }) {
               <div
                 key={partner.id}
                 className="flex flex-col rounded-2xl mb-2 h-40"
-                style={{ ...BorderStyle, minWidth: "210px" }}
+                style={{ ...BorderStyle }}
               >
                 <div
                   className="flex flex-row p-2 rounded-t-2xl border-b-dark-blue items-center gap-2"
@@ -160,75 +158,49 @@ export default function Partner({ borderColour, titleColors }) {
                     lastName={partner.last_name}
                     color={borderColour}
                   />
-                  <div className="flex flex-row w-full items-center">
-                    <div className="flex flex-col w-full">
-                      <p className="font-extrabold text-sm text-white truncate">
-                        {`${partner.first_name} ${partner.last_name}`.length >
-                        11
-                          ? `${partner.first_name} ${partner.last_name}`.substring(
-                              0,
-                              8
-                            ) + "..."
-                          : `${partner.first_name} ${partner.last_name}`}
-                      </p>
-                      <p className="text-sm text-white">
-                        {partner.organization_name
-                          ? partner.organization_name.length > 15
-                            ? partner.organization_name.substring(0, 12) + "..."
-                            : partner.organization_name
-                          : "No company"}
-                      </p>
-                    </div>
-                    <div className=" self-end">
-                      <ContactMenu
-                        anchorEl={anchorEl}
-                        handleMenuClick={(event) =>
-                          handleMenuClick(event, partner.id)
-                        }
-                        handleMenuClose={handleMenuClose}
-                        handleViewOrUpdate={handleViewOrUpdate}
-                        handleDeleteClick={handleDeleteClick}
-                      />
-                    </div>
+                  <div className="flex-grow overflow-hidden">
+                    <p className="font-extrabold text-sm text-white truncate">
+                      {`${partner.first_name} ${partner.last_name}`}
+                    </p>
+                    <p className="text-sm text-white truncate">
+                      {partner.organization_name || "No company"}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <ContactMenu
+                      anchorEl={anchorEl}
+                      handleMenuClick={(event) =>
+                        handleMenuClick(event, partner.id)
+                      }
+                      handleMenuClose={handleMenuClose}
+                      handleViewOrUpdate={handleViewOrUpdate}
+                      handleDeleteClick={handleDeleteClick}
+                    />
                   </div>
                 </div>
                 <div className="flex flex-col gap-1 p-2 items-start bg-light-grey rounded-2xl">
-                  <div>
-                    <p className="text-xs font-semibold">
-                      Deal Size:{" "}
+                  <div className="overflow-hidden w-full">
+                    <p className="text-xs font-semibold truncate">
+                      Deal Size: $
                       {partner.deal_size
-                        ? partner.deal_size.length > 15
-                          ? "$" +
-                            addCommasToNumber(
-                              partner.deal_size.substring(0, 12)
-                            ) +
-                            "..."
-                          : "$" + addCommasToNumber(partner.deal_size)
-                        : "$0"}
+                        ? addCommasToNumber(partner.deal_size)
+                        : "0"}
                     </p>
-                    <p className="text-xs font-semibold">
+                    <p className="text-xs font-semibold truncate">
                       Meeting:{" "}
                       {partner.meeting_date
                         ? new Date(partner.meeting_date).toLocaleString()
                         : "Nil"}
                     </p>
-                    <p className="text-xs">
-                      {partner.email
-                        ? truncateEmail(partner.email, 30)
-                        : "No email"}
+                    <p className="text-xs truncate">
+                      {partner.email || "No email"}
                     </p>
-                    <p className="text-xs">
-                      {partner.phone_number
-                        ? truncatePhoneNumber(partner.phone_number, 15)
-                        : "No phone number"}
+                    <p className="text-xs truncate">
+                      {partner.phone_number || "No phone number"}
                     </p>
                   </div>
-                  <div className="flex flex-col justify-center items-start">
-                    <p className="text-xs text-wrap truncate">
-                      {partner.notes.length > 33
-                        ? partner.notes.substring(0, 30) + "..."
-                        : partner.notes}
-                    </p>
+                  <div className="w-full overflow-hidden">
+                    <p className="text-xs truncate">{partner.notes}</p>
                   </div>
                 </div>
               </div>
