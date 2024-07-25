@@ -151,7 +151,7 @@ export default function Contact({ borderColour }) {
                 <ContactMenu
                   anchorEl={anchorEl}
                   handleMenuClick={(event) =>
-                    handleMenuClick(event, research.id)
+                    handleMenuClick(event, contact.id)
                   }
                   handleMenuClose={handleMenuClose}
                   handleViewOrUpdate={handleViewOrUpdate}
