@@ -12,9 +12,8 @@ export function SidebarItem({ icon, text, activeItem, setActiveItem, id }) {
   return (
     <div
       onClick={handleClick}
-      className={`text-white flex flex-row gap-6 max-[768px]:gap-0 py-2 px-3 w-full items-center justify-start max-[768px]:justify-center ${
-        activeItem === id ? "active" : ""
-      }`}
+      className={`text-white flex flex-row gap-6 max-[768px]:gap-0 py-2 px-3 w-full items-center justify-start max-[768px]:justify-center ${activeItem === id ? "active" : ""
+        }`}
     >
       <img className=" w-7" src={icon} alt="" />
       <p>{text}</p>
@@ -23,9 +22,9 @@ export function SidebarItem({ icon, text, activeItem, setActiveItem, id }) {
 }
 
 // Search bar
-export function SearchBar() {
+export function SearchBar({ value, onChange, placeHolder }) {
   return (
-    <label className="relative inline-flex items-center w-full">
+    <label className="relative inline-flex items-center w-full rounded-full">
       <span className="sr-only">Search</span>
       <span className="absolute inset-y-0 left-0 flex items-center pl-2">
         <img
@@ -36,14 +35,17 @@ export function SearchBar() {
         />
       </span>
       <input
-        className=" placeholder:text-dark-blue block bg-light-grey w-full border border-light-grey rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-dark-blue sm:text-sm"
-        placeholder="Search Contacts"
+        className="placeholder:text-dark-blue block bg-light-grey w-full border border-dark-blue rounded-full py-2 pl-9 pr-3 focus:outline-none focus:border-dark-blue font-bold max-md:text-sm px-12 py-4"
+        placeholder={placeHolder}
         type="text"
         name="search"
+        value={value}
+        onChange={onChange}
       />
     </label>
   );
 }
+
 
 // Buttons
 export function Button({ text, onClick, className }) {
@@ -51,7 +53,7 @@ export function Button({ text, onClick, className }) {
     <button
       onClick={onClick}
       className={`
-        bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue
+        bg-mansa-blue w-max active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue
          max-md:py-3 max-md:px-2
          ${className}
         `}
@@ -66,7 +68,7 @@ export function ButtonWithIcon({ onClick, className, children }) {
     <button
       onClick={onClick}
       className={`
-        bg-mansa-blue  active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue
+        bg-mansa-blue active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue
         max-md:py-3 max-md:px-2
         ${className}
         `}
@@ -100,15 +102,13 @@ export function FormInput({
 
   return (
     <div
-      className={` relative col-span-full w-60 max-lg:w-full ${
-        isFocused ? "focus" : ""
-      }`}
+      className={` relative col-span-full w-60 max-lg:w-full ${isFocused ? "focus" : ""
+        }`}
     >
       <label
         htmlFor={id}
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
-          isFocused ? "text-mansa-blue" : "text-dark-blue"
-        }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
+          }`}
       >
         {title}
       </label>
@@ -121,9 +121,8 @@ export function FormInput({
           placeholder={placeholder}
           min={min}
           maxLength={maxLength}
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
-            isFocused ? "border-mansa-blue" : "border-dark-blue"
-          } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
+            } hover:border-mansa-blue`}
           value={value}
           pattern={pattern}
           onChange={onChange}
@@ -163,9 +162,8 @@ export function FullInput({
     >
       <label
         htmlFor={id}
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
-          isFocused ? "text-mansa-blue" : "text-dark-blue"
-        }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
+          }`}
       >
         {title}
       </label>
@@ -176,9 +174,8 @@ export function FullInput({
           id={id}
           autoComplete={id}
           placeholder={placeholder}
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
-            isFocused ? "border-mansa-blue" : "border-dark-blue"
-          } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
+            } hover:border-mansa-blue`}
           value={value}
           min={min}
           maxLength={maxLength}
@@ -223,9 +220,8 @@ export function SignUpRequired({
     >
       <label
         htmlFor={id}
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
-          isFocused ? "text-mansa-blue" : "text-dark-blue"
-        }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
+          }`}
       >
         {title}
       </label>
@@ -238,9 +234,8 @@ export function SignUpRequired({
           placeholder={placeholder}
           min={min}
           required
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
-            isFocused ? "border-mansa-blue" : "border-dark-blue"
-          } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
+            } hover:border-mansa-blue`}
           value={value}
           onChange={onChange}
           onFocus={handleFocus}
@@ -277,15 +272,13 @@ export function FormInputRequired({
 
   return (
     <div
-      className={`relative col-span-full w-60 max-lg:w-full ${
-        isFocused ? "focus" : ""
-      }`}
+      className={`relative col-span-full w-60 max-lg:w-full ${isFocused ? "focus" : ""
+        }`}
     >
       <label
         htmlFor={id}
-        className={` absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
-          isFocused ? "text-mansa-blue" : "text-dark-blue"
-        }`}
+        className={` absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
+          }`}
       >
         {title}
       </label>
@@ -297,9 +290,8 @@ export function FormInputRequired({
           autoComplete={autoComplete}
           placeholder={placeholder}
           required
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
-            isFocused ? "border-mansa-blue" : "border-dark-blue"
-          } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
+            } hover:border-mansa-blue`}
           value={value}
           onChange={onChange}
           onFocus={handleFocus}
@@ -327,9 +319,8 @@ export function FormNotes({ value, onChange }) {
     <div className={`relative col-span-full ${isFocused ? "focus" : ""}`}>
       <label
         htmlFor="notes"
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm leading-6 font-semibold ${
-          isFocused ? "text-mansa-blue" : "text-dark-blue"
-        }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm leading-6 font-semibold ${isFocused ? "text-mansa-blue" : "text-dark-blue"
+          }`}
       >
         Notes
       </label>
@@ -338,9 +329,8 @@ export function FormNotes({ value, onChange }) {
           id="notes"
           name="notes"
           rows={3}
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
-            isFocused ? "border-mansa-blue" : "border-dark-blue"
-          } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
+            } hover:border-mansa-blue`}
           placeholder="Example text."
           // maxLength={35}
           value={value}
@@ -367,15 +357,13 @@ export function DropDown({ label, id, value, onChange }) {
 
   return (
     <div
-      className={`relative sm:col-span-3 w-60 max-lg:w-full ${
-        isFocused ? "focus" : ""
-      }`}
+      className={`relative sm:col-span-3 w-60 max-lg:w-full ${isFocused ? "focus" : ""
+        }`}
     >
       <label
         htmlFor={id}
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
-          isFocused ? "text-mansa-blue" : "text-dark-blue"
-        }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
+          }`}
       >
         {label}
       </label>
@@ -385,9 +373,8 @@ export function DropDown({ label, id, value, onChange }) {
           name={id}
           autoComplete={id}
           required
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
-            isFocused ? "border-mansa-blue" : "border-dark-blue"
-          } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
+            } hover:border-mansa-blue`}
           value={value}
           onChange={onChange}
           onFocus={handleFocus}
@@ -433,15 +420,13 @@ export const DateForm = ({ title, value, onChange }) => {
 
   return (
     <div
-      className={`relative sm:col-span-3 max-lg:w-full ${
-        isFocused ? "focus" : ""
-      }`}
+      className={`relative sm:col-span-3 max-lg:w-full ${isFocused ? "focus" : ""
+        }`}
     >
       <label
         htmlFor="datetime"
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
-          isFocused ? "text-mansa-blue" : "text-dark-blue"
-        }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
+          }`}
       >
         {title}
       </label>
@@ -450,9 +435,8 @@ export const DateForm = ({ title, value, onChange }) => {
           type="datetime-local"
           id="datetime"
           name="datetime"
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
-            isFocused ? "border-mansa-blue" : "border-dark-blue"
-          } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
+            } hover:border-mansa-blue`}
           value={value}
           onChange={onChange}
           onFocus={handleFocus}

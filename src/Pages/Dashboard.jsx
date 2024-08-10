@@ -1,5 +1,6 @@
 // Dashboard implementation
-import { Button } from "../components/Reusables";
+
+import { Button, SearchBar } from "../components/Reusables";
 import Modal from "../components/CardDetails/Modal";
 import { useState, useEffect } from "react";
 import { Tables } from "../components/TableDetails/Tables";
@@ -11,11 +12,14 @@ import Loader from "../components/ReusableComponents/Loader";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/AuthContext";
 import ShareButton from "../components/ShareFeature/ShareButton";
+import { getFilteredContacts } from "../components/Search/getFilteredContacts.js";
 
 function Dasboard() {
-  const navigate = useNavigate(); // Use useNavigate hook to navigate programmatically
-
-  const { isAuthenticated } = useAuth(); // Access isAuthenticated from useAuth hook
+  const navigate = useNavigate(); 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredContacts, setFilteredContacts] = useState([]);
+  const [selectedContact, setSelectedContact] = useState(null);
+  const { isAuthenticated } = useAuth(); 
   const [showModal, setShowModal] = useState(false);
   const [showMoveContactModal, setShowMoveContactModal] = useState(false);
   const [singleDeals, setSingleDeals] = useState([]);
@@ -27,13 +31,20 @@ function Dasboard() {
   const userDetails = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
+    const fetchFilteredContacts = async () => {
+      const contacts = await getFilteredContacts(searchTerm);
+      setFilteredContacts(contacts);
+    };
+
+    fetchFilteredContacts();
+  }, [searchTerm]);
+
+  useEffect(() => {
     const fetchSingleDeals = async () => {
-      // Check if currentDealId exists before making the request
       if (currentDealId) {
         try {
           const response = await api.get(`deals/single-deal/${currentDealId}`);
           setUserId(response.data.deal.owner_id);
-          // Assuming response.data contains the single deal object
           const fetchedSingleDeal = response.data.deal;
           setSingleDeals(fetchedSingleDeal);
         } catch (error) {
@@ -45,15 +56,16 @@ function Dasboard() {
     };
 
     fetchSingleDeals();
-  }, [currentDealId]); // Include currentDealId in the dependency array
+  }, [currentDealId]);
 
-  // Check if user is authenticated
-  // useEffect(() => {
-  //     // Redirect to login page if not authenticated
-  //     if (!isAuthenticated) {
-  //       navigate('/auth/login');
-  //     }
-  //   }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
+  const addFromSearch = (contact) => {
+    setSelectedContact(contact);
+  };
+
+  const finishAddFromSearch = () => {
+    setSelectedContact(null);
+    setSearchTerm('');
+  };
 
   return (
     <div className="">
@@ -63,7 +75,47 @@ function Dasboard() {
       <div className=" flex flex-col gap-2 w-full mr-2 h-screen overflow-auto pt-2 px-3">
         {userDetails && userDetails.id === userId && (
           <div className="flex w-full items-center justify-between">
-            <div className=" flex items-center gap-4">
+            <div className="flex items-center gap-4 w-full pr-4">
+              <div className="w-full">
+                <SearchBar
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeHolder={"Search Contact Database"}
+                />
+                {searchTerm && (
+                  <ul className="absolute z-50 min-w-80 p-2 bg-light-grey shadow-lg rounded-lg overflow-y-auto">
+                    {filteredContacts.map((contact) => (
+                      <li
+                        key={contact.id}
+                        className="hover:bg-dark-blue hover:text-white p-2 flex items-center"
+                        title="Click to add to this dashboard"
+                        onClick={() => addFromSearch(contact)}
+                      >
+                        {contact.profile_pic ? (
+                          <img
+                            src={contact.profile_pic}
+                            className="h-12 w-12 rounded-full"
+                          />
+                        ) : (
+                          <div className="h-12 w-12 rounded-full border-2 border-white bg-dark-blue text-blue items-center flex justify-center">
+                            <h3 className="text-white">
+                              {contact.first_name[0].toUpperCase()}{" "}
+                              {contact.last_name[0].toUpperCase()}
+                            </h3>
+                          </div>
+                        )}
+
+                        <div className="px-2">
+                          <h3>
+                            {contact.first_name} {contact.last_name}
+                          </h3>
+                          <p>{contact.email}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
               <div onClick={() => setShowModal(true)} className="flex">
                 <Button text="Add a New Contact" />
               </div>
@@ -123,12 +175,12 @@ function Dasboard() {
         </div>
         <Tables />
       </div>
-      {showModal && <Modal onClose={() => setShowModal(false)} />}
+      {showModal && <Modal onClose={() => setShowModal(false)} data={{}} />}
       {showMoveContactModal && (
         <MoveContactModal onClose={() => setShowMoveContactModal(false)} />
       )}
+      {selectedContact && <Modal onClose={finishAddFromSearch} data={selectedContact} />}
     </div>
-    //  </div>
   );
 }
 
