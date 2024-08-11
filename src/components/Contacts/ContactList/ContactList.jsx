@@ -70,7 +70,9 @@ function ContactList() {
             placeHolder={"Search Contacts..."}
           />
           </div>
+          <div>
           <ExportContacts />
+          </div>
         </div>
       </div>
       <div className="py-8">
