@@ -18,20 +18,20 @@ function ContactList() {
     };
 
     fetchFilteredContacts();
-  }, [searchTerm]);
+  }, [searchTerm, allcontacts]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await api.get("contacts/all-contacts");
-  //       setAllContacts(response.data.data);
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("contacts/all-contacts");
+        setAllContacts(response.data.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   const handleDeleteContact = async (id) => {
     try {
