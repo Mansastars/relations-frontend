@@ -1,7 +1,7 @@
 import React from "react";
 import SingleContactRow from "./SingleContactRow";
 
-function ContactTable({ data }) {
+function ContactTable({ data, onDeleteContact, onUpdateContact }) {
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -22,21 +22,24 @@ function ContactTable({ data }) {
             <th scope="col" className="px-6 py-3">
               Organization
             </th>
-            {/* <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3">
               Action
-            </th> */}
+            </th>
           </tr>
         </thead>
         <tbody>
           {data
             ? data.map((contact) => (
                 <SingleContactRow
-                  key={contact.id} // Don't forget to include a unique key prop
+                  key={contact.id}
                   firstName={contact.first_name}
                   lastName={contact.last_name}
                   email={contact.email}
                   org={contact.organization_name}
                   phoneNumber={contact.phone_number}
+                  id={contact.id}
+                  onDelete={onDeleteContact}
+                  onUpdate={onUpdateContact}
                 />
               ))
             : null}

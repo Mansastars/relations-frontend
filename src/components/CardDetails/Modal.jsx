@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ContactImage from "./ContactImage/ContactImage";
 
-function Modal({ onClose }) {
+function Modal({ onClose, data }) {
   const modalRef = useRef();
   const formRef = useRef();
   const queryClient = useQueryClient();
@@ -29,13 +29,13 @@ function Modal({ onClose }) {
   };
 
   const [formValue, setFormValue] = useState({
-    title: "",
-    firstName: "",
-    lastName: "",
-    company: "",
+    title: data.title || "",
+    firstName: data.first_name || "",
+    lastName: data.last_name || "",
+    company: data.organization_name || "",
     dealSize: 0,
-    email: "",
-    phoneNumber: "",
+    email: data.email || "",
+    phoneNumber: data.phone_number || "",
     notes: "",
     currentStage: "",
     datetime: "",
