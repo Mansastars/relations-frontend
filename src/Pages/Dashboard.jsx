@@ -132,7 +132,7 @@ function Dasboard() {
             </div>
           </div>
         )}
-
+        {singleDeals.deal_name &&
         <div className={`flex flex-row max-md:flex-col w-full items-center`}>
           <div className=" bg-dark-blue text-white font-bold text-2xl max-md:text-base py-6 max-md:py-2 rounded-l-xl max-md:rounded-xl w-[40%] max-md:w-full text-center">
             {singleDeals &&
@@ -173,6 +173,8 @@ function Dasboard() {
             </div>
           </div>
         </div>
+
+        }
         <Tables />
       </div>
       {showModal && <Modal onClose={() => setShowModal(false)} data={{}} />}
