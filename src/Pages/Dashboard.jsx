@@ -96,15 +96,16 @@ function Dasboard() {
                             src={contact.profile_pic}
                             className="h-12 w-12 rounded-full"
                           />
-                        ) : (
+                        ) : ((contact.first_name && contact.last_name) ?
                           <div className="h-12 w-12 rounded-full border-2 border-white bg-dark-blue text-blue items-center flex justify-center">
                             <h3 className="text-white">
                               {contact.first_name[0].toUpperCase()}{" "}
                               {contact.last_name[0].toUpperCase()}
                             </h3>
-                          </div>
+                          </div> :
+                          <div className="h-12 w-12 rounded-full border-2 border-white bg-dark-blue text-blue items-center flex justify-center">
+                        </div> 
                         )}
-
                         <div className="px-2">
                           <h3>
                             {contact.first_name} {contact.last_name}
