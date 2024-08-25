@@ -11,6 +11,8 @@ import { AuthProvider } from "./hooks/AuthContext";
 import ProtectedRoute from "./hooks/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 // Lazy loading implementation
 const Dashboard = lazy(() => import("./Pages/Dashboard"));
@@ -58,6 +60,7 @@ function App() {
     hideSidePanelPatterns.some((pattern) => pattern.test(location.pathname));
 
   return (
+    <DndProvider backend={HTML5Backend}>
     <AuthProvider>
       <div className="flex h-screen w-full">
         {!shouldHideSidePanel && (
@@ -121,6 +124,7 @@ function App() {
         <ToastContainer />
       </div>
     </AuthProvider>
+    </DndProvider>
   );
 }
 
