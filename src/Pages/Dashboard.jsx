@@ -145,7 +145,7 @@ function Dasboard() {
             <div className=" flex flex-col w-[60%] max-md:w-full">
               <div className=" bg-mansa-blue text-white py-2 text-center rounded-tr-xl max-md:rounded-t-xl">
                 Deal Size Amount:{" "}
-                <span className=" font-semibold">
+                <span className="font-semibold">
                   $
                   {singleDeals.deal_size
                     ? addCommasToNumber(singleDeals.deal_size)

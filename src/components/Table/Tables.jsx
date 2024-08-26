@@ -22,7 +22,7 @@ export const Tables = () => {
         stage={stageType.PROSPECT}
         stageQuery={"prospects"}
         url={'deals/prospect-contacts'}
-        isCollapsed={true}
+        isCollapsed={false}
       />
       <Stage
         titleColor={"#87CEEB"}
@@ -49,7 +49,7 @@ export const Tables = () => {
         stage={stageType.REVIEW}
         stageQuery={"OnGoingReviews"}
         url={'deals/review-contacts'}
-        isCollapsed={true}
+        isCollapsed={false}
       />
       <Stage
         titleColor={"#E67451"}
@@ -58,7 +58,7 @@ export const Tables = () => {
         stage={stageType.PARTNER}
         stageQuery={"partners"}
         url={'deals/partner-contacts'}
-        isCollapsed={true}
+        isCollapsed={false}
       />
       <Stage
         titleColor={"#000000"}
@@ -76,7 +76,7 @@ export const Tables = () => {
         stage={stageType.NEGOTIATION}
         stageQuery={"negotiations"}
         url={'deals/negotiation-contacts'}
-        isCollapsed={false}
+        isCollapsed={true}
       />
       <Stage
         titleColor={"green"}
@@ -85,7 +85,7 @@ export const Tables = () => {
         stage={stageType.DEAL}
         stageQuery={"deals"}
         url={'deals/deal-contacts'}
-        isCollapsed={false}
+        isCollapsed={true}
       />
       <Stage
         titleColor={"#D3D3D3"}
@@ -103,7 +103,7 @@ export const Tables = () => {
         stage={stageType.REJECTION}
         stageQuery={"notAFits"}
         url={'deals/rejection-contacts'}
-        isCollapsed={false}
+        isCollapsed={true}
       />
     </div>
   );

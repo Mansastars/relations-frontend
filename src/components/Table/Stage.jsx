@@ -183,7 +183,7 @@ function Stage({
           className={`shadow-lg rounded-2xl w-full bg-white flex justify-between`}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.5 }}
         >
           {!collapsed && (
             <div
@@ -206,10 +206,10 @@ function Stage({
           ref={dropRef}
           className={`overflow-auto p-2 rounded-xl ${
             collapsed ? "w-16 min-h-16" : "min-w-48"
-          } ${isOver || contacts.length === 0 ? "bg-gray-400 min-h-96" : ""}`}
+          } ${isOver || contacts.length === 0 ? "min-h-96" : ""}`}
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: collapsed ? 0 : "auto", opacity: collapsed ? 0 : 1 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          transition={{ duration: 1, ease: "easeInOut" }}
           style={{
             display: collapsed ? "none" : "block",
           }}
@@ -235,7 +235,7 @@ function Stage({
             ))
           ) : (
             <div className="text-center text-gray-500 p-4">
-              Drag and drop a contact here
+              
             </div>
           )}
         </motion.div>
