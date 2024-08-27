@@ -3,7 +3,7 @@
 import { Button, SearchBar } from "../components/Reusables";
 import Modal from "../components/CardDetails/Modal";
 import { useState, useEffect } from "react";
-import { Tables } from "../components/TableDetails/Tables";
+import { Tables } from "../components/Table/Tables.jsx";
 import MoveContactModal from "../components/CardDetails/MoveContactModal";
 import api from "../api";
 import addCommasToNumber from "../components/ReusableComponents/AddCommastoNum";
@@ -15,11 +15,11 @@ import ShareButton from "../components/ShareFeature/ShareButton";
 import { getFilteredContacts } from "../components/Search/getFilteredContacts.js";
 
 function Dasboard() {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
-  const { isAuthenticated } = useAuth(); 
+  const { isAuthenticated } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [showMoveContactModal, setShowMoveContactModal] = useState(false);
   const [singleDeals, setSingleDeals] = useState([]);
@@ -64,7 +64,7 @@ function Dasboard() {
 
   const finishAddFromSearch = () => {
     setSelectedContact(null);
-    setSearchTerm('');
+    setSearchTerm("");
   };
 
   return (
@@ -80,7 +80,7 @@ function Dasboard() {
                 <SearchBar
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeHolder={"Search Contact Database"}
+                  placeHolder={"Add from contact database"}
                 />
                 {searchTerm && (
                   <ul className="absolute z-50 min-w-80 p-2 bg-light-grey shadow-lg rounded-lg overflow-y-auto">
@@ -96,15 +96,15 @@ function Dasboard() {
                             src={contact.profile_pic}
                             className="h-12 w-12 rounded-full"
                           />
-                        ) : ((contact.first_name && contact.last_name) ?
+                        ) : contact.first_name && contact.last_name ? (
                           <div className="h-12 w-12 rounded-full border-2 border-white bg-dark-blue text-blue items-center flex justify-center">
                             <h3 className="text-white">
                               {contact.first_name[0].toUpperCase()}{" "}
                               {contact.last_name[0].toUpperCase()}
                             </h3>
-                          </div> :
-                          <div className="h-12 w-12 rounded-full border-2 border-white bg-dark-blue text-blue items-center flex justify-center">
-                        </div> 
+                          </div>
+                        ) : (
+                          <div className="h-12 w-12 rounded-full border-2 border-white bg-dark-blue text-blue items-center flex justify-center"></div>
                         )}
                         <div className="px-2">
                           <h3>
@@ -120,12 +120,12 @@ function Dasboard() {
               <div onClick={() => setShowModal(true)} className="flex">
                 <Button text="Add a New Contact" />
               </div>
-              <div
+              {/* <div
                 onClick={() => setShowMoveContactModal(true)}
                 className="flex"
               >
                 <Button text="Move a Contact" />
-              </div>
+              </div> */}
             </div>
 
             <div className="">
@@ -133,56 +133,57 @@ function Dasboard() {
             </div>
           </div>
         )}
-        {singleDeals.deal_name &&
-        <div className={`flex flex-row max-md:flex-col w-full items-center`}>
-          <div className=" bg-dark-blue text-white font-bold text-2xl max-md:text-base py-6 max-md:py-2 rounded-l-xl max-md:rounded-xl w-[40%] max-md:w-full text-center">
-            {singleDeals &&
-            singleDeals.deal_name &&
-            singleDeals.deal_name.length > 15
-              ? `${singleDeals.deal_name.substring(0, 15)}...`
-              : singleDeals && singleDeals.deal_name}
-          </div>
-          <div className=" flex flex-col w-[60%] max-md:w-full">
-            <div className=" bg-mansa-blue text-white py-2 text-center rounded-tr-xl max-md:rounded-t-xl">
-              Deal Size Amount:{" "}
-              <span className=" font-semibold">
-                $
-                {singleDeals.deal_size
-                  ? addCommasToNumber(singleDeals.deal_size)
-                  : "0"}
-              </span>
+        {singleDeals.deal_name && (
+          <div className={`flex flex-row max-md:flex-col w-full items-center`}>
+            <div className=" bg-dark-blue text-white font-bold text-2xl max-md:text-base py-6 max-md:py-2 rounded-l-xl max-md:rounded-xl w-[40%] max-md:w-full text-center">
+              {singleDeals &&
+              singleDeals.deal_name &&
+              singleDeals.deal_name.length > 15
+                ? `${singleDeals.deal_name.substring(0, 15)}...`
+                : singleDeals && singleDeals.deal_name}
             </div>
-            <div className=" flex flex-row  ">
-              <div className=" bg-[orange] text-white w-1/2 max-md:w-full py-2 pl-5 max-md:rounded-bl-xl">
-                In-Negotiation Value:{" "}
-                <span className=" font-semibold">
+            <div className=" flex flex-col w-[60%] max-md:w-full">
+              <div className=" bg-mansa-blue text-white py-2 text-center rounded-tr-xl max-md:rounded-t-xl">
+                Deal Size Amount:{" "}
+                <span className="font-semibold">
                   $
-                  {singleDeals.negotiation_value
-                    ? addCommasToNumber(singleDeals.negotiation_value)
+                  {singleDeals.deal_size
+                    ? addCommasToNumber(singleDeals.deal_size)
                     : "0"}
                 </span>
               </div>
-              <div className=" bg-[green] text-white w-1/2 max-md:w-full py-2 pl-5 rounded-br-xl ">
-                Deal Signed Value:{" "}
-                <span className=" font-semibold">
-                  $
-                  {singleDeals.signed_value
-                    ? addCommasToNumber(singleDeals.signed_value)
-                    : "0"}
-                </span>
+              <div className=" flex flex-row  ">
+                <div className=" bg-[orange] text-white w-1/2 max-md:w-full py-2 pl-5 max-md:rounded-bl-xl">
+                  In-Negotiation Value:{" "}
+                  <span className=" font-semibold">
+                    $
+                    {singleDeals.negotiation_value
+                      ? addCommasToNumber(singleDeals.negotiation_value)
+                      : "0"}
+                  </span>
+                </div>
+                <div className=" bg-[green] text-white w-1/2 max-md:w-full py-2 pl-5 rounded-br-xl ">
+                  Deal Signed Value:{" "}
+                  <span className=" font-semibold">
+                    $
+                    {singleDeals.signed_value
+                      ? addCommasToNumber(singleDeals.signed_value)
+                      : "0"}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        }
-        <Tables />
+        )}
+          <Tables />
       </div>
       {showModal && <Modal onClose={() => setShowModal(false)} data={{}} />}
       {showMoveContactModal && (
         <MoveContactModal onClose={() => setShowMoveContactModal(false)} />
       )}
-      {selectedContact && <Modal onClose={finishAddFromSearch} data={selectedContact} />}
+      {selectedContact && (
+        <Modal onClose={finishAddFromSearch} data={selectedContact} />
+      )}
     </div>
   );
 }

@@ -89,7 +89,7 @@ function Modal({ onClose, data }) {
       toast.success("Contact created successfully.");
     },
     onError: (error) => {
-      setErrorMessage("An error occurred. Please try again.");
+      setErrorMessage(error.response.data.message);
       formRef.current.scrollIntoView({ behavior: "smooth" });
       setIsSubmitting(false);
     },
