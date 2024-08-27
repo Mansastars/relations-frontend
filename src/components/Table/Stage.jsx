@@ -11,6 +11,7 @@ import { useDrop } from "react-dnd";
 import { BiCollapse } from "react-icons/bi";
 import { HiArrowsExpand } from "react-icons/hi";
 import { motion } from "framer-motion";
+import Tooltip from "../Tooltip";
 
 function Stage({
   titleColor,
@@ -193,7 +194,7 @@ function Stage({
               {stageName}
             </div>
           )}
-          <button onClick={toggleCollapse} className="p-5 rounded transition-transform duration-300 ease-in-out transform hover:scale-110">
+          <button onClick={toggleCollapse} className="p-5 rounded transition-transform duration-300 ease-in-out transform hover:scale-110" onMouseOver={<Tooltip text={stageName}></Tooltip>}>
             {collapsed ? (
               <HiArrowsExpand className="text-green-400" size={24} />
             ) : (
@@ -212,6 +213,8 @@ function Stage({
           transition={{ duration: 1, ease: "easeInOut" }}
           style={{
             display: collapsed ? "none" : "block",
+            backgroundColor: isOver ? "grey": "",
+            paddingBottom: isOver ? "5rem": ""
           }}
         >
           {contacts.length > 0 ? (
