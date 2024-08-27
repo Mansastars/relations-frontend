@@ -3,7 +3,7 @@ import ContactImage from "../Cards/ContactImage/ContactImage";
 import ContactMenu from "../Cards/ContactMenu/ContactMenu";
 import { useDrag } from "react-dnd";
 import itemTypes from "./itemTypes";
-import addCommasToNumbergit  from "../ReusableComponents/AddCommastoNum";
+import addCommasToNumber  from "../ReusableComponents/AddCommastoNum";
 
 function ContactCard({ contact, borderColour, anchorEl, handleMenuClose, handleViewOrUpdate, handleDeleteClick,handleMenuClick }) {
   const [{ opacity }, dragRef] = useDrag(
