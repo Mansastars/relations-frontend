@@ -234,7 +234,7 @@ function Stage({
               </motion.div>
             ))
           ) : (
-            <div className="text-center text-gray-500 p-4">
+            <div className="text-center text-gray-500 p-4" title="Drag and drop contact here">
               
             </div>
           )}
