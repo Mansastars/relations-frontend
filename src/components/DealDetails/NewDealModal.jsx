@@ -125,6 +125,7 @@ function NewDealModal({ onClose }) {
                 title="Deadline"
                 value={formValue.datetime}
                 onChange={handleInput}
+                id={"datetime"}
               />
               <FullInput
                 type="number"

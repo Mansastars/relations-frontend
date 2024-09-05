@@ -223,10 +223,11 @@ function Modal({ onClose, data }) {
                   title="Meeting Date"
                   value={formValue.datetime}
                   onChange={handleInput}
+                  id={"datetime"}
                 />
               </div>
               <div>
-                <FormNotes value={formValue.notes} onChange={handleInput} />
+                <FormNotes value={formValue.notes} onChange={handleInput} title={"Notes"} id={"notes"}/>
               </div>
             </div>
 

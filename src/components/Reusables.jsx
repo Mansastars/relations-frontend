@@ -12,8 +12,9 @@ export function SidebarItem({ icon, text, activeItem, setActiveItem, id }) {
   return (
     <div
       onClick={handleClick}
-      className={`text-white flex flex-row gap-6 max-[768px]:gap-0 py-2 px-3 w-full items-center justify-start max-[768px]:justify-center ${activeItem === id ? "active" : ""
-        }`}
+      className={`text-white flex flex-row gap-6 max-[768px]:gap-0 py-2 px-3 w-full items-center justify-start max-[768px]:justify-center ${
+        activeItem === id ? "active" : ""
+      }`}
     >
       <img className=" w-7" src={icon} alt="" />
       <p>{text}</p>
@@ -46,19 +47,18 @@ export function SearchBar({ value, onChange, placeHolder }) {
   );
 }
 
-
 // Buttons
 export function Button({ text, onClick, className }) {
   return (
     <button
       onClick={onClick}
       className={`
-        bg-mansa-blue w-max active:bg-dark-blue text-white px-12 py-4 rounded-xl transition-all duration-200 shadow hover:bg-dark-blue
-         max-md:py-3 max-md:px-2
-         ${className}
-        `}
+        bg-mansa-blue text-white px-12 py-4 rounded-xl shadow-md transition-all duration-300 ease-in-out transform hover:bg-dark-blue hover:scale-105 active:scale-95 active:bg-dark-blue focus:outline-none focus:ring-4 focus:ring-mansa-blue/50
+        max-md:py-3 max-md:px-6
+        ${className}
+      `}
     >
-      <p className="font-bold max-md:text-sm">{text}</p>
+      <p className="font-bold text-base max-md:text-sm">{text}</p>
     </button>
   );
 }
@@ -74,6 +74,20 @@ export function ButtonWithIcon({ onClick, className, children }) {
         `}
     >
       {children}
+    </button>
+  );
+}
+export function WaitlistButton({ onClick, className, title }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`
+        bg-dark-blue text-white py-3 px-6 text-lg font-semibold rounded-xl shadow-lg transition-transform transform hover:scale-105 active:scale-95 
+        hover:bg-mansa-blue active:bg-mansa-blue focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50
+        ${className}
+      `}
+    >
+      {title}
     </button>
   );
 }
@@ -102,13 +116,15 @@ export function FormInput({
 
   return (
     <div
-      className={` relative col-span-full w-60 max-lg:w-full ${isFocused ? "focus" : ""
-        }`}
+      className={` relative col-span-full w-60 max-lg:w-full ${
+        isFocused ? "focus" : ""
+      }`}
     >
       <label
         htmlFor={id}
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
-          }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
+          isFocused ? "text-mansa-blue" : "text-dark-blue"
+        }`}
       >
         {title}
       </label>
@@ -121,8 +137,9 @@ export function FormInput({
           placeholder={placeholder}
           min={min}
           maxLength={maxLength}
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
-            } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
+            isFocused ? "border-mansa-blue" : "border-dark-blue"
+          } hover:border-mansa-blue`}
           value={value}
           pattern={pattern}
           onChange={onChange}
@@ -162,8 +179,9 @@ export function FullInput({
     >
       <label
         htmlFor={id}
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
-          }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
+          isFocused ? "text-mansa-blue" : "text-dark-blue"
+        }`}
       >
         {title}
       </label>
@@ -174,8 +192,9 @@ export function FullInput({
           id={id}
           autoComplete={id}
           placeholder={placeholder}
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
-            } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
+            isFocused ? "border-mansa-blue" : "border-dark-blue"
+          } hover:border-mansa-blue`}
           value={value}
           min={min}
           maxLength={maxLength}
@@ -220,8 +239,9 @@ export function SignUpRequired({
     >
       <label
         htmlFor={id}
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
-          }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
+          isFocused ? "text-mansa-blue" : "text-dark-blue"
+        }`}
       >
         {title}
       </label>
@@ -234,8 +254,9 @@ export function SignUpRequired({
           placeholder={placeholder}
           min={min}
           required
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
-            } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
+            isFocused ? "border-mansa-blue" : "border-dark-blue"
+          } hover:border-mansa-blue`}
           value={value}
           onChange={onChange}
           onFocus={handleFocus}
@@ -272,13 +293,15 @@ export function FormInputRequired({
 
   return (
     <div
-      className={`relative col-span-full w-60 max-lg:w-full ${isFocused ? "focus" : ""
-        }`}
+      className={`relative col-span-full w-60 max-lg:w-full ${
+        isFocused ? "focus" : ""
+      }`}
     >
       <label
         htmlFor={id}
-        className={` absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
-          }`}
+        className={` absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
+          isFocused ? "text-mansa-blue" : "text-dark-blue"
+        }`}
       >
         {title}
       </label>
@@ -290,8 +313,9 @@ export function FormInputRequired({
           autoComplete={autoComplete}
           placeholder={placeholder}
           required
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
-            } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
+            isFocused ? "border-mansa-blue" : "border-dark-blue"
+          } hover:border-mansa-blue`}
           value={value}
           onChange={onChange}
           onFocus={handleFocus}
@@ -304,7 +328,7 @@ export function FormInputRequired({
 }
 
 // Notes part of the add a contact form
-export function FormNotes({ value, onChange }) {
+export function FormNotes({ value, onChange, title, id }) {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -318,19 +342,21 @@ export function FormNotes({ value, onChange }) {
   return (
     <div className={`relative col-span-full ${isFocused ? "focus" : ""}`}>
       <label
-        htmlFor="notes"
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm leading-6 font-semibold ${isFocused ? "text-mansa-blue" : "text-dark-blue"
-          }`}
+        htmlFor={id}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm leading-6 font-semibold ${
+          isFocused ? "text-mansa-blue" : "text-dark-blue"
+        }`}
       >
-        Notes
+        {title}
       </label>
       <div className={`mt-1 ${isFocused ? "focus" : ""}`}>
         <textarea
-          id="notes"
-          name="notes"
+          id={id}
+          name={id}
           rows={3}
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
-            } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
+            isFocused ? "border-mansa-blue" : "border-dark-blue"
+          } hover:border-mansa-blue`}
           placeholder="Example text."
           // maxLength={35}
           value={value}
@@ -357,13 +383,15 @@ export function DropDown({ label, id, value, onChange }) {
 
   return (
     <div
-      className={`relative sm:col-span-3 w-60 max-lg:w-full ${isFocused ? "focus" : ""
-        }`}
+      className={`relative sm:col-span-3 w-60 max-lg:w-full ${
+        isFocused ? "focus" : ""
+      }`}
     >
       <label
         htmlFor={id}
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
-          }`}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
+          isFocused ? "text-mansa-blue" : "text-dark-blue"
+        }`}
       >
         {label}
       </label>
@@ -373,8 +401,9 @@ export function DropDown({ label, id, value, onChange }) {
           name={id}
           autoComplete={id}
           required
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
-            } hover:border-mansa-blue`}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
+            isFocused ? "border-mansa-blue" : "border-dark-blue"
+          } hover:border-mansa-blue`}
           value={value}
           onChange={onChange}
           onFocus={handleFocus}
@@ -406,8 +435,55 @@ export function DropDown({ label, id, value, onChange }) {
   );
 }
 
+export const CustomDropDown = ({ options, label, id, value, onChange }) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+  return (
+    <div
+      className={`relative sm:col-span-3 w-60 max-lg:w-full ${
+        isFocused ? "focus" : ""
+      }`}
+    >
+      <label
+        htmlFor={id}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
+          isFocused ? "text-mansa-blue" : "text-dark-blue"
+        }`}
+      >
+        {label}
+      </label>
+      <div className={`mt-1 w-full ${isFocused ? "focus" : ""}`}>
+        <select
+          id={id}
+          name={id}
+          autoComplete={id}
+          required
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
+            isFocused ? "border-mansa-blue" : "border-dark-blue"
+          } hover:border-mansa-blue`}
+          value={value}
+          onChange={onChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        >
+          {options.map((option) => (
+            <option value={option}>{option}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+};
+
 // Form for data time
-export const DateForm = ({ title, value, onChange }) => {
+export const DateForm = ({ title, value, onChange, id }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -420,23 +496,26 @@ export const DateForm = ({ title, value, onChange }) => {
 
   return (
     <div
-      className={`relative sm:col-span-3 max-lg:w-full ${isFocused ? "focus" : ""
-        }`}
+      className={`relative sm:col-span-3 max-lg:w-full ${
+        isFocused ? "focus" : ""
+      }`}
     >
       <label
-        htmlFor="datetime"
-        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${isFocused ? "text-mansa-blue" : "text-dark-blue"
-          }`}
+        htmlFor={id}
+        className={`absolute -top-3 left-3 bg-white px-1 text-sm font-semibold leading-6 ${
+          isFocused ? "text-mansa-blue" : "text-dark-blue"
+        }`}
       >
         {title}
       </label>
       <div className={`mt-1 ${isFocused ? "focus" : ""}`}>
         <input
           type="datetime-local"
-          id="datetime"
-          name="datetime"
-          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${isFocused ? "border-mansa-blue" : "border-dark-blue"
-            } hover:border-mansa-blue`}
+          id={id}
+          name={id}
+          className={`block w-full rounded-md border py-2.5 pl-2 text-dark-blue shadow-sm placeholder:text-gray-400 focus:outline-none focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 ${
+            isFocused ? "border-mansa-blue" : "border-dark-blue"
+          } hover:border-mansa-blue`}
           value={value}
           onChange={onChange}
           onFocus={handleFocus}

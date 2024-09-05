@@ -13,12 +13,15 @@ import SubTitle from "../../StepsUI/SubTitle";
 const AppInterations = () => {
   return (
     <div className="px-14 max-md:px-10 max-sm:px-5 py-20 bg-light-grey w-full">
-      <div className=" flex flex-col justify-center gap-12 max-md:gap-8 w-full">
-        <div className=" flex flex-col gap-3">
-          <Title title="Integrate with apps you use daily" />
-          <SubTitle subTitle="Seamlessly Connect Your CRM with Gmail, Google Meet, and More for Enhanced Productivity" />
+      <div className="flex flex-col justify-center gap-12 max-md:gap-8 w-full">
+        {/* Title Section */}
+        <div className="text-center flex flex-col gap-3">
+          <Title title="Integrate with Apps You Use Daily" />
+          <SubTitle subTitle="Seamlessly connect your CRM with Gmail, Google Meet, and more for enhanced productivity." />
         </div>
-        <div className=" flex flex-wrap justify-center items-center gap-10">
+
+        {/* Icons Section */}
+        <div className="flex flex-wrap justify-center items-center gap-12 max-md:gap-8 max-sm:gap-6">
           <AppIntegrationIcon image={GoogleCalenderIcon} isComingSoon={true} />
           <AppIntegrationIcon image={GmailIcon} />
           <AppIntegrationIcon image={GoogleMeet} isComingSoon={true} />

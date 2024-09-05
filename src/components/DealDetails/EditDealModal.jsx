@@ -124,6 +124,7 @@ function EditDealModal({ onClose, dealDetails }) {
                 title="Deadline"
                 value={formatDateTime(formValue.datetime)}
                 onChange={handleInput}
+                id={"datetime"}
               />
               <FullInput
                 type="number"

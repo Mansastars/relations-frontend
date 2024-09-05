@@ -171,78 +171,84 @@ function EditContactDetails({ onClose, contactDetails }) {
               contactId={contactID}
             />
             <div className="flex flex-row items-center justify-center flex-wrap gap-5 w-full">
-              <FormInput
-                type="text"
-                title="Title"
-                placeholder="Mr./Mrs./Ms./Dr./Engr."
-                id="title"
-                value={formValue.title}
-                onChange={handleInput}
-              />
-              <FormInput
-                type="text"
-                title="First Name"
-                placeholder="Sundi"
-                id="first_name"
-                value={formValue.first_name}
-                onChange={handleInput}
-              />
-              <FormInput
-                type="text"
-                title="Last Name"
-                placeholder="Keita"
-                id="last_name"
-                value={formValue.last_name}
-                onChange={handleInput}
-              />
-              <FormInput
-                type="text"
-                title="Company"
-                placeholder="Mansa, LLC"
-                id="organization_name"
-                value={formValue.organization_name}
-                onChange={handleInput}
-              />
-              <FormInput
-                type="number"
-                title="Deal Size ($)"
-                placeholder="1,000,000"
-                id="deal_size"
-                min={0}
-                value={formValue.deal_size}
-                onChange={handleInput}
-              />
-              <FormInput
-                type="email"
-                title="Contact Email"
-                placeholder="sundi@sankore.com"
-                id="email"
-                value={formValue.email}
-                onChange={handleInput}
-              />
-              <FormInput
-                type="tel"
-                title="Phone Number"
-                placeholder="+123456789"
-                id="phone_number"
-                value={formValue.phone_number}
-                onChange={handleInput}
-                maxLength={15}
-              />
-              <DropDown
-                label="Current Stage"
-                id="stage"
-                value={formValue.stage}
-                onChange={handleInput}
-              />
-              <DateForm
-                title="Meeting Date"
-                value={formValue.datetime}
-                onChange={handleInput}
-              />
+                <FormInput
+                  type="text"
+                  title="Title"
+                  placeholder="Mr./Mrs./Ms./Dr./Engr."
+                  id="title"
+                  value={formValue.title}
+                  onChange={handleInput}
+                />
+                <FormInput
+                  type="text"
+                  title="First Name"
+                  placeholder="Sundi"
+                  id="first_name"
+                  value={formValue.first_name}
+                  onChange={handleInput}
+                />
+                <FormInput
+                  type="text"
+                  title="Last Name"
+                  placeholder="Keita"
+                  id="last_name"
+                  value={formValue.last_name}
+                  onChange={handleInput}
+                />
+                <FormInput
+                  type="text"
+                  title="Company"
+                  placeholder="Mansa, LLC"
+                  id="organization_name"
+                  value={formValue.organization_name}
+                  onChange={handleInput}
+                />
+                <FormInput
+                  type="number"
+                  title="Deal Size ($)"
+                  placeholder="1,000,000"
+                  id="deal_size"
+                  min={0}
+                  value={formValue.deal_size}
+                  onChange={handleInput}
+                />
+                <FormInput
+                  type="email"
+                  title="Contact Email"
+                  placeholder="sundi@sankore.com"
+                  id="email"
+                  value={formValue.email}
+                  onChange={handleInput}
+                />
+              
+                <FormInput
+                  type="tel"
+                  title="Phone Number"
+                  placeholder="+123456789"
+                  id="phone_number"
+                  value={formValue.phone_number}
+                  onChange={handleInput}
+                  maxLength={15}
+                />
+                <DropDown
+                  label="Current Stage"
+                  id="stage"
+                  value={formValue.stage}
+                  onChange={handleInput}
+                />
+                <DateForm
+                  title="Meeting Date"
+                  value={formValue.datetime}
+                  onChange={handleInput}
+                  id={"datetime"}
+                />
             </div>
             <div>
-              <FormNotes value={formValue.notes} onChange={handleInput} />
+              <FormNotes
+                value={formValue.notes}
+                onChange={handleInput}
+                id={"notes"}
+              />
             </div>
             <div className="mt-8 w-full flex items-center justify-center">
               <Button

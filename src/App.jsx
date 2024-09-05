@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import Waitlist from "./Pages/Waitlist";
 
 // Lazy loading implementation
 const Dashboard = lazy(() => import("./Pages/Dashboard"));
@@ -50,6 +51,7 @@ function App() {
     "/cancel-payment",
     "/successful-payment",
     "/not-found",
+    "/wait-list"
   ];
 
   const hideSidePanelPatterns = [/^\/reset-password\/.*$/, /^\/verify\/.*$/];
@@ -73,7 +75,7 @@ function App() {
             <Routes>
               <Route path="/auth/login" element={<NewLogin />} />
               <Route path="/auth/sign_up" element={<NewSignUpPage />} />
-
+              <Route path="/wait-list" element={<Waitlist />} />
               <Route path="/verify_email" element={<VerifyEmail />} />
               <Route
                 path="/reset-password/:verificationToken"
