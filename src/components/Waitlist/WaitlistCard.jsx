@@ -3,7 +3,7 @@ import { WaitlistButton } from "../Reusables";
 import WaitlistForm from "./WaitlistForm";
 
 function WaitlistCard({ image, title, note }) {
-  const list = note.split("-");
+  const list = note.split("- ");
   const [joinWaitlist, setJoinWaitlist] = useState(false);
 
   // Function to handle closing the WaitlistForm

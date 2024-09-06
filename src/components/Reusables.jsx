@@ -36,7 +36,7 @@ export function SearchBar({ value, onChange, placeHolder }) {
         />
       </span>
       <input
-        className="placeholder:text-dark-blue block bg-light-grey w-full border border-dark-blue rounded-full py-2 pl-9 pr-3 focus:outline-none focus:border-dark-blue font-bold max-md:text-sm px-12 py-4"
+        className="placeholder:text-dark-blue block bg-light-grey w-full border border-dark-blue rounded-full pl-9 pr-3 focus:outline-none focus:border-dark-blue font-bold max-md:text-sm px-12 py-4"
         placeholder={placeHolder}
         type="text"
         name="search"
