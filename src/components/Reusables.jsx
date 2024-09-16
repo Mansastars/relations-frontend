@@ -163,6 +163,7 @@ export function FullInput({
   min,
   maxLength,
   pattern,
+  disabled
 }) {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -202,6 +203,7 @@ export function FullInput({
           onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          disabled={disabled}
         />
         <div className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">
           {icon}

@@ -18,6 +18,10 @@ import {
   StarBorderOutlined,
   Star,
 } from "@mui/icons-material";
+import { BsHourglassSplit } from "react-icons/bs";
+import { SlHourglass } from "react-icons/sl";
+import { HiSpeakerphone } from "react-icons/hi";
+import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { useAuth } from "../hooks/AuthContext";
 import api from "../api";
 import Swal from "sweetalert2";
@@ -94,44 +98,56 @@ function SidePanel({ setShowContactUs }) {
       activeIcon: <Dashboard />,
     },
     {
-      path: "/investors-update",
-      label: "Send Investors Update",
-      icon: <UpdateOutlined />,
-      activeIcon: <Update />,
-    },
-    {
       path: "/contact",
       label: "Contacts",
       icon: <PeopleOutline />,
       activeIcon: <People />,
     },
     {
-      path: "/pricing",
-      label: "Billing",
-      icon: <AttachMoneyOutlined />,
-      activeIcon: <AttachMoney />,
-      onClick: handleBilling,
+      path: "/broadcast",
+      label: "BroadCast",
+      icon: <HiOutlineSpeakerphone className="w-6 h-w-6"/>,
+      activeIcon: <HiSpeakerphone className="w-6 h-w-6"/>,
     },
     {
-      path: "https://community.mansastars.com/home",
-      label: "VC/Founder Network",
-      icon: <StarBorderOutlined />,
-      activeIcon: <Star />,
-      external: true,
+      path: "/investors-update",
+      label: "Send Investors Update",
+      icon: <UpdateOutlined />,
+      activeIcon: <Update />,
     },
     {
-      path: "/profile",
-      label: "Settings",
-      icon: <SettingsOutlined />,
-      activeIcon: <Settings />,
+      path: "/wait-list",
+      label: "Upcoming",
+      icon: <BsHourglassSplit className="w-6 h-w-6"/>,
+      activeIcon: <SlHourglass className="w-6 h-w-6"/>,
     },
-    {
-      path: "#",
-      label: "Contact Us",
-      icon: <ContactSupportOutlined />,
-      activeIcon: <ContactSupport />,
-      onClick: () => setShowContactUs(true),
-    },
+    // {
+    //   path: "/pricing",
+    //   label: "Billing",
+    //   icon: <AttachMoneyOutlined />,
+    //   activeIcon: <AttachMoney />,
+    //   onClick: handleBilling,
+    // },
+    // {
+    //   path: "https://community.mansastars.com/home",
+    //   label: "VC/Founder Network",
+    //   icon: <StarBorderOutlined />,
+    //   activeIcon: <Star />,
+    //   external: true,
+    // },
+    // {
+    //   path: "/profile",
+    //   label: "Settings",
+    //   icon: <SettingsOutlined />,
+    //   activeIcon: <Settings />,
+    // },
+    // {
+    //   path: "#",
+    //   label: "Contact Us",
+    //   icon: <ContactSupportOutlined />,
+    //   activeIcon: <ContactSupport />,
+    //   onClick: () => setShowContactUs(true),
+    // },
   ];
 
   const getUserInitials = (firstName, lastName) => {

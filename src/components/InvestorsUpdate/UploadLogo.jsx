@@ -28,6 +28,7 @@ const UploadLogo = ({ updateData }) => {
 
           // Update the state with the new logoUrl
           setLogoUrl(imageUrl);
+          
 
           // Store the logoUrl in localStorage
           const savedData = localStorage.getItem("InvestorsUpdate");

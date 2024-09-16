@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import Waitlist from "./Pages/Waitlist";
+import BroadCast from "./Pages/BroadCast";
 
 // Lazy loading implementation
 const Dashboard = lazy(() => import("./Pages/Dashboard"));
@@ -94,6 +95,9 @@ function App() {
 
               <Route path="/contact" element={<ProtectedRoute />}>
                 <Route index element={<Contacts />} />
+              </Route>
+              <Route path="/broadcast" element={<ProtectedRoute />}>
+                <Route index element={<BroadCast />} />
               </Route>
 
               <Route path="/investors-update" element={<ProtectedRoute />}>
