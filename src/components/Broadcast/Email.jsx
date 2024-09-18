@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { Button, FullInput, FormNotes, SearchBar } from "../Reusables";
 import { toast } from "react-toastify";
 import api from "../../api";
 import { getFilteredContacts } from "../Search/getFilteredContacts.js";
-import UploadLogo from '../InvestorsUpdate/UploadLogo.jsx'
-
+import UploadLogo from "../InvestorsUpdate/UploadLogo.jsx";
+import JoditEditor from "jodit-react";
 
 function Email({ onClose }) {
+  const editor = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredContacts, setFilteredContacts] = useState([]);
@@ -18,7 +19,7 @@ function Email({ onClose }) {
     email_content: "",
     address: "",
     name: "",
-    logo: "", 
+    logo: "",
     phone_number: "",
     send_to_all: false,
   });
@@ -28,7 +29,6 @@ function Email({ onClose }) {
     setFormValue((prevFormValue) => ({ ...prevFormValue, [name]: value }));
   };
 
-  // Handle checkbox toggle for "Send to all contacts"
   const handleCheckboxChange = () => {
     setFormValue((prevFormValue) => ({
       ...prevFormValue,
@@ -37,7 +37,6 @@ function Email({ onClose }) {
     }));
   };
 
-  // Fetch and filter contacts based on the search term
   useEffect(() => {
     const fetchFilteredContacts = async () => {
       const contacts = await getFilteredContacts(searchTerm);
@@ -57,7 +56,7 @@ function Email({ onClose }) {
         ? `${prevFormValue.recipients_email} ${email}`
         : email,
     }));
-    setSearchTerm(""); // Clear the search term
+    setSearchTerm("");
   };
 
   const handleSubmit = async (e) => {
@@ -65,22 +64,23 @@ function Email({ onClose }) {
     setIsSubmitting(true);
     try {
       const response = await api.post("general/broadcast-email", formValue);
+      console.log(response)
       if (response.data.status === "success") {
         toast.success(response.data.message);
-        onClose()
+        onClose();
       }
     } catch (error) {
+      console.log(error)
       toast.error("Something went wrong");
       setIsSubmitting(false);
     }
     setIsSubmitting(false);
   };
 
-  // Function to handle logo update
   const handleLogoUpdate = (data) => {
     setFormValue((prevFormValue) => ({
       ...prevFormValue,
-      logo: data.logoUrl, // Update the logo URL in the form value
+      logo: data.logoUrl,
     }));
   };
 
@@ -101,7 +101,6 @@ function Email({ onClose }) {
             onSubmit={handleSubmit}
             className="flex flex-col gap-5 justify-center w-full"
           >
-            {/* Conditionally render SearchBar and Recipients Email */}
             {!formValue.send_to_all && (
               <>
                 <div className="flex items-center gap-4 w-full pr-4">
@@ -161,7 +160,6 @@ function Email({ onClose }) {
               </>
             )}
 
-            {/* Checkbox for Send to all contacts */}
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -172,7 +170,6 @@ function Email({ onClose }) {
               <label htmlFor="send_to_all">Send to all contacts</label>
             </div>
 
-            {/* Upload Logo button always visible */}
             <div className="w-full mt-4">
               <UploadLogo updateData={handleLogoUpdate} />
             </div>
@@ -234,15 +231,22 @@ function Email({ onClose }) {
               />
             </div>
             <div>
-              <FormNotes
-                id="email_content"
+              <label
+                className={` bg-white px-1 text-sm font-semibold leading-6`}
+              >
+                Email content
+              </label>
+              <JoditEditor
+                ref={editor}
                 value={formValue.email_content}
-                onChange={handleInput}
-                title="Email Content"
-                name="email_content"
+                onBlur={(content) =>
+                  setFormValue((prevFormValue) => ({
+                    ...prevFormValue,
+                    email_content: content,
+                  }))
+                }
               />
             </div>
-
             <div className="mt-8 w-full flex items-center justify-center">
               <Button type="submit" disabled={isSubmitting} text="Submit" />
             </div>
