@@ -70,7 +70,6 @@ function Email({ onClose }) {
         onClose();
       }
     } catch (error) {
-      console.log(error)
       toast.error("Something went wrong");
       setIsSubmitting(false);
     }

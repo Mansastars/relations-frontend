@@ -163,7 +163,7 @@ export function FullInput({
   min,
   maxLength,
   pattern,
-  disabled
+  disabled,
 }) {
   const [isFocused, setIsFocused] = useState(false);
 
