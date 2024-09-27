@@ -9,15 +9,18 @@ import GoogleMeet from "../../../../assets/SignUpImages/GoogleMeet.svg";
 import LinkedInLogo from "../../../../assets/SignUpImages/LinkedInLogo.svg";
 import MicrosoftTeamsIcon from "../../../../assets/SignUpImages/MicrosoftTeamsIcon.svg";
 import SubTitle from "../../StepsUI/SubTitle";
+import { useTranslation } from 'react-i18next';
 
 const AppInterations = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="px-14 max-md:px-10 max-sm:px-5 py-20 bg-light-grey w-full">
       <div className="flex flex-col justify-center gap-12 max-md:gap-8 w-full">
         {/* Title Section */}
         <div className="text-center flex flex-col gap-3">
-          <Title title="Integrate with Apps You Use Daily" />
-          <SubTitle subTitle="Seamlessly connect your CRM with Gmail, Google Meet, and more for enhanced productivity." />
+          <Title title={t('integrate_title')} />
+          <SubTitle subTitle={t('integrate_subtitle')} />
         </div>
 
         {/* Icons Section */}

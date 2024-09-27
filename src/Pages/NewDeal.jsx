@@ -1,40 +1,36 @@
-// New Deal Page
-import { SearchBar } from "../components/Reusables";
-import { Button } from "../components/Reusables";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/AuthContext";
+import { useTranslation } from 'react-i18next'; // Import useTranslation hook
 import NewDealModal from "../components/DealDetails/NewDealModal";
 import CreatedDeals from "../components/DealDetails/CreatedDeal";
 import FreeTrialBanner from "./FreeTrialBanner";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/AuthContext";
-import { useEffect } from "react";
+import { Button } from "../components/Reusables";
 
-// The all dashbord page. All dashboards appear here annd one can also create a dashboard on this page.
 export default function NewDealPage() {
+  const { t } = useTranslation(); // Initialize translation function
   const [showNewDealModal, setShowNewDealModal] = useState(false);
-  const navigate = useNavigate(); // Use useNavigate hook to navigate programmatically
-
-  const { isAuthenticated } = useAuth(); // Access isAuthenticated from useAuth hook
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    // Redirect to login page if not authenticated
     if (!isAuthenticated) {
       navigate("/auth/login");
     }
-  }, [isAuthenticated, navigate]); // Dependency array ensures this effect runs when isAuthenticated changes
+  }, [isAuthenticated, navigate]);
 
   return (
-    <div className=" h-screen w-full">
-      <div className=" sticky top-0 w-full z-50">
+    <div className="h-screen w-full">
+      <div className="sticky top-0 w-full z-50">
         <FreeTrialBanner />
       </div>
-      <div className=" flex flex-col gap-20 w-full h-screen max-sm:w-full max-sm:pr-2 pl-3">
-        <div className=" flex pt-2 items-center gap-4">
+      <div className="flex flex-col gap-20 w-full h-screen max-sm:w-full max-sm:pr-2 pl-3">
+        <div className="flex pt-2 items-center gap-4">
           <div onClick={() => setShowNewDealModal(true)} className="flex">
-            <Button text="Create a Dashboard" />
+            <Button text={t('CreateDashboard')} /> {/* Use translation */}
           </div>
         </div>
-        <div className=" overflow-x-auto pb-5 items-center">
+        <div className="overflow-x-auto pb-5 items-center">
           <CreatedDeals />
         </div>
       </div>

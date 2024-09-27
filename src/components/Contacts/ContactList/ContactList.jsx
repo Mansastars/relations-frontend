@@ -5,8 +5,10 @@ import ContactTable from "./ContactTable";
 import { toast } from "react-toastify";
 import { getFilteredContacts } from "../../Search/getFilteredContacts.js";
 import { SearchBar } from "../../Reusables";
+import { useTranslation } from 'react-i18next';
 
 function ContactList() {
+  const { t } = useTranslation();
   const [allcontacts, setAllContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,7 +48,7 @@ function ContactList() {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || "Failed to delete contact");
+      toast.error(error.response?.data?.message || t('delete_contact_error'));
     }
   };
 
@@ -61,17 +63,17 @@ function ContactList() {
   return (
     <div className="mx-3 my-5 text-dark-blue">
       <div className="flex flex-col gap-5">
-        <h1 className="text-3xl font-bold">All Contacts</h1>
+        <h1 className="text-3xl font-bold">{t('all_contacts')}</h1>
         <div className="flex justify-between items-center">
           <div className="w-full mr-4">
-          <SearchBar 
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeHolder={"Search Contacts..."}
-          />
+            <SearchBar 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeHolder={t('search_contacts_placeholder')}
+            />
           </div>
           <div>
-          <ExportContacts />
+            <ExportContacts />
           </div>
         </div>
       </div>

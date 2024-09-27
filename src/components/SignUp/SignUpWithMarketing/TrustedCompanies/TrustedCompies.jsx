@@ -1,14 +1,17 @@
 import React from "react";
 import Company_6 from "../../../../assets/SignUpImages/Company_6.jpeg";
 import Title from "../../StepsUI/Title";
+import { useTranslation } from 'react-i18next';
 
 const TrustedCompies = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="px-14 max-md:px-10 max-sm:px-5 pb-10 pt-28 lg:pt-40 max-md:pt-20 lg:pb-24 bg-white w-full">
       <div className=" flex flex-col justify-center gap-12 max-md:gap-8 w-full">
         <div className="flex flex-col gap-3">
           <Title
-            title="Trusted by over 800 fund managers and start-ups across the globe"
+            title={t('trusted_by')}
             className="text-4xl"
           />
         </div>

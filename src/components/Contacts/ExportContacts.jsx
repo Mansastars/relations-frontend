@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import exportFromJSON from "export-from-json";
 import { Button } from "../Reusables";
 import Swal from "sweetalert2";
 import api from "../../api";
+import { useTranslation } from "react-i18next";
 
 function ExportContacts() {
+  const { t } = useTranslation();
+
   const handleExport = async () => {
     Swal.fire({
-      title: "Export Contacts",
-      text: "Are you sure you want to export your contacts?",
+      title: t("export_contacts.title"),
+      text: t("export_contacts.text"),
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: "Yes, export it!",
-      cancelButtonText: "Cancel",
+      confirmButtonText: t("export_contacts.confirmButtonText"),
+      cancelButtonText: t("export_contacts.cancelButtonText"),
     }).then(async (result) => {
       if (result.isConfirmed) {
         // API call to get contacts
@@ -29,26 +32,26 @@ function ExportContacts() {
             data,
             fileName,
             fields: {
-              first_name: "First Name",
-              last_name: "Last Name",
-              gender: "Gender",
-              organization_name: "Organization",
+              first_name: t("export_contacts.fields.first_name"),
+              last_name: t("export_contacts.fields.last_name"),
+              gender: t("export_contacts.fields.gender"),
+              organization_name: t("export_contacts.fields.organization_name"),
             },
             exportType,
           });
 
           Swal.fire({
             icon: "success",
-            title: "Success!",
-            text: "Contacts exported successfully.",
+            title: t("export_contacts.success.title"),
+            text: t("export_contacts.success.text"),
           });
         } catch (error) {
           console.log(error);
 
           Swal.fire({
             icon: "error",
-            title: "Export Error!",
-            text: "Failed to export contacts. Please try again.",
+            title: t("export_contacts.error.title"),
+            text: t("export_contacts.error.text"),
           });
         }
       }
@@ -57,7 +60,7 @@ function ExportContacts() {
 
   return (
     <>
-      <Button text="Export Contacts" onClick={handleExport} />
+      <Button text={t("export_contacts.button_text")} onClick={handleExport} />
     </>
   );
 }

@@ -4,6 +4,7 @@ import "./index.css";
 import AppWrapper from "./App.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "./i18n.js"
 
 const queryClient = new QueryClient();
 

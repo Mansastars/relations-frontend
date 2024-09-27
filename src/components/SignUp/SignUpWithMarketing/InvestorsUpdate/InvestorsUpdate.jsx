@@ -3,19 +3,22 @@ import Title from "../../StepsUI/Title";
 import SubTitle from "../../StepsUI/SubTitle";
 import "../../CSS/investorsUpdateSection.css";
 import InvestorsUpdateImage from "../../../../assets/SignUpImages/InvestorsUpdate.png";
+import { useTranslation } from 'react-i18next';
 
 const InvestorsUpdate = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="px-14 max-md:px-10 max-sm:px-5 py-20 bg-white w-full">
       <div className=" flex flex-col justify-center gap-12 max-md:gap-8 w-full">
         <div className=" flex flex-col gap-3">
-          <Title title="Discover our AI-powered investor relations automation" />
-          <SubTitle subTitle="Revolutionizing How You Connect with Investors for Real-Time Insights and Efficiency" />
+          <Title title={t('investor_update_title')} />
+          <SubTitle subTitle={t('investor_update_subtitle')} />
         </div>
         <div className=" flex flex-col gap-10">
           <div className="clients-card w-full gap-5 justify-center items-center">
             <div className=" text-wrap text-lg font-semibold">
-              Investment Managers require Updates from Founders
+              {t('investment_managers_need_updates')}
             </div>
             <div className=" self-center w-full">
               <iframe
@@ -29,7 +32,7 @@ const InvestorsUpdate = () => {
 
           <div className="clients-card w-full gap-5 justify-center items-center">
             <div className=" text-wrap text-lg font-semibold">
-              Investors Update Template
+              {t('investors_update_template')}
             </div>
             <div className=" self-center w-full h-80 overflow-auto">
               <img

@@ -9,14 +9,8 @@ import {
   ContactSupport,
   PeopleOutline,
   People,
-  AttachMoneyOutlined,
-  AttachMoney,
   Update,
   UpdateOutlined,
-  Settings,
-  SettingsOutlined,
-  StarBorderOutlined,
-  Star,
 } from "@mui/icons-material";
 import { BsHourglassSplit } from "react-icons/bs";
 import { SlHourglass } from "react-icons/sl";
@@ -27,6 +21,8 @@ import api from "../api";
 import Swal from "sweetalert2";
 import { ArrowLeftCircle, MenuIcon } from "lucide-react";
 import { Avatar } from "@mui/material";
+import LanguageSwitcher from "../components/LanguageSwitcher";
+import { useTranslation } from "react-i18next";  // Importing useTranslation
 
 function SidePanel({ setShowContactUs }) {
   const [isOpen, setIsOpen] = useState(() => window.innerWidth > 768);
@@ -37,6 +33,8 @@ function SidePanel({ setShowContactUs }) {
   const [user, setUser] = useState(null);
 
   const userData = localStorage.getItem("user");
+
+  const { t } = useTranslation();  // Using the translation hook
 
   useEffect(() => {
     const storedUser = JSON.parse(userData);
@@ -57,97 +55,44 @@ function SidePanel({ setShowContactUs }) {
     }
   };
 
-  const handleBilling = async () => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    setIsLoading(true);
-    if (!userData.subscription_name) {
-      navigate("/pricing");
-      setIsLoading(false);
-      return;
-    }
-    try {
-      const res = await api.post(`users/customer-portal`, {
-        email: userData.email,
-      });
-      if (res.data && res.data.url) {
-        window.location.href = res.data.url;
-      } else {
-        Swal.fire(
-          "Error",
-          "An error occurred while processing your request",
-          "error"
-        );
-      }
-    } catch (error) {
-      Swal.fire(
-        "Error",
-        "An error occurred while processing your request",
-        "error"
-      );
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const menuItems = [
     {
       path: "/alldashboards",
-      label: "Dashboards",
+      label: t("sidepanel.dashboards"),  // Translation key for "Dashboards"
       icon: <DashboardOutlined />,
       activeIcon: <Dashboard />,
     },
     {
       path: "/contact",
-      label: "Contacts",
+      label: t("sidepanel.contacts"),  // Translation key for "Contacts"
       icon: <PeopleOutline />,
       activeIcon: <People />,
     },
     {
       path: "/broadcast",
-      label: "BroadCast",
-      icon: <HiOutlineSpeakerphone className="w-6 h-w-6"/>,
-      activeIcon: <HiSpeakerphone className="w-6 h-w-6"/>,
+      label: t("sidepanel.broadcast"),  // Translation key for "Broadcast"
+      icon: <HiOutlineSpeakerphone className="w-6 h-w-6" />,
+      activeIcon: <HiSpeakerphone className="w-6 h-w-6" />,
     },
     {
       path: "/investors-update",
-      label: "Send Investors Update",
+      label: t("sidepanel.investorsUpdate"),  // Translation key for "Send Investors Update"
       icon: <UpdateOutlined />,
       activeIcon: <Update />,
     },
     {
       path: "/wait-list",
-      label: "Upcoming",
-      icon: <BsHourglassSplit className="w-6 h-w-6"/>,
-      activeIcon: <SlHourglass className="w-6 h-w-6"/>,
+      label: t("sidepanel.upcoming"),  // Translation key for "Upcoming"
+      icon: <BsHourglassSplit className="w-6 h-w-6" />,
+      activeIcon: <SlHourglass className="w-6 h-w-6" />,
     },
-    // {
-    //   path: "/pricing",
-    //   label: "Billing",
-    //   icon: <AttachMoneyOutlined />,
-    //   activeIcon: <AttachMoney />,
-    //   onClick: handleBilling,
-    // },
-    // {
-    //   path: "https://community.mansastars.com/home",
-    //   label: "VC/Founder Network",
-    //   icon: <StarBorderOutlined />,
-    //   activeIcon: <Star />,
-    //   external: true,
-    // },
-    // {
-    //   path: "/profile",
-    //   label: "Settings",
-    //   icon: <SettingsOutlined />,
-    //   activeIcon: <Settings />,
-    // },
-    // {
-    //   path: "#",
-    //   label: "Contact Us",
-    //   icon: <ContactSupportOutlined />,
-    //   activeIcon: <ContactSupport />,
-    //   onClick: () => setShowContactUs(true),
-    // },
+    {
+      path: "#",
+      label: t("sidepanel.contactUs"),  // Translation key for "Contact Us"
+      icon: <ContactSupportOutlined />,
+      activeIcon: <ContactSupport />,
+      onClick: () => setShowContactUs(true),
+    },
   ];
 
   const getUserInitials = (firstName, lastName) => {
@@ -167,7 +112,7 @@ function SidePanel({ setShowContactUs }) {
         <Link to="/alldashboards">
           <img src={MansaLogo} alt="Company Logo" />
         </Link>
-
+        <LanguageSwitcher />
         {user && (
           <div
             className={`flex items-center mt-5 px-4 cursor-pointer ${
@@ -269,7 +214,7 @@ function SidePanel({ setShowContactUs }) {
           }`}
         >
           <Logout className="w-8 h-6 block" />
-          {isOpen && <span className="font-bold text-base">Log Out</span>}
+          {isOpen && <span className="font-bold text-base">{t("logout")}</span>} {/* Translation for "Log Out" */}
         </button>
       </div>
     </div>

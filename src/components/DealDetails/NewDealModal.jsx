@@ -1,12 +1,10 @@
-// Pop-up NewDealModal
 import { X } from "lucide-react";
 import Swal from "sweetalert2";
-import { Button, FullInput, SignUpRequired } from "../Reusables";
-import { useRef } from "react";
+import { Button, FullInput, SignUpRequired, DateForm } from "../Reusables";
+import { useRef, useState } from "react";
 import api from "../../api";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DateForm } from "../Reusables";
+import { useTranslation } from 'react-i18next'; // Import useTranslation hook
 
 /**
  * Renders a modal for creating a new deal.
@@ -17,6 +15,7 @@ import { DateForm } from "../Reusables";
  */
 
 function NewDealModal({ onClose }) {
+  const { t } = useTranslation(); // Initialize translation function
   const NewDealModalRef = useRef();
 
   const closeNewDealModal = (e) => {
@@ -62,19 +61,18 @@ function NewDealModal({ onClose }) {
       console.log("Response: ", response);
       if (
         response.data.message ===
-        "You have to upgrade your subscription to create a neww dashboard"
+        "You have to upgrade your subscription to create a new dashboard"
       ) {
         onClose();
         Swal.fire({
           icon: "warning",
-          title: "Subscription Upgrade Required",
-          text: "You have reached your limit. Please upgrade your subscription to create a new dashboard.",
+          title: t('SubscriptionUpgradeRequired'),
+          text: t('SubscriptionUpgradeText'),
           showCancelButton: true,
-          confirmButtonText: "Upgrade",
-          cancelButtonText: "Cancel",
+          confirmButtonText: t('Upgrade'),
+          cancelButtonText: t('Cancel'),
         }).then((result) => {
           if (result.isConfirmed) {
-            // Redirect to pricing page
             navigate("/pricing");
           }
         });
@@ -83,8 +81,8 @@ function NewDealModal({ onClose }) {
       }
     } catch (error) {
       console.log(error);
-      setErrorMessage("Something went wrong. Please try again."); // set error message
-      window.scrollTo(0, 0); //scroll to the top of the page
+      setErrorMessage(t('ErrorMessage'));
+      window.scrollTo(0, 0);
     }
   };
 
@@ -92,53 +90,53 @@ function NewDealModal({ onClose }) {
     <div
       ref={NewDealModalRef}
       onClick={closeNewDealModal}
-      className=" fixed z-50 inset-0 bg-dark-blue bg-opacity-30 backdrop-blur-sm flex justify-center overflow-y-auto h-screen"
+      className="fixed z-50 inset-0 bg-dark-blue bg-opacity-30 backdrop-blur-sm flex justify-center overflow-y-auto h-screen"
     >
-      <div className=" mt-10 flex flex-col">
-        <div className=" bg-white w-full rounded-xl px-20 max-md:px-5 py-10 flex flex-col gap-10 items-center mx-4 justify-center">
+      <div className="mt-10 flex flex-col">
+        <div className="bg-white w-full rounded-xl px-20 max-md:px-5 py-10 flex flex-col gap-10 items-center mx-4 justify-center">
           <button
             onClick={onClose}
-            className=" place-self-end text-red-500 hover:text-dark-blue"
+            className="place-self-end text-red-500 hover:text-dark-blue"
           >
             <X size={30} />
           </button>
-          <h1 className=" text-dark-blue text-3xl max-sm:text-xl font-extrabold">
-            Create a New Dashboard
+          <h1 className="text-dark-blue text-3xl max-sm:text-xl font-extrabold">
+            {t('CreateNewDashboard')}
           </h1>
           <form
             onSubmit={handleSubmit}
-            className=" flex flex-col gap-5 justify-center w-full"
+            className="flex flex-col gap-5 justify-center w-full"
           >
             {errorMessage && (
-              <p className=" text-[#ff0000] font-semibold">{errorMessage}</p>
+              <p className="text-[#ff0000] font-semibold">{errorMessage}</p>
             )}
-            <div className="flex flex-col gap-5 w-full ">
+            <div className="flex flex-col gap-5 w-full">
               <SignUpRequired
                 type="text"
-                title="Dashboard Name*"
-                placeholder="Sundi"
+                title={t('DashboardName')}
+                placeholder={t('PlaceholderDealName')}
                 id="dealName"
                 value={formValue.dealName}
                 onChange={handleInput}
               />
               <DateForm
-                title="Deadline"
+                title={t('Deadline')}
                 value={formValue.datetime}
                 onChange={handleInput}
-                id={"datetime"}
+                id="datetime"
               />
               <FullInput
                 type="number"
-                title="Deal Size ($)"
-                placeholder="1,000,000"
+                title={t('DealSize')}
+                placeholder={t('PlaceholderDealSize')}
                 min={0}
                 id="dealSize"
                 value={formValue.dealSize}
                 onChange={handleInput}
               />
             </div>
-            <div className=" mt-8 w-full flex items-center justify-center">
-              <Button type="submit" text="Create a Dashboard" />
+            <div className="mt-8 w-full flex items-center justify-center">
+              <Button type="submit" text={t('CreateDashboardButton')} />
             </div>
           </form>
         </div>

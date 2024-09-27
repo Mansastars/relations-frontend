@@ -14,6 +14,7 @@ import GoogleSignUp from "../../../GoogleAuth/GoogleSignUp";
 import Swal from "sweetalert2";
 import api from "../../../../api";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // Import useTranslation
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -25,6 +26,7 @@ const theme = createTheme({
 });
 
 const FormContainer = () => {
+  const { t } = useTranslation(); // Initialize useTranslation
   const [privacyPolicyModal, setPrivacyPolicyModal] = useState(false);
   const [openTermOfUsageModal, setOpenTermOfUsageModal] = useState(false);
   const [openConfirmEmailModal, setOpenConfirmEmailModal] = useState(false);
@@ -50,8 +52,8 @@ const FormContainer = () => {
 
   const onSubmit = async (data) => {
     Swal.fire({
-      title: "Creating Account...",
-      text: "Please wait while we create your account.",
+      title: t("Creating Account..."), // Translated
+      text: t("Please wait while we create your account."), // Translated
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -69,7 +71,7 @@ const FormContainer = () => {
     } catch (error) {
       Swal.close();
 
-      let errorMessage = "An error occurred during the submission process.";
+      let errorMessage = t("An error occurred during the submission process."); // Translated
       if (
         error.response &&
         error.response.data &&
@@ -80,9 +82,9 @@ const FormContainer = () => {
 
       Swal.fire({
         icon: "error",
-        title: "Submission Failed",
+        title: t("Submission Failed"), // Translated
         text: errorMessage,
-        confirmButtonText: "Retry",
+        confirmButtonText: t("Retry"), // Translated
       });
       console.error("Failed to submit sign up data:", error);
     }
@@ -98,10 +100,10 @@ const FormContainer = () => {
     <div className=" w-full bg-white rounded-lg px-10 py-10 flex flex-col gap-5 shadow-xl">
       <div>
         <p className="font-semibold text-lg">
-          Get started with your free account today.
+          {t("Get started with your free account today.")} {/* Translated */}
         </p>
         <p className=" text-md text-gray-500">
-          No credit card required. Enjoy a 7-day free trial.
+          {t("No credit card required. Enjoy a 7-day free trial.")} {/* Translated */}
         </p>
       </div>
       <form
@@ -113,14 +115,14 @@ const FormContainer = () => {
             name="first_name"
             control={control}
             error={errors.first_name}
-            label="First Name *"
+            label={t("First Name *")} 
             autoFocus={true}
           />
           <CustomInput
             name="last_name"
             control={control}
             error={errors.last_name}
-            label="Last Name *"
+            label={t("Last Name *")} 
           />
         </div>
 
@@ -128,28 +130,28 @@ const FormContainer = () => {
           name="email"
           control={control}
           error={errors.email}
-          label="Business Email *"
+          label={t("Business Email *")} 
         />
 
         <CustomInput
           name="password"
           control={control}
           error={errors.first_name}
-          label="Password *"
+          label={t("Password *")} 
           type="password"
         />
         <CustomInput
           name="confirm_password"
           control={control}
           error={errors.last_name}
-          label="Confirm Password *"
+          label={t("Confirm Password *")} 
           type="password"
         />
         <CustomInput
           name="referral_code"
           control={control}
           error={errors.referral_code}
-          label="Referral Code"
+          label={t("Referral Code")} 
         />
 
         <div className="">
@@ -165,19 +167,19 @@ const FormContainer = () => {
             }
             label={
               <p className="text-sm">
-                Yes, I agree to the{" "}
+                {t("Yes, I agree to the")}{" "}
                 <span
                   onClick={() => setPrivacyPolicyModal(true)}
                   className="text-mansa-blue underline cursor-pointer hover:text-dark-blue"
                 >
-                  Privacy Policy
+                  {t("Privacy Policy")} 
                 </span>{" "}
-                and{" "}
+                {t("and")}{" "}
                 <span
                   onClick={() => setOpenTermOfUsageModal(true)}
                   className="text-mansa-blue underline cursor-pointer hover:text-dark-blue"
                 >
-                  Terms of Usage
+                  {t("Terms of Usage")} 
                 </span>
                 .
               </p>
@@ -194,7 +196,7 @@ const FormContainer = () => {
             color="mainColor"
             type="submit"
           >
-            SIGN UP
+            {t("SIGN UP")} {/* Translated */}
           </Button>
         </ThemeProvider>
       </form>

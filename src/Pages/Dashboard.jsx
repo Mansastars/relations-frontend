@@ -13,6 +13,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/AuthContext";
 import ShareButton from "../components/ShareFeature/ShareButton";
 import { getFilteredContacts } from "../components/Search/getFilteredContacts.js";
+import { useTranslation } from "react-i18next"; // For translations
 
 function Dasboard() {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ function Dasboard() {
 
   const currentDealId = localStorage.getItem("currentDealId");
   const userDetails = JSON.parse(localStorage.getItem("user"));
+
+  const { t } = useTranslation(); // Initialize translation hook
 
   useEffect(() => {
     const fetchFilteredContacts = async () => {
@@ -80,7 +83,7 @@ function Dasboard() {
                 <SearchBar
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeHolder={"Add from contact database"}
+                  placeHolder={t("Add from contact database")}
                 />
                 {searchTerm && (
                   <ul className="absolute z-50 min-w-80 p-2 bg-light-grey shadow-lg rounded-lg overflow-y-auto">
@@ -88,7 +91,7 @@ function Dasboard() {
                       <li
                         key={contact.id}
                         className="hover:bg-dark-blue hover:text-white p-2 flex items-center"
-                        title="Click to add to this dashboard"
+                        title={t("Click to add to this dashboard")} // Title translation
                         onClick={() => addFromSearch(contact)}
                       >
                         {contact.profile_pic ? (
@@ -117,17 +120,10 @@ function Dasboard() {
                   </ul>
                 )}
               </div>
-              <div onClick={() => setShowModal(true)} className="flex">
-                <Button text="Add a New Contact" />
-              </div>
-              {/* <div
-                onClick={() => setShowMoveContactModal(true)}
-                className="flex"
-              >
-                <Button text="Move a Contact" />
-              </div> */}
             </div>
-
+            <div onClick={() => setShowModal(true)} className="">
+              <Button text={t("Add a New Contact")} className='whitespace-nowrap mr-4'/>
+            </div>
             <div className="">
               <ShareButton dealDetail={singleDeals} />
             </div>
@@ -144,7 +140,7 @@ function Dasboard() {
             </div>
             <div className=" flex flex-col w-[60%] max-md:w-full">
               <div className=" bg-mansa-blue text-white py-2 text-center rounded-tr-xl max-md:rounded-t-xl">
-                Deal Size Amount:{" "}
+                {t("Deal Size Amount")}: {/* Translation */}
                 <span className="font-semibold">
                   $
                   {singleDeals.deal_size
@@ -154,7 +150,7 @@ function Dasboard() {
               </div>
               <div className=" flex flex-row  ">
                 <div className=" bg-[orange] text-white w-1/2 max-md:w-full py-2 pl-5 max-md:rounded-bl-xl">
-                  In-Negotiation Value:{" "}
+                  {t("In-Negotiation Value")}: {/* Translation */}
                   <span className=" font-semibold">
                     $
                     {singleDeals.negotiation_value
@@ -163,7 +159,7 @@ function Dasboard() {
                   </span>
                 </div>
                 <div className=" bg-[green] text-white w-1/2 max-md:w-full py-2 pl-5 rounded-br-xl ">
-                  Deal Signed Value:{" "}
+                  {t("Deal Signed Value")}: {/* Translation */}
                   <span className=" font-semibold">
                     $
                     {singleDeals.signed_value
@@ -175,7 +171,7 @@ function Dasboard() {
             </div>
           </div>
         )}
-          <Tables />
+        <Tables />
       </div>
       {showModal && <Modal onClose={() => setShowModal(false)} data={{}} />}
       {showMoveContactModal && (

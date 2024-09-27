@@ -1,4 +1,3 @@
-// Pop-up Modal
 import { X } from "lucide-react";
 import {
   Button,
@@ -15,8 +14,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ContactImage from "./ContactImage/ContactImage";
+import { useTranslation } from "react-i18next";
 
 function Modal({ onClose, data }) {
+  const { t } = useTranslation(); // Initialize translation hook
   const modalRef = useRef();
   const formRef = useRef();
   const queryClient = useQueryClient();
@@ -85,8 +86,8 @@ function Modal({ onClose, data }) {
         datetime: "",
       });
       setIsSubmitting(false);
-      onClose(); // Close the modal on successful submission
-      toast.success("Contact created successfully.");
+      onClose();
+      toast.success(t("contact_created_success")); // Translated success message
     },
     onError: (error) => {
       setErrorMessage(error.response.data.message);
@@ -116,7 +117,6 @@ function Modal({ onClose, data }) {
       stage: formValue.currentStage,
       meeting_date: meetingDate,
       notes: formValue.notes,
-      // linkedin_url: formValue.linkedin_url,
       profile_pic: localStorage.getItem("profile_pic") || "",
     };
     createContactMutation.mutate(userData);
@@ -140,7 +140,7 @@ function Modal({ onClose, data }) {
             ref={formRef}
             className=" text-dark-blue text-3xl max-md:text-2xl max-sm:text-xl font-extrabold"
           >
-            Add a new contact to your pipeline
+            {t("add_new_contact")} {/* Translated header */}
           </h1>
           <form
             action=""
@@ -155,24 +155,24 @@ function Modal({ onClose, data }) {
               <div className=" flex flex-row flex-wrap gap-5 justify-center max-md:justify-start">
                 <FormInput
                   type="text"
-                  title="Title"
-                  placeholder="Mr./Mrs./Ms./Dr./Engr."
+                  title={t("title")}
+                  placeholder={t("title_placeholder")}
                   id="title"
                   value={formValue.title}
                   onChange={handleInput}
                 />
                 <FormInputRequired
                   type="text"
-                  title="First Name*"
-                  placeholder="Sundi"
+                  title={t("first_name_required")}
+                  placeholder={t("first_name_placeholder")}
                   id="firstName"
                   value={formValue.firstName}
                   onChange={handleInput}
                 />
                 <FormInputRequired
                   type="text"
-                  title="Last Name*"
-                  placeholder="Keita"
+                  title={t("last_name_required")}
+                  placeholder={t("last_name_placeholder")}
                   id="lastName"
                   value={formValue.lastName}
                   onChange={handleInput}
@@ -181,16 +181,16 @@ function Modal({ onClose, data }) {
               <div className=" flex flex-row flex-wrap gap-x-5 gap-y-8 justify-center max-md:justify-start">
                 <FormInput
                   type="text"
-                  title="Company"
-                  placeholder="Mansa, LLC"
+                  title={t("company")}
+                  placeholder={t("company_placeholder")}
                   id="company"
                   value={formValue.company}
                   onChange={handleInput}
                 />
                 <FormInput
                   type="number"
-                  title="Deal Size ($)"
-                  placeholder="1,000,000"
+                  title={t("deal_size")}
+                  placeholder={t("deal_size_placeholder")}
                   id="dealSize"
                   min={0}
                   value={formValue.dealSize}
@@ -198,36 +198,36 @@ function Modal({ onClose, data }) {
                 />
                 <FormInput
                   type="email"
-                  title="Contact Email"
-                  placeholder="sundi@sankore.com"
+                  title={t("email")}
+                  placeholder={t("email_placeholder")}
                   id="email"
                   value={formValue.email}
                   onChange={handleInput}
                 />
                 <FormInput
                   type="tel"
-                  title="Phone Number"
-                  placeholder="+123456789"
+                  title={t("phone_number")}
+                  placeholder={t("phone_number_placeholder")}
                   id="phoneNumber"
                   maxLength={15}
                   value={formValue.phoneNumber}
                   onChange={handleInput}
                 />
                 <DropDown
-                  label="Current Stage"
+                  label={t("current_stage")}
                   id="currentStage"
                   value={formValue.currentStage}
                   onChange={handleInput}
                 />
                 <DateForm
-                  title="Meeting Date"
+                  title={t("meeting_date")}
                   value={formValue.datetime}
                   onChange={handleInput}
                   id={"datetime"}
                 />
               </div>
               <div>
-                <FormNotes value={formValue.notes} onChange={handleInput} title={"Notes"} id={"notes"}/>
+                <FormNotes value={formValue.notes} onChange={handleInput} title={t("notes")} id={"notes"}/>
               </div>
             </div>
 
@@ -235,7 +235,7 @@ function Modal({ onClose, data }) {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                text="Create Contact"
+                text={t("create_contact")}
               />
             </div>
           </form>

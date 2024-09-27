@@ -5,7 +5,8 @@ import Button from "@mui/material/Button";
 import { ArrowForward } from "@mui/icons-material";
 import { ImHourGlass } from "react-icons/im";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { useTranslation } from "react-i18next"; // Import useTranslation for i18n
+import LanguageSwitcher from "../../../LanguageSwitcher";
 const { palette } = createTheme();
 const { augmentColor } = palette;
 const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
@@ -17,6 +18,7 @@ const theme = createTheme({
 
 const SignUpNavbar = ({ isScrolled }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation(); // Initialize translation
 
   const navbarStyle = {
     backgroundColor: isScrolled ? "white" : "#1A1D32", // Smooth transition between colors
@@ -34,35 +36,36 @@ const SignUpNavbar = ({ isScrolled }) => {
         <a href="https://relations.mansastars.com/">
           <img
             src={MansaLogo}
-            className="h-14 max-sm:h-12 hover:scale-105 transition-transform duration-300 ease-in-out" // Add hover effect on the logo
-            alt="Mansa's Logo"
+            className="h-14 max-sm:h-12 hover:scale-105 transition-transform duration-300 ease-in-out"
+            alt={t("mansaLogoAlt")} // Use translation for alt text
           />
         </a>
       </div>
-      
+
       {/* Buttons */}
       <ThemeProvider theme={theme}>
         <div className="flex gap-4">
           <Button
             variant="contained"
             endIcon={<ImHourGlass />}
-            className="w-30 hover:scale-105 transition-transform duration-300 ease-in-out" // Button hover effect
+            className="w-30 hover:scale-105 transition-transform duration-300 ease-in-out"
             color="mainColor"
             type="button"
             onClick={() => navigate("/wait-list")}
           >
-            Join Waitlist
+            {t("joinWaitlist")} {/* Use translation */}
           </Button>
           <Button
             variant="contained"
             endIcon={<ArrowForward />}
-            className="w-30 hover:scale-105 transition-transform duration-300 ease-in-out" // Button hover effect
+            className="w-30 hover:scale-105 transition-transform duration-300 ease-in-out"
             color="mainColor"
             type="button"
             onClick={() => navigate("/auth/login")}
           >
-            Sign In
+            {t("signIn")} {/* Use translation */}
           </Button>
+          <LanguageSwitcher />
         </div>
       </ThemeProvider>
     </nav>

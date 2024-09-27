@@ -10,7 +10,7 @@ import {
   CustomDropDown,
 } from "../Reusables";
 import { toast } from "react-toastify";
-import { waitlistContent } from "./waitlistContent";
+import { useWaitlistContent } from "./waitlistContent";
 import api from "../../api";
 
 function WaitlistForm({ onClose }) {
@@ -21,7 +21,7 @@ function WaitlistForm({ onClose }) {
       setFormValue((prevFormValue) => ({ ...prevFormValue, [name]: value }));
     }
   };
-
+  const waitlistContent = useWaitlistContent()
   const [formValue, setFormValue] = useState({
     first_name: "",
     last_name: "",

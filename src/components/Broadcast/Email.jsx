@@ -67,6 +67,7 @@ function Email({ onClose }) {
       console.log(response)
       if (response.data.status === "success") {
         toast.success(response.data.message);
+        localStorage.removeItem("InvestorsUpdate");
         onClose();
       }
     } catch (error) {

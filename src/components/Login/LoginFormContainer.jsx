@@ -14,6 +14,8 @@ import Swal from "sweetalert2";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GoogleSignIn from "../GoogleAuth/GoogleSignIn";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 const schema = yup.object().shape({
   email: yup
@@ -34,6 +36,7 @@ const theme = createTheme({
 });
 
 const LoginFormContainer = () => {
+  const { t } = useTranslation();
   const { login } = useAuth();
   const [emailNotVerifiedModal, setEmailNotVerifiedModal] = useState(false);
   const [openConfirmEmailModal, setOpenConfirmEmailModal] = useState(false);
@@ -67,8 +70,8 @@ const LoginFormContainer = () => {
     setIsLoading(true);
     try {
       Swal.fire({
-        title: "Logging In...",
-        text: "We are processing your login details. This will only take a few moments.",
+        title: t("login_logging_in"),
+        text: t("login_logging_in_text"),
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
@@ -89,7 +92,7 @@ const LoginFormContainer = () => {
       reset();
     } catch (error) {
       Swal.close();
-      let errorMessage = "An error occurred while logging in";
+      let errorMessage = t("login_error_occurred");
       if (
         error.response &&
         error.response.data &&
@@ -100,9 +103,9 @@ const LoginFormContainer = () => {
 
       Swal.fire({
         icon: "error",
-        title: "Submission Failed",
-        text: `${errorMessage}. Please try again.`,
-        confirmButtonText: "Retry",
+        title: t("login_submission_failed"),
+        text: `${errorMessage}. ${t("login_try_again")}`,
+        confirmButtonText: t("login_retry"),
       });
       console.error("Failed to login: ", error);
     } finally {
@@ -118,8 +121,8 @@ const LoginFormContainer = () => {
         </a>
 
         <div className=" flex flex-col gap-2">
-          <Title title="Welcome back!" />
-          <Subtitle subtitle="You talk, We organise." />
+          <Title title={t("login_title")} />
+          <Subtitle subtitle={t("login_subtitle")} />
         </div>
 
         <form
@@ -130,7 +133,7 @@ const LoginFormContainer = () => {
             name="email"
             control={control}
             error={errors.email}
-            label="Email"
+            label={t("login_email_label")}
             autoFocus={true}
           />
 
@@ -139,14 +142,14 @@ const LoginFormContainer = () => {
               name="password"
               control={control}
               error={errors.first_name}
-              label="Password"
+              label={t("login_password_label")}
               type="password"
             />
             <Link
               to="/verify_email"
               className=" text-sm text-mansa-blue hover:text-dark-blue self-end"
             >
-              <u>Forgot your password?</u>
+              <u>{t("login_forgot_password")}</u>
             </Link>
           </div>
 
@@ -158,7 +161,7 @@ const LoginFormContainer = () => {
               type="submit"
               disabled={isLoading}
             >
-              {isLoading ? "Loading..." : "Log In"}
+              {isLoading ? t("login_button_loading") : t("login_button")}
             </Button>
           </ThemeProvider>
         </form>
@@ -169,16 +172,18 @@ const LoginFormContainer = () => {
 
         <div className=" self-center mt-3">
           <span>
-            Don't have an account?{" "}
+            {t("login_no_account")}{" "}
             <Link
               to="/auth/sign_up"
               className=" text-mansa-blue hover:text-dark-blue"
             >
-              <u>Register</u>
+              <u>{t("login_register")}</u>
             </Link>
           </span>
         </div>
-
+        <div className="flex justify-center">
+          <LanguageSwitcher />
+        </div>
         {setEmailNotVerifiedModal && (
           <EmailNotVerified
             onClose={closeEmailNotVerifiedModal}

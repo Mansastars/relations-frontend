@@ -2,8 +2,11 @@ import React from "react";
 import "./CSS/glassmorphism.css";
 import WebsiteShareImage from "../../assets/LoginImage/WebsiteShareImage.jpeg";
 import Company_6 from "../../assets/SignUpImages/Company_6.jpeg";
+import { useTranslation } from "react-i18next";
 
 const LoginImageContainer = () => {
+  const { t } = useTranslation();
+
   return (
     <div
       className={`bg-[rgba(8,165,170,0.2)] w-full h-full min-h-screen max-lg:min-h-fit flex flex-col justify-center p-8 max-sm:p-3`}
@@ -17,7 +20,7 @@ const LoginImageContainer = () => {
         <div className=" bg-white px-5 py-10 rounded-b-lg">
           <div>
             <h3 className=" text-2xl max-sm:text-lg font-semibold text-center mb-10 mt-5">
-              Trusted by over 800 fund managers and start-ups across the globe
+              {t("trusted_by_fund_managers")}
             </h3>
           </div>
           <div className=" flex flex-wrap items-center justify-center w-full gap-5">
