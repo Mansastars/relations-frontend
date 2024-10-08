@@ -1,29 +1,32 @@
 import React from "react";
 import SingleContactRow from "./SingleContactRow";
+import { useTranslation } from "react-i18next";
 
 function ContactTable({ data, onDeleteContact, onUpdateContact }) {
+  const { t } = useTranslation();
+
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-white uppercase bg-mansa-blue">
           <tr>
             <th scope="col" className="px-6 py-3">
-              First name
+              {t('contactTable.firstName')}
             </th>
             <th scope="col" className="px-6 py-3">
-              Last name
+              {t('contactTable.lastName')}
             </th>
             <th scope="col" className="px-6 py-3">
-              Email
+              {t('contactTable.email')}
             </th>
             <th scope="col" className="px-6 py-3">
-              Phone Number
+              {t('contactTable.phoneNumber')}
             </th>
             <th scope="col" className="px-6 py-3">
-              Organization
+              {t('contactTable.organization')}
             </th>
             <th scope="col" className="px-6 py-3">
-              Action
+              {t('contactTable.action')}
             </th>
           </tr>
         </thead>

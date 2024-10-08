@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next"; // i18next hook
 import api from "../../../api";
 import { FullInput } from "../../Reusables";
 import Button from "@mui/material/Button";
@@ -16,6 +17,7 @@ const theme = createTheme({
 });
 
 const ProfileSection = () => {
+  const { t } = useTranslation(); // Use translation hook
   const [userDetails, setUserDetails] = useState(null);
   const [generalInfoIsSubmitting, setGeneralInfoIsSubmitting] = useState(false);
   const [formValue, setFormValue] = useState({
@@ -25,7 +27,6 @@ const ProfileSection = () => {
     bio: "",
   });
 
-  // Get user's details
   useEffect(() => {
     const handleUserDetails = async () => {
       try {
@@ -39,23 +40,17 @@ const ProfileSection = () => {
           bio: userDetails.bio || "",
         });
       } catch (error) {
-        if (error.response.data.message) {
-          Swal.fire("Error", error.response.data.message, "error");
-        } else {
-          Swal.fire(
-            "Error",
-            `An error occurred while trying to get your information. \
-            Please refresh the page.`,
-            "error"
-          );
-        }
+        Swal.fire(
+          t("error"),
+          t("errorFetchingDetails"),
+          "error"
+        );
         console.error("Error fetching user details:", error);
       }
     };
     handleUserDetails();
-  }, []);
+  }, [t]);
 
-  // Handle user's general info input
   const handleGeneralInfoInput = (e) => {
     if (e && e.target) {
       const { name, value } = e.target;
@@ -63,7 +58,6 @@ const ProfileSection = () => {
     }
   };
 
-  // Submit user's general info update
   const handleGeneralInfoSubmit = async (e) => {
     setGeneralInfoIsSubmitting(true);
     e.preventDefault();
@@ -77,7 +71,6 @@ const ProfileSection = () => {
 
     try {
       const res = await api.patch(`users/update-profile`, userData);
-      // Update local storage
       const user = JSON.parse(localStorage.getItem("user"));
       if (user) {
         user.first_name = formValue.first_name;
@@ -87,20 +80,16 @@ const ProfileSection = () => {
         localStorage.setItem("user", JSON.stringify(user));
       }
       Swal.fire(
-        "Profile Update",
-        "Your profile was updated successfully",
+        t("profileUpdate"),
+        t("profileUpdateSuccess"),
         "success"
       );
     } catch (error) {
-      if (error.response.data.message) {
-        Swal.fire("Error", error.response.data.message, "error");
-      } else {
-        Swal.fire(
-          "Eror",
-          `An waiting error occurred while updating your information. Please try again.`,
-          "error"
-        );
-      }
+      Swal.fire(
+        t("error"),
+        t("errorUpdatingInfo"),
+        "error"
+      );
       console.log(error);
     } finally {
       setGeneralInfoIsSubmitting(false);
@@ -109,14 +98,14 @@ const ProfileSection = () => {
 
   return (
     <div className=" flex flex-col w-full px-3 items-center overflow-y-auto">
-      <div
-        className={`bg-white py-10 px-6 max-sm:px-3 flex flex-col justify-center mt-10 mb-10 rounded-2xl items-start gap-10 w-[75%] max-md:w-full`}
-      >
+      <div className="bg-white py-10 px-6 flex flex-col justify-center mt-10 mb-10 rounded-2xl items-start gap-10 w-[75%]">
         <form onSubmit={handleGeneralInfoSubmit} className=" w-full">
           <div className=" w-full">
-            <h1 className=" text-dark-blue font-bold text-3xl">Profile</h1>
+            <h1 className=" text-dark-blue font-bold text-3xl">
+              {t("profile")}
+            </h1>
             <p className=" text-dark-blue text-base">
-              Use the form below to update your profile.
+              {t("updateProfile")}
             </p>
           </div>
           <div className="flex flex-col gap-5 mt-8 w-full">
@@ -126,17 +115,15 @@ const ProfileSection = () => {
             <div className="flex max-[768px]:flex-col gap-5 w-full">
               <FullInput
                 type="text"
-                title="First Name"
+                title={t("firstName")}
                 placeholder=""
-                // id="first_name"
                 value={formValue.first_name}
                 onChange={handleGeneralInfoInput}
               />
               <FullInput
                 type="text"
-                title="Last Name"
+                title={t("lastName")}
                 placeholder=""
-                // id="last_name"
                 value={formValue.last_name}
                 onChange={handleGeneralInfoInput}
               />
@@ -144,15 +131,14 @@ const ProfileSection = () => {
             <div className=" flex flex-col gap-1 w-1/2 max-[768px]:w-full">
               <FullInput
                 type="tel"
-                title="Phone Number"
+                title={t("phoneNumber")}
                 placeholder="+123456789"
-                // id="phone_number"
                 maxLength={15}
                 value={formValue.phone_number}
                 onChange={handleGeneralInfoInput}
               />
               <p className=" text-dark-blue text-sm">
-                We collect this incase of emergencies.
+                {t("phoneNumberDescription")}
               </p>
             </div>
             <div className="">
@@ -161,14 +147,13 @@ const ProfileSection = () => {
                   htmlFor="bio"
                   className=" absolute -top-3 left-3 bg-white px-1 text-sm leading-6 text-dark-blue font-semibold"
                 >
-                  Bio
+                  {t("bio")}
                 </label>
                 <div className="mt-1">
                   <textarea
-                    // id="bio"
                     name="bio"
                     rows={2}
-                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue focus:outline-none shadow-sm placeholder:text-gray-400 focus:border focus:border-mansa-blue sm:text-sm sm:leading-6 hover:border-mansa-blue"
+                    className="block w-full rounded-md border border-dark-blue py-2.5 pl-2 text-dark-blue"
                     placeholder=""
                     value={formValue.bio}
                     onChange={handleGeneralInfoInput}
@@ -176,7 +161,7 @@ const ProfileSection = () => {
                 </div>
               </div>
               <p className="text-dark-blue text-sm">
-                Brief description of your profile.
+                {t("bioDescription")}
               </p>
             </div>
           </div>
@@ -189,7 +174,7 @@ const ProfileSection = () => {
                 type="submit"
                 disabled={generalInfoIsSubmitting && true}
               >
-                Update Profile
+                {t("updateProfileButton")}
               </Button>
             </ThemeProvider>
           </div>

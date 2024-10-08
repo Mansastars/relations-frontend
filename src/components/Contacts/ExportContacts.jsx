@@ -60,7 +60,7 @@ function ExportContacts() {
 
   return (
     <>
-      <Button text={t("export_contacts.button_text")} onClick={handleExport} />
+      <Button text={t("export_contacts.button_text")} onClick={handleExport} className='whitespace-nowrap'/>
     </>
   );
 }
