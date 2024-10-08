@@ -100,7 +100,7 @@ export const Tables = () => {
       <Stage
         titleColor={"#FF0000"}
         borderColour={"#FF0000"}
-        stageName={t("stage.deal")}
+        stageName={t("stage.closed")}
         stage={stageType.REJECTION}
         stageQuery={"notAFits"}
         url={'deals/rejection-contacts'}
