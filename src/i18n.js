@@ -338,7 +338,7 @@ const resources = {
       kosta_scholiadis: "Kosta Scholiadis",
       founder_ceo: "Fondateur et PDG de Street Wallet",
       trusted_by:
-        "Plus de 800 VCs et start-ups à travers le monde nous font confiance et start-ups à travers le monde",
+        "Plus de 800 VCs et start-ups à travers le monde nous font confiance",
       integrate_title:
         "Intégrez les applications que vous utilisez au quotidien",
       integrate_subtitle:
@@ -768,7 +768,7 @@ const resources = {
         partner: "Partner",
         termSheet: "Vertragsbedingungen",
         negotiation: "Verhandlung",
-        deal: "Vertrag Unterzeichnet",
+        deal: "Erfolg",
         followUp: "Nachverfolgung",
         closed: "Geschlossen",
       },
