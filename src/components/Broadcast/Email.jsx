@@ -4,11 +4,8 @@ import { Button, FullInput, FormNotes, SearchBar } from "../Reusables";
 import { toast } from "react-toastify";
 import api from "../../api";
 import { getFilteredContacts } from "../Search/getFilteredContacts.js";
-import UploadLogo from "../InvestorsUpdate/UploadLogo.jsx";
-import JoditEditor from "jodit-react";
 import { useTranslation } from "react-i18next";
 import EmailEditor from "react-email-editor";
-import { render } from "react-dom";
 
 function Email({ onClose }) {
   const { t } = useTranslation();
@@ -28,32 +25,8 @@ function Email({ onClose }) {
     send_to_all: false,
   });
   const emailEditorRef = useRef(null);
-  const exportHtml = () => {
-    const unlayer = emailEditorRef.current?.editor;
-
-    unlayer?.exportHtml((data) => {
-      const { design, html } = data;
-      setFormValue((prevFormValue) => ({
-        ...prevFormValue,
-        email_content: html,
-      }))
-      console.log("exportHtml", html);
-    });
-  };
-  const onLoad = () => {
-    // editor instance is created
-    // you can load your template here;
-    // const templateJson = {};
-    // emailEditorRef.current.editor.loadDesign(templateJson);
-  };
-  const onReady = (unlayer) => {
-    // editor is ready
-    // you can load your template here;
-    // the design json can be obtained by calling
-    // unlayer.loadDesign(callback) or unlayer.exportHtml(callback)
-    // const templateJson = { DESIGN JSON GOES HERE };
-    // unlayer.loadDesign(templateJson);
-  };
+  const onLoad = () => {};
+  const onReady = (unlayer) => {};
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -93,24 +66,24 @@ function Email({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     // Export the email content and send email after content is updated
     const unlayer = emailEditorRef.current?.editor;
     unlayer?.exportHtml(async (data) => {
       const { design, html } = data;
-      
+
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
         email_content: html,
       }));
-  
+
       try {
         // Wait for the state update and then send the email
         const response = await api.post("general/broadcast-email", {
           ...formValue,
           email_content: html, // Use the updated content directly
         });
-        
+
         console.log(response);
         if (response.data.status === "success") {
           toast.success(response.data.message);
@@ -121,11 +94,10 @@ function Email({ onClose }) {
         toast.error(t("somethingWentWrong"));
         setIsSubmitting(false);
       }
-      
+
       setIsSubmitting(false);
     });
   };
-  
 
   const handleLogoUpdate = (data) => {
     setFormValue((prevFormValue) => ({
@@ -220,10 +192,6 @@ function Email({ onClose }) {
               <label htmlFor="send_to_all">{t("sendToAll")}</label>
             </div>
 
-            <div className="w-full mt-4">
-              <UploadLogo updateData={handleLogoUpdate} />
-            </div>
-
             <div>
               <FullInput
                 id="sender_email"
@@ -268,6 +236,28 @@ function Email({ onClose }) {
                 value={formValue.phone_number}
                 onChange={handleInput}
               />
+            </div>
+            <div className="bg-light-grey p-4 rounded-md shadow-md border border-dark-blue">
+              <p className="text-dark-blue font-semibold">
+                {/* {t("variablesToAttachContacts")} */}
+                Variables to attach
+              </p>
+              <ul className="list-disc list-inside text-dark-grey mt-2">
+                <li>
+                  <span className="text-blue font-semibold">
+                    {"{first_name}"}
+                  </span>{" "}
+                  {/* {t("forContactFirstName")} */}
+                  for contact first name
+                </li>
+                <li>
+                  <span className="text-blue font-semibold">
+                    {"{last_name}"}
+                  </span>{" "}
+                  {/* {t("forContactLastName")} */}
+                  for contact last name
+                </li>
+              </ul>
             </div>
             <div>
               <FullInput
