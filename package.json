@@ -50,6 +50,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-email-editor": "^1.7.11",
     "react-hook-form": "^7.51.5",
     "react-i18next": "^15.0.2",
     "react-loader-spinner": "^6.1.6",

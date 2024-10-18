@@ -6,10 +6,12 @@ import api from "../../api";
 import { getFilteredContacts } from "../Search/getFilteredContacts.js";
 import UploadLogo from "../InvestorsUpdate/UploadLogo.jsx";
 import JoditEditor from "jodit-react";
-import { useTranslation } from "react-i18next"; // Import useTranslation
+import { useTranslation } from "react-i18next";
+import EmailEditor from "react-email-editor";
+import { render } from "react-dom";
 
 function Email({ onClose }) {
-  const { t } = useTranslation(); // Initialize translation
+  const { t } = useTranslation();
   const editor = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,6 +27,33 @@ function Email({ onClose }) {
     phone_number: "",
     send_to_all: false,
   });
+  const emailEditorRef = useRef(null);
+  const exportHtml = () => {
+    const unlayer = emailEditorRef.current?.editor;
+
+    unlayer?.exportHtml((data) => {
+      const { design, html } = data;
+      setFormValue((prevFormValue) => ({
+        ...prevFormValue,
+        email_content: html,
+      }))
+      console.log("exportHtml", html);
+    });
+  };
+  const onLoad = () => {
+    // editor instance is created
+    // you can load your template here;
+    // const templateJson = {};
+    // emailEditorRef.current.editor.loadDesign(templateJson);
+  };
+  const onReady = (unlayer) => {
+    // editor is ready
+    // you can load your template here;
+    // the design json can be obtained by calling
+    // unlayer.loadDesign(callback) or unlayer.exportHtml(callback)
+    // const templateJson = { DESIGN JSON GOES HERE };
+    // unlayer.loadDesign(templateJson);
+  };
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -64,20 +93,39 @@ function Email({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    try {
-      const response = await api.post("general/broadcast-email", formValue);
-      console.log(response);
-      if (response.data.status === "success") {
-        toast.success(response.data.message);
-        localStorage.removeItem("InvestorsUpdate");
-        onClose();
+  
+    // Export the email content and send email after content is updated
+    const unlayer = emailEditorRef.current?.editor;
+    unlayer?.exportHtml(async (data) => {
+      const { design, html } = data;
+      
+      setFormValue((prevFormValue) => ({
+        ...prevFormValue,
+        email_content: html,
+      }));
+  
+      try {
+        // Wait for the state update and then send the email
+        const response = await api.post("general/broadcast-email", {
+          ...formValue,
+          email_content: html, // Use the updated content directly
+        });
+        
+        console.log(response);
+        if (response.data.status === "success") {
+          toast.success(response.data.message);
+          localStorage.removeItem("InvestorsUpdate");
+          onClose();
+        }
+      } catch (error) {
+        toast.error(t("somethingWentWrong"));
+        setIsSubmitting(false);
       }
-    } catch (error) {
-      toast.error(t("somethingWentWrong")); // Use translation for error message
+      
       setIsSubmitting(false);
-    }
-    setIsSubmitting(false);
+    });
   };
+  
 
   const handleLogoUpdate = (data) => {
     setFormValue((prevFormValue) => ({
@@ -97,7 +145,7 @@ function Email({ onClose }) {
             <X size={30} />
           </button>
           <h1 className="text-dark-blue text-3xl max-sm:text-xl font-extrabold">
-            {t("sendBroadcastEmail")} {/* Translation for heading */}
+            {t("sendBroadcastEmail")}
           </h1>
           <form
             onSubmit={handleSubmit}
@@ -110,7 +158,7 @@ function Email({ onClose }) {
                     <SearchBar
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      placeHolder={t("addRecipient")} // Translation for placeholder
+                      placeHolder={t("addRecipient")}
                     />
                     {searchTerm && (
                       <ul className="absolute z-50 min-w-80 p-2 bg-light-grey shadow-lg rounded-lg overflow-y-auto">
@@ -118,7 +166,7 @@ function Email({ onClose }) {
                           <li
                             key={contact.id}
                             className="hover:bg-dark-blue hover:text-white p-2 flex items-center"
-                            title={t("clickToAdd")} // Translation for title
+                            title={t("clickToAdd")}
                             onClick={() => addRecipientEmail(contact.email)}
                           >
                             {contact.profile_pic ? (
@@ -152,8 +200,8 @@ function Email({ onClose }) {
                   <FullInput
                     id="recipients_email"
                     type="text"
-                    title={t("recipientsEmail")} // Translation for title
-                    placeholder={t("enterRecipientEmails")} // Translation for placeholder
+                    title={t("recipientsEmail")}
+                    placeholder={t("enterRecipientEmails")}
                     name="recipients_email"
                     value={formValue.recipients_email}
                     onChange={handleInput}
@@ -169,7 +217,7 @@ function Email({ onClose }) {
                 checked={formValue.send_to_all}
                 onChange={handleCheckboxChange}
               />
-              <label htmlFor="send_to_all">{t("sendToAll")}</label> {/* Translation for label */}
+              <label htmlFor="send_to_all">{t("sendToAll")}</label>
             </div>
 
             <div className="w-full mt-4">
@@ -180,8 +228,8 @@ function Email({ onClose }) {
               <FullInput
                 id="sender_email"
                 type="email"
-                title={t("senderEmail")} // Translation for title
-                placeholder={t("enterYourEmail")} // Translation for placeholder
+                title={t("senderEmail")}
+                placeholder={t("enterYourEmail")}
                 name="sender_email"
                 value={formValue.sender_email}
                 onChange={handleInput}
@@ -191,8 +239,8 @@ function Email({ onClose }) {
               <FullInput
                 id="name"
                 type="text"
-                title={t("senderName")} // Translation for title
-                placeholder={t("enterYourName")} // Translation for placeholder
+                title={t("senderName")}
+                placeholder={t("enterYourName")}
                 name="name"
                 value={formValue.name}
                 onChange={handleInput}
@@ -202,8 +250,8 @@ function Email({ onClose }) {
               <FullInput
                 id="address"
                 type="text"
-                title={t("senderAddress")} // Translation for title
-                placeholder={t("enterYourAddress")} // Translation for placeholder
+                title={t("senderAddress")}
+                placeholder={t("enterYourAddress")}
                 name="address"
                 value={formValue.address}
                 onChange={handleInput}
@@ -214,8 +262,8 @@ function Email({ onClose }) {
               <FullInput
                 id="phone_number"
                 type="text"
-                title={t("senderPhoneNumber")} // Translation for title
-                placeholder={t("enterYourPhone")} // Translation for placeholder
+                title={t("senderPhoneNumber")}
+                placeholder={t("enterYourPhone")}
                 name="phone_number"
                 value={formValue.phone_number}
                 onChange={handleInput}
@@ -225,30 +273,31 @@ function Email({ onClose }) {
               <FullInput
                 id="subject"
                 type="text"
-                title={t("subject")} // Translation for title
-                placeholder={t("enterSubject")} // Translation for placeholder
+                title={t("subject")}
+                placeholder={t("enterSubject")}
                 name="subject"
                 value={formValue.subject}
                 onChange={handleInput}
               />
             </div>
             <div>
-              <label className={`bg-white px-1 text-sm font-semibold leading-6`}>
-                {t("emailContent")} {/* Translation for label */}
+              <label
+                className={`bg-white px-1 text-sm font-semibold leading-6`}
+              >
+                {t("emailContent")}
               </label>
-              <JoditEditor
-                ref={editor}
-                value={formValue.email_content}
-                onBlur={(content) =>
-                  setFormValue((prevFormValue) => ({
-                    ...prevFormValue,
-                    email_content: content,
-                  }))
-                }
+              <EmailEditor
+                ref={emailEditorRef}
+                onLoad={onLoad}
+                onReady={onReady}
               />
             </div>
             <div className="mt-8 w-full flex items-center justify-center">
-              <Button type="submit" disabled={isSubmitting} text={t("submit")} /> {/* Translation for button text */}
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                text={t("submit")}
+              />
             </div>
           </form>
         </div>
