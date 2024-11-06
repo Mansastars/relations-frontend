@@ -5,14 +5,17 @@ import { toast } from "react-toastify";
 import api from "../../../api";
 
 
-function EditSingleContact({ onClose, firstName, lastName, email, phoneNumber, org, id, onUpdate }) {
+function EditSingleContact({ onClose, title, firstName, lastName, email, phoneNumber, org, id, onUpdate, gender, linkedin_url }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formValue, setFormValue] = useState({
+        title: title,
         first_name: firstName,
         last_name: lastName,
         organization_name: org,
         email: email,
         phone_number: phoneNumber,
+        gender: gender,
+        linkedin_url: linkedin_url
     });
 
     const handleInput = (e) => {
@@ -63,6 +66,14 @@ function EditSingleContact({ onClose, firstName, lastName, email, phoneNumber, o
                             <div className="flex justify-between">
                                 <FormInput
                                     type="text"
+                                    title="Title"
+                                    placeholder=""
+                                    id="title"
+                                    value={formValue.title}
+                                    onChange={handleInput}
+                                />
+                                <FormInput
+                                    type="text"
                                     title="First name"
                                     placeholder=""
                                     id="first_name"
@@ -95,6 +106,14 @@ function EditSingleContact({ onClose, firstName, lastName, email, phoneNumber, o
                                     value={formValue.email}
                                     onChange={handleInput}
                                 />
+                                <FormInput
+                                    type="text"
+                                    title="Gender"
+                                    placeholder=""
+                                    id="gender"
+                                    value={formValue.gender}
+                                    onChange={handleInput}
+                                />
                             </div>
                             <div className="flex justify-between">
                                 <FormInput
@@ -103,6 +122,14 @@ function EditSingleContact({ onClose, firstName, lastName, email, phoneNumber, o
                                     placeholder=""
                                     id="organization_name"
                                     value={formValue.organization_name}
+                                    onChange={handleInput}
+                                />
+                                <FormInput
+                                    type="text"
+                                    title="Linkedin Url"
+                                    placeholder=""
+                                    id="linkin_url"
+                                    value={formValue.linkedin_url}
                                     onChange={handleInput}
                                 />
                             </div>

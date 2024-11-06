@@ -5,7 +5,7 @@ import api from "../../../api";
 import { toast } from "react-toastify";
 import EditSingleContact from "./EditSingleContact";
 
-function SingleContactRow({ firstName, lastName, email, phoneNumber, org, id, onDelete, onUpdate }) {
+function SingleContactRow({ title, firstName, lastName, email, phoneNumber, org, id, onDelete, onUpdate, gender, linkedinUrl }) {
   const [showEditContact, setShowEditContact] = useState(false);
 
   const handleDelete = async () => {
@@ -33,16 +33,20 @@ function SingleContactRow({ firstName, lastName, email, phoneNumber, org, id, on
           <XCircleIcon className="h-4 w-4 text-red-600" />
         </button>
       </td>
+      <td className="px-6 py-4">{title}</td>
       <td className="px-6 py-4">{firstName}</td>
       <td className="px-6 py-4">{lastName}</td>
       <td className="px-6 py-4">{email}</td>
-      <td className="px-6 py-4">{`${phoneNumber}`}</td>
+      <td className="px-6 py-4 whitespace-nowrap">{phoneNumber}</td>
       <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
         {org}
       </th>
+      <td className="px-6 py-4">{gender}</td>
+      <td className="px-6 py-4">{linkedinUrl}</td>
       {showEditContact && (
         <EditSingleContact
           onClose={() => setShowEditContact(false)}
+          title={title}
           firstName={firstName}
           lastName={lastName}
           email={email}
@@ -50,6 +54,8 @@ function SingleContactRow({ firstName, lastName, email, phoneNumber, org, id, on
           org={org}
           id={id}
           onUpdate={handleUpdate}
+          gender={gender}
+          linkedin_url={linkedinUrl}
         />
       )}
     </tr>
