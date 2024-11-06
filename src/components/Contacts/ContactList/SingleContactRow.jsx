@@ -19,16 +19,7 @@ function SingleContactRow({ firstName, lastName, email, phoneNumber, org, id, on
 
   return (
     <tr className="bg-white border-b hover:bg-gray-50">
-      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-        {firstName}
-      </th>
-      <td className="px-6 py-4">{lastName}</td>
-      <td className="px-6 py-4">{email}</td>
-      <td className="px-6 py-4">{phoneNumber}</td>
-      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-        {org}
-      </th>
-      <td className="px-6 py-4">
+      <td className="px-6 py-4 flex">
         <button
           onClick={() => setShowEditContact(true)}
           className="text-white cursor-pointer mr-4"
@@ -42,6 +33,13 @@ function SingleContactRow({ firstName, lastName, email, phoneNumber, org, id, on
           <XCircleIcon className="h-4 w-4 text-red-600" />
         </button>
       </td>
+      <td className="px-6 py-4">{firstName}</td>
+      <td className="px-6 py-4">{lastName}</td>
+      <td className="px-6 py-4">{email}</td>
+      <td className="px-6 py-4">{`${phoneNumber}`}</td>
+      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+        {org}
+      </th>
       {showEditContact && (
         <EditSingleContact
           onClose={() => setShowEditContact(false)}
