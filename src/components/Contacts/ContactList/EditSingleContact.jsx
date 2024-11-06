@@ -128,7 +128,7 @@ function EditSingleContact({ onClose, title, firstName, lastName, email, phoneNu
                                     type="text"
                                     title="Linkedin Url"
                                     placeholder=""
-                                    id="linkin_url"
+                                    id="linkedin_url"
                                     value={formValue.linkedin_url}
                                     onChange={handleInput}
                                 />
