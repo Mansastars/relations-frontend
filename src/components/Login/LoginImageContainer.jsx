@@ -32,7 +32,7 @@ const LoginImageContainer = () => {
             </div>
             <div className=" w-20 h-12 flex items-center justify-center">
               <img
-                src="https://media.licdn.com/dms/image/C4D0BAQHtlhjG5szJKA/company-logo_200_200/0/1631335017074?e=1728518400&v=beta&t=YD3rRaTw8W38CAx3tPOFW4aPZ8IvGcBy-tBbCY4OOrk"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROLOuV-V7z8KiR5Tfpv0X_soAzzO-hSTsPT6IHjnnE4W2B0nXdXdZUyuRvB28npPtY6QM&usqp=CAU"
                 alt="Trusted Company 2"
               />
             </div>
@@ -44,13 +44,13 @@ const LoginImageContainer = () => {
             </div>
             <div className=" w-20 h-12 flex items-center justify-center">
               <img
-                src="https://media.licdn.com/dms/image/C560BAQHpEkHODoMiLw/company-logo_200_200/0/1664218436549/lvlup_vc_logo?e=1728518400&v=beta&t=AYc9MAyTBhix2R5RtezF2IEu23eKRWJVokW2b8dthVE"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4ddEq7h0SWhqsRJwQdBgSTOTb6jH_B8QT5XI9vDon0TPX-5MwhL7EDsxzbmAu9RREZQ&usqp=CAU"
                 alt="Trusted Company 4"
               />
             </div>
             <div className=" w-20 h-12 flex items-center justify-center">
               <img
-                src="https://media.licdn.com/dms/image/C560BAQGRla1tM3Q9yw/company-logo_200_200/0/1630609388366/tlcom_capital_partners_logo?e=1728518400&v=beta&t=si48pU6SIU4coH2tYOlaAttYi1bwaWpvAOoqVbKR-L4"
+                src="https://media.licdn.com/dms/image/v2/C560BAQHpEkHODoMiLw/company-logo_200_200/company-logo_200_200/0/1664218436549/lvlup_vc_logo?e=2147483647&v=beta&t=BJmJE1qaWoCFs0mDlhov5x_FfF-Vm0Y47JZlfxybY5E"
                 alt="Trusted Company 5"
               />
             </div>

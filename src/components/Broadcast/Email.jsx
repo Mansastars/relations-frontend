@@ -120,7 +120,7 @@ function Email({ onClose }) {
             {t("sendBroadcastEmail")}
           </h1>
           <form
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             className="flex flex-col gap-5 justify-center w-full"
           >
             {!formValue.send_to_all && (
@@ -287,6 +287,7 @@ function Email({ onClose }) {
                 type="submit"
                 disabled={isSubmitting}
                 text={t("submit")}
+                onClick={handleSubmit}
               />
             </div>
           </form>
