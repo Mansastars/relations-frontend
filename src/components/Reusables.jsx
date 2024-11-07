@@ -179,7 +179,7 @@ export function FullInput({
     >
       <label
         htmlFor={id}
-        className={`absolute -top-3 left-3 bg-none px-1 text-sm font-semibold leading-6 ${
+        className={`absolute -top-3 left-3 bg-white bg-none px-1 text-sm font-semibold leading-6 ${
           isFocused ? "text-mansa-blue" : "text-dark-blue"
         }`}
       >

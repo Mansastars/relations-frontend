@@ -10,33 +10,33 @@ function ContactTable({ data, onDeleteContact, onUpdateContact }) {
       <table className="min-w-full text-sm text-left text-gray-700">
         <thead className="sticky top-0 z-10 bg-mansa-blue text-white shadow-sm">
           <tr>
-            <th scope="col" className="px-4 py-3 text-center">
+            <th scope="col" className="px-4 py-3">
               {t('contactTable.action')}
             </th>
-            <th className="px-4 py-3 text-center min-w-fit">
+            <th className="px-4 py-3 min-w-fit">
               {/* {t('contactTable.firstName')} */}
               Title
             </th>
-            <th scope="col" className="px-4 py-3 text-center whitespace-nowrap">
+            <th scope="col" className="px-4 py-3 whitespace-nowrap">
               {t('contactTable.firstName')}
             </th>
-            <th scope="col" className="px-4 py-3 text-center">
+            <th scope="col" className="px-4 py-3">
               {t('contactTable.lastName')}
             </th>
-            <th scope="col" className="px-4 py-3 text-center">
+            <th scope="col" className="px-4 py-3">
               {t('contactTable.email')}
             </th>
-            <th scope="col" className="px-4 py-3 text-center">
+            <th scope="col" className="px-4 py-3">
               {t('contactTable.phoneNumber')}
             </th>
-            <th scope="col" className="px-4 py-3 text-center">
+            <th scope="col" className="px-4 py-3">
               {t('contactTable.organization')}
             </th>
-            <th scope="col" className="px-4 py-3 text-center">
+            <th scope="col" className="px-4 py-3">
               {/* {t('contactTable.organization')} */}
               Gender
             </th>
-            <th scope="col" className="px-4 py-3 text-center whitespace-nowrap">
+            <th scope="col" className="px-4 py-3 whitespace-nowrap">
               {/* {t('contactTable.organization')} */}
               LinkedIn url
             </th>
