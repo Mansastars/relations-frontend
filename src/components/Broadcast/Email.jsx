@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
-import { Button, FullInput, FormNotes, SearchBar } from "../Reusables";
+import { Button, FullInput, FormNotes, SearchBar, DefaultInput } from "../Reusables";
 import { toast } from "react-toastify";
 import api from "../../api";
 import { getFilteredContacts } from "../Search/getFilteredContacts.js";
@@ -23,6 +23,9 @@ function Email({ onClose }) {
     logo: "",
     phone_number: "",
     send_to_all: false,
+    default_first_name: "",
+    default_last_name: "",
+    default_company_name: ""
   });
   const emailEditorRef = useRef(null);
   const onLoad = () => {};
@@ -248,14 +251,39 @@ function Email({ onClose }) {
                     {"{first_name}"}
                   </span>{" "}
                   {/* {t("forContactFirstName")} */}
-                  for contact first name
+                  for contact first name. You can also enter a default value here
+                  <DefaultInput 
+                    value={formValue.default_first_name} 
+                    id="default_first_name" 
+                    onChange={handleInput}
+                    placeHolder="Default First name"
+                  />
                 </li>
                 <li>
                   <span className="text-blue font-semibold">
                     {"{last_name}"}
                   </span>{" "}
                   {/* {t("forContactLastName")} */}
-                  for contact last name
+                  for contact last name. You can also enter a default value here
+                  <DefaultInput 
+                    value={formValue.default_last_name} 
+                    id="default_last_name" 
+                    onChange={handleInput}
+                    placeHolder="Default Last name"  
+                  />
+                </li>
+                <li>
+                  <span className="text-blue font-semibold">
+                    {"{company_name}"}
+                  </span>{" "}
+                  {/* {t("forContactFirstName")} */}
+                  for contact company name. You can also enter a default value here
+                  <DefaultInput 
+                    value={formValue.default_company_name} 
+                    id="default_company_name" 
+                    onChange={handleInput}
+                    placeHolder="Default Company name"
+                  />
                 </li>
               </ul>
             </div>

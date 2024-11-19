@@ -271,6 +271,21 @@ export function SignUpRequired({
   );
 }
 
+//Defaults input
+export function DefaultInput({id, value, onChange, placeHolder}){
+  return(
+    <input 
+    id={id} 
+    type='text'
+    placeholder={placeHolder}
+    name={id} 
+    value={value} 
+    onChange={onChange}
+    className= "ml-2 my-1 h-5 py-5"
+    />
+  )
+}
+
 // Form template for required inputs (NOT FULL)
 export function FormInputRequired({
   type,
