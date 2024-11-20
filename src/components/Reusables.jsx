@@ -281,7 +281,7 @@ export function DefaultInput({id, value, onChange, placeHolder}){
     name={id} 
     value={value} 
     onChange={onChange}
-    className= "ml-2 my-1 h-5 py-5"
+    className= "ml-2 my-1 py-1 text-sm rounded-2xl"
     />
   )
 }

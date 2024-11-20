@@ -6,6 +6,9 @@ import api from "../../api";
 import { getFilteredContacts } from "../Search/getFilteredContacts.js";
 import { useTranslation } from "react-i18next";
 import EmailEditor from "react-email-editor";
+import Tooltip from '@mui/material/Tooltip';
+import { IoPersonOutline } from "react-icons/io5";
+import { FaRegBuilding } from "react-icons/fa";
 
 function Email({ onClose }) {
   const { t } = useTranslation();
@@ -42,6 +45,15 @@ function Email({ onClose }) {
       send_to_all: !prevFormValue.send_to_all,
       recipients_email: "",
     }));
+  };
+
+  const handleCopy = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success('Variable copied to clipboard!');
+    } catch (err) {
+      console.error("Failed to copy Variable");
+    }
   };
 
   useEffect(() => {
@@ -243,15 +255,16 @@ function Email({ onClose }) {
             <div className="bg-light-grey p-4 rounded-md shadow-md border border-dark-blue">
               <p className="text-dark-blue font-semibold">
                 {/* {t("variablesToAttachContacts")} */}
-                Variables to attach
+                Add dynamic Variables
               </p>
               <ul className="list-disc list-inside text-dark-grey mt-2">
-                <li>
-                  <span className="text-blue font-semibold">
-                    {"{first_name}"}
-                  </span>{" "}
-                  {/* {t("forContactFirstName")} */}
-                  for contact first name. You can also enter a default value here
+                <li className="flex items-center">
+                  <Tooltip title="Click to copy variable" arrow>
+                    <div className="flex items-center cursor-pointer" onClick={()=>handleCopy("{first_name}")}>
+                      <IoPersonOutline className="w-5 h-5"/>
+                      First name
+                    </div>
+                  </Tooltip>
                   <DefaultInput 
                     value={formValue.default_first_name} 
                     id="default_first_name" 
@@ -259,12 +272,13 @@ function Email({ onClose }) {
                     placeHolder="Default First name"
                   />
                 </li>
-                <li>
-                  <span className="text-blue font-semibold">
-                    {"{last_name}"}
-                  </span>{" "}
-                  {/* {t("forContactLastName")} */}
-                  for contact last name. You can also enter a default value here
+                <li className="flex items-center">
+                  <Tooltip title="Click to copy variable" arrow>
+                    <div className="flex items-center cursor-pointer" onClick={()=>handleCopy("{last_name}")}>
+                      <IoPersonOutline className="w-5 h-5"/>
+                      Last name
+                    </div>
+                  </Tooltip>
                   <DefaultInput 
                     value={formValue.default_last_name} 
                     id="default_last_name" 
@@ -272,12 +286,13 @@ function Email({ onClose }) {
                     placeHolder="Default Last name"  
                   />
                 </li>
-                <li>
-                  <span className="text-blue font-semibold">
-                    {"{company_name}"}
-                  </span>{" "}
-                  {/* {t("forContactFirstName")} */}
-                  for contact company name. You can also enter a default value here
+                <li className="flex items-center">
+                  <Tooltip title="Click to copy variable" arrow>
+                    <div className="flex items-center cursor-pointer" onClick={()=>handleCopy("{company_name}")}>
+                      <FaRegBuilding className="w-5 h-5"/>
+                      Company name
+                    </div>
+                  </Tooltip>
                   <DefaultInput 
                     value={formValue.default_company_name} 
                     id="default_company_name" 
