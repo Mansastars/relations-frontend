@@ -102,7 +102,6 @@ function Email({ onClose }) {
         console.log(response);
         if (response.data.status === "success") {
           toast.success(response.data.message);
-          localStorage.removeItem("InvestorsUpdate");
           onClose();
         }
       } catch (error) {
@@ -112,13 +111,6 @@ function Email({ onClose }) {
 
       setIsSubmitting(false);
     });
-  };
-
-  const handleLogoUpdate = (data) => {
-    setFormValue((prevFormValue) => ({
-      ...prevFormValue,
-      logo: data.logoUrl,
-    }));
   };
 
   return (
@@ -252,16 +244,16 @@ function Email({ onClose }) {
                 onChange={handleInput}
               />
             </div>
-            <div className="bg-light-grey p-4 rounded-md shadow-md border border-dark-blue">
-              <p className="text-dark-blue font-semibold">
+            <div className="p-4 rounded-md shadow-md border border-dark-blue">
+              <p className="text-dark-blue font-semibold text-center">
                 {/* {t("variablesToAttachContacts")} */}
                 Add dynamic Variables
               </p>
-              <ul className="list-disc list-inside text-dark-grey mt-2">
-                <li className="flex items-center">
+              <div className="flex text-dark-grey mt-2 justify-center">
+                <div className="flex flex-col items-center">
                   <Tooltip title="Click to copy variable" arrow>
-                    <div className="flex items-center cursor-pointer" onClick={()=>handleCopy("{first_name}")}>
-                      <IoPersonOutline className="w-5 h-5"/>
+                    <div className="flex flex-col items-center mb-3 shadow-sm hover:shadow-2xl cursor-pointer border py-6 px-2 text-xs" onClick={()=>handleCopy("{first_name}")}>
+                      <IoPersonOutline className="w-5 h-5 mb-2"/>
                       First name
                     </div>
                   </Tooltip>
@@ -271,11 +263,11 @@ function Email({ onClose }) {
                     onChange={handleInput}
                     placeHolder="Default First name"
                   />
-                </li>
-                <li className="flex items-center">
+                </div>
+                <div className="flex flex-col items-center">
                   <Tooltip title="Click to copy variable" arrow>
-                    <div className="flex items-center cursor-pointer" onClick={()=>handleCopy("{last_name}")}>
-                      <IoPersonOutline className="w-5 h-5"/>
+                    <div className="flex flex-col items-center mb-3 shadow-sm hover:shadow-2xl cursor-pointer border py-6 px-2 text-xs" onClick={()=>handleCopy("{last_name}")}>
+                      <IoPersonOutline className="w-5 h-5 mb-2"/>
                       Last name
                     </div>
                   </Tooltip>
@@ -285,12 +277,12 @@ function Email({ onClose }) {
                     onChange={handleInput}
                     placeHolder="Default Last name"  
                   />
-                </li>
-                <li className="flex items-center">
+                </div>
+                <div className="flex flex-col items-center">
                   <Tooltip title="Click to copy variable" arrow>
-                    <div className="flex items-center cursor-pointer" onClick={()=>handleCopy("{company_name}")}>
-                      <FaRegBuilding className="w-5 h-5"/>
-                      Company name
+                    <div className="flex flex-col items-center mb-3 shadow-mdshadow-mdshadow-mdshadow-sm hover:shadow-2xl cursor-pointer border py-6 px-2 text-xs min-w-20" onClick={()=>handleCopy("{company_name}")}>
+                      <FaRegBuilding className="w-5 h-5 mb-2"/>
+                      Company
                     </div>
                   </Tooltip>
                   <DefaultInput 
@@ -299,8 +291,8 @@ function Email({ onClose }) {
                     onChange={handleInput}
                     placeHolder="Default Company name"
                   />
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
             <div>
               <FullInput
