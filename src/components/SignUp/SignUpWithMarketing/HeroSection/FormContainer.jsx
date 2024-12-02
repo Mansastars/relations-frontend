@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import api from "../../../../api";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next"; // Import useTranslation
+import Tooltip from '@mui/material/Tooltip';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -31,6 +32,11 @@ const FormContainer = () => {
   const [openTermOfUsageModal, setOpenTermOfUsageModal] = useState(false);
   const [openConfirmEmailModal, setOpenConfirmEmailModal] = useState(false);
   const navigate = useNavigate();
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleChange = (event) => {
+    setSelectedOption(event.target.value); // Update the state with the selected value
+  };
 
   const {
     handleSubmit,
@@ -45,6 +51,7 @@ const FormContainer = () => {
       last_name: "",
       password: "",
       confirm_password: "",
+      type:selectedOption,
       referral_code: "",
       acceptTerms: false,
     },
@@ -103,7 +110,8 @@ const FormContainer = () => {
           {t("Get started with your free account today.")} {/* Translated */}
         </p>
         <p className=" text-md text-gray-500">
-          {t("No credit card required. Enjoy a 7-day free trial.")} {/* Translated */}
+          {t("No credit card required. Enjoy a 7-day free trial.")}{" "}
+          {/* Translated */}
         </p>
       </div>
       <form
@@ -115,43 +123,76 @@ const FormContainer = () => {
             name="first_name"
             control={control}
             error={errors.first_name}
-            label={t("First Name *")} 
+            label={t("First Name *")}
             autoFocus={true}
           />
           <CustomInput
             name="last_name"
             control={control}
             error={errors.last_name}
-            label={t("Last Name *")} 
+            label={t("Last Name *")}
           />
         </div>
-
+        <div className="flex gap-10">
+          <p>I am a</p>
+          
+          <Tooltip title="A simplified account for personal usage" arrow>
+          <label>
+            <input
+              type="radio"
+              name="options"
+              value="User"
+              checked={selectedOption === "User"}
+              onChange={handleChange}
+              className="mr-2"
+            />
+            User
+          </label>
+          </Tooltip>
+          <br />
+          <Tooltip 
+          title="An organizational level account that other users and 
+                staffs can be added to use a shared subscription, contact database and dashboard" 
+          arrow>
+          <label>
+            <input
+              type="radio"
+              name="options"
+              value="Company"
+              checked={selectedOption === "Company"}
+              onChange={handleChange}
+              className="mr-2"
+            />
+            Comapny
+          </label>
+          </Tooltip>
+        </div>
         <CustomInput
           name="email"
           control={control}
           error={errors.email}
-          label={t("Business Email *")} 
+          label={t("Business Email *")}
         />
 
         <CustomInput
           name="password"
           control={control}
           error={errors.first_name}
-          label={t("Password *")} 
+          label={t("Password *")}
           type="password"
         />
         <CustomInput
           name="confirm_password"
           control={control}
           error={errors.last_name}
-          label={t("Confirm Password *")} 
+          label={t("Confirm Password *")}
           type="password"
         />
         <CustomInput
           name="referral_code"
           control={control}
           error={errors.referral_code}
-          label={t("Referral Code")} 
+          label={t("Referral Code")}
         />
 
         <div className="">
@@ -172,14 +213,14 @@ const FormContainer = () => {
                   onClick={() => setPrivacyPolicyModal(true)}
                   className="text-mansa-blue underline cursor-pointer hover:text-dark-blue"
                 >
-                  {t("Privacy Policy")} 
+                  {t("Privacy Policy")}
                 </span>{" "}
                 {t("and")}{" "}
                 <span
                   onClick={() => setOpenTermOfUsageModal(true)}
                   className="text-mansa-blue underline cursor-pointer hover:text-dark-blue"
                 >
-                  {t("Terms of Usage")} 
+                  {t("Terms of Usage")}
                 </span>
                 .
               </p>
