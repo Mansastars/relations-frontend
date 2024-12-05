@@ -92,6 +92,7 @@ function FreeTrialBanner() {
                         daysLeft: daysLeft,
                         paidFeaturesLink: <Link to='/pricing' className='underline cursor-pointer font-bold'>{t('PaidFeaturesLink')}</Link>
                     })}
+                    <Link to='/pricing' className='underline cursor-pointer font-bold'>{t('PaidFeaturesLink')}</Link>
                 </p>
             </div>
         </div>

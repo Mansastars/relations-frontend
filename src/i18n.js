@@ -118,7 +118,7 @@ const resources = {
       WelcomeFreeTrial: "Welcome to your free trial!",
       LimitedTimeOffer: "Limited Time Offer! {{price}} until {{endDate}}.",
       TrialDaysMessage:
-        "You have {{daysLeft}} {{daysLeft === 1 ? 'day' : 'days'}} to try Mansa's CRM {{paidFeaturesLink}}. Upgrade anytime for as low as €29.99/month.",
+        "You have {{daysLeft}} day(s) left to try Mansa's CRM. Upgrade anytime for as low as €29.99/month.",
       Subscribe: "Subscribe",
       PaidFeaturesLink: "paid features",
       ExistingDashboards: "Existing Dashboards",

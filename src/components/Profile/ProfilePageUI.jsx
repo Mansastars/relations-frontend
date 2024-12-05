@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs } from "flowbite-react";
 import { HiUser, HiMail, HiLockClosed } from "react-icons/hi";
 import ProfileSection from "./ProfileSection/ProfileSection";
 import EmailSection from "./EmailSection/EmailSection";
 import PasswordSection from "./PasswordSection/PasswordSection";
 import DeleteAccount from "./DeleteAccountSection/DeleteAccount";
+import AdminTab from "./AdminSection/AdminTab";
 
 const ProfilePageUI = () => {
   const [selectedSection, setSelectedSection] = useState("Profile");
+  const [accountType, setAccountType] = useState("");
+
+  useEffect(() => {
+    const account = JSON.parse(localStorage.getItem("user"));
+    setAccountType(account.role);
+    console.log(account.role);
+  });
 
   const renderSection = () => {
     switch (selectedSection) {
@@ -19,6 +27,8 @@ const ProfilePageUI = () => {
         return <PasswordSection />;
       case "Account":
         return <DeleteAccount />;
+      case "Admin":
+        return <AdminTab />;
       default:
         return <ProfileSection />;
     }
@@ -56,6 +66,15 @@ const ProfilePageUI = () => {
           >
             <PasswordSection />
           </Tabs.Item>
+          {accountType === "Company" ? (
+            <Tabs.Item
+              active={selectedSection === "Admin"}
+              title="Admin"
+              onClick={() => setSelectedSection("Admin")}
+            >
+              <AdminTab />
+            </Tabs.Item>
+          ) : null}
           <Tabs.Item
             active={selectedSection === "Account"}
             title="Account"

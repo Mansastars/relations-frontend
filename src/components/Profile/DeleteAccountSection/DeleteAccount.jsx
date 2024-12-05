@@ -15,8 +15,8 @@ const theme = createTheme({
 });
 
 const DeleteAccount = () => {
-  const [accountType, setAccountType] = useState('')
   const navigate = useNavigate();
+  const [accountType, setAccountType] = useState('')
 
   useEffect(()=>{
     const account = JSON.parse(localStorage.getItem('user'))
@@ -64,7 +64,7 @@ const DeleteAccount = () => {
           navigate("/auth/login");
         } catch (error) {
           console.error("Error:", error);
-          Swal.fire("Error", "Failed to delete user", "error");
+          Swal.fire("Error", "Failed to switch account", "error");
         }
       }
     });
