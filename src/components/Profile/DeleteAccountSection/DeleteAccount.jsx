@@ -59,7 +59,7 @@ const DeleteAccount = () => {
       if (result.isConfirmed) {
         try {
           screen;
-          await api.post(`company/switch-account-type`);
+          const response = await api.post(`company/switch-account-type`);
           Swal.fire("", "Your account has been successfully switched", "success");
           navigate("/auth/login");
         } catch (error) {
@@ -69,6 +69,17 @@ const DeleteAccount = () => {
       }
     });
   };
+
+  const handleChangeAccount = async()=>{
+    try{
+      const response = await api.post(`company/switch-account-type`);
+      Swal.fire("", "Your account has been successfully switched", "success");
+      navigate("/auth/login");
+    }catch(error){
+      console.log(error)
+      Swal.fire("Error", "Failed to switch account", "error");
+    }
+  }
 
   return (
     <div className=" flex flex-col w-full px-3 items-center overflow-y-auto">
@@ -92,7 +103,7 @@ const DeleteAccount = () => {
                   className=" w-[80%] max-md:w-full"
                   color="success"
                   type="button"
-                  onClick={() => handleSwitchAccount()}
+                  onClick={() => handleChangeAccount()}
                   // disabled={emailIsSubmitting && true}
                 >
                   Switch account
