@@ -38,7 +38,8 @@ const DeleteAccount = () => {
           screen;
           await api.delete(`users/delete-account`);
           Swal.fire("Deleted!", "Your account has been deleted.", "success");
-          navigate("/auth/sign_up");
+          localStorage.clear()
+          navigate("/auth/sign_up"); 
         } catch (error) {
           console.error("Error:", error);
           Swal.fire("Error", "Failed to delete user", "error");
@@ -60,7 +61,8 @@ const DeleteAccount = () => {
         try {
           screen;
           const response = await api.post(`company/switch-account-type`);
-          Swal.fire("", "Your account has been successfully switched", "success");
+          Swal.fire("", "Your account has been successfully switched, Please login", "success");
+          localStorage.clear()
           navigate("/auth/login");
         } catch (error) {
           console.error("Error:", error);
@@ -69,17 +71,6 @@ const DeleteAccount = () => {
       }
     });
   };
-
-  const handleChangeAccount = async()=>{
-    try{
-      const response = await api.post(`company/switch-account-type`);
-      Swal.fire("", "Your account has been successfully switched", "success");
-      navigate("/auth/login");
-    }catch(error){
-      console.log(error)
-      Swal.fire("Error", "Failed to switch account", "error");
-    }
-  }
 
   return (
     <div className=" flex flex-col w-full px-3 items-center overflow-y-auto">
@@ -103,7 +94,7 @@ const DeleteAccount = () => {
                   className=" w-[80%] max-md:w-full"
                   color="success"
                   type="button"
-                  onClick={() => handleChangeAccount()}
+                  onClick={() => handleSwitchAccount()}
                   // disabled={emailIsSubmitting && true}
                 >
                   Switch account
